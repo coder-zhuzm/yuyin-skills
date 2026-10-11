@@ -6,7 +6,7 @@
 - npm 包改为纯 Skill/参考资料/模板，不包含自制 CLI、current 版本切换或 payload 构建器。
 - 现有 yuyin-dev 的 11 个文件内容保持 v0.2.0 原样。
 - 提供本地目录、npm tgz、附上游依赖的离线 ZIP 接入方式；更新和回退重新 add。
-- 候选 npm 名称为 @coder-zhuzm/yuyin-skills，待 npm 登录确认 scope 后正式发布。
+- npm 名称改为 @zhuzm/yuyin-skills，与用户提供的 npm whoami 一致；尚未正式发布。
 
 ## 0.2.0（历史附件保留）
 

@@ -28,7 +28,7 @@
 
 ## npm 发布状态
 
-`npm publish --dry-run --ignore-scripts` 成功检查包内容，同时提示尚未登录。`npm whoami` 返回 ENEEDAUTH。**没有执行正式发布，也没有验证候选 scope 的所有权。** dry-run 成功不代表账号有权 publish。
+`npm publish --dry-run --ignore-scripts` 成功检查包内容，同时提示尚未登录。当前执行环境的 `npm whoami` 返回 ENEEDAUTH；用户自己的电脑上 `npm whoami` 返回 zhuzm。公开 registry 查询新包名返回 E404。**没有执行正式发布。** dry-run 成功不代表账号已在本环境授权 publish。
 
 ## 仍待实机确认
 

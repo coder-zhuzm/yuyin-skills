@@ -32,7 +32,7 @@ Claude Code 显式调用 `/yuyin-dev`，Codex 用 `$yuyin-dev`。先试只读梳
 
 ## npm 分发状态
 
-本地包版本 v0.3.0，候选包名 `@coder-zhuzm/yuyin-skills`，**未发布到 npm**。GitHub 用户名不代表已拥有同名 npm scope，发布前须登录并确认权限。这个名字不能在发布前用于在线安装。
+本地包版本 v0.3.0，包名 `@zhuzm/yuyin-skills` 与用户提供的 `npm whoami` 一致；公开 registry 查询返回 E404，**目前尚未发布**。正式发布需要在已登录 npm 的电脑上执行；发布前不能按包名在线安装。
 
 ```bash
 # 在源码目录：仅安装现成维护工具，然后打内容包

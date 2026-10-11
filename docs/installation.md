@@ -22,12 +22,12 @@ DISABLE_TELEMETRY=1 npx skills@1.7.2 add /绝对路径/yuyin-skills/skills/devel
 DISABLE_TELEMETRY=1 npx skills@1.7.2 add coder-zhuzm/yuyin-skills -s yuyin-dev -a claude-code -a codex -y
 ```
 
-当前候选 npm 包名 `@coder-zhuzm/yuyin-skills` **未发布，scope 权限未确认**。将来发布后可用 npm 安装内容到独立目录，再交给 `skills`：
+npm 包名已根据用户提供的 `npm whoami` 改为 `@zhuzm/yuyin-skills`，**目前尚未发布**。首次公开发布后，可用 npm 安装内容到独立目录，再交给 `skills`：
 
 ```bash
 # 仅在包实际发布后执行；候选名称可能按 npm 账号调整
-npm install --prefix "$HOME/.local/share/yuyin-skills-package" @coder-zhuzm/yuyin-skills@0.3.0 --ignore-scripts --no-audit --no-fund
-DISABLE_TELEMETRY=1 npx skills@1.7.2 add "$HOME/.local/share/yuyin-skills-package/node_modules/@coder-zhuzm/yuyin-skills/skills/development/shared" -s yuyin-dev -a claude-code -a codex -y
+npm install --prefix "$HOME/.local/share/yuyin-skills-package" @zhuzm/yuyin-skills@0.3.0 --ignore-scripts --no-audit --no-fund
+DISABLE_TELEMETRY=1 npx skills@1.7.2 add "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyin-skills/skills/development/shared" -s yuyin-dev -a claude-code -a codex -y
 ```
 
 无需自写一个 `npx yuyin-skills` 包装器。内容更新归 npm，Agent 接入归现成 `skills`。
@@ -48,8 +48,8 @@ DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" list -a claude-
 想走 npm .tgz 同样可行；包无运行时依赖：
 
 ```bash
-npm install --prefix "$HOME/.local/share/yuyin-skills-package" "$PACK/coder-zhuzm-yuyin-skills-0.3.0.tgz" --offline --no-update-notifier --ignore-scripts --no-audit --no-fund
-DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" add "$HOME/.local/share/yuyin-skills-package/node_modules/@coder-zhuzm/yuyin-skills/skills/development/shared" -s yuyin-dev -a claude-code -a codex -y
+npm install --prefix "$HOME/.local/share/yuyin-skills-package" "$PACK/zhuzm-yuyin-skills-0.3.0.tgz" --offline --no-update-notifier --ignore-scripts --no-audit --no-fund
+DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" add "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyin-skills/skills/development/shared" -s yuyin-dev -a claude-code -a codex -y
 ```
 
 两种内容来源任选其一。默认按项目接入；加 `-g` 可安装到用户级目录。只用 CC 则只传 `-a claude-code`，只用 Codex 则只传 `-a codex`。不支持软链接时加 `--copy`，之后仍按同一方式重新接入更新。
@@ -101,7 +101,7 @@ npm publish --dry-run --ignore-scripts
 
 构建离线 ZIP：保留这一份完整源码和生成的 tgz，另带 `npm ci` 产生的 `node_modules`（包含上游包与许可证）。Git 不提交 ZIP、tgz 或 node_modules。使用标准 ZIP 工具；保留 THIRD_PARTY_LICENSES 中的 Vercel skills MIT 许可和各包自带 notice。本仓库没有自制安装/更新脚本。
 
-当前 npm 未登录；正式发布须在有权的 npm 账号下 `npm login`（registry 明确为 npmjs），确认同名 scope 属于自己；否则改 `package.json` 的 name 并重新生成 lockfile、文档与实际 tarball。GitHub 私有仓库保持私有；公共 npm 发布会公开包内列明的 Skill 内容，二者不是同一个权限。
+当前执行环境的 npm 未登录；用户本机已通过 `npm whoami` 确认用户名为 `zhuzm`。本机公开 registry 对该包名返回 E404，说明它未作为公开包列出；不能据此排除未获授权的私有包。正式首次发布请在用户已登录 npm 的电脑上执行；成功后核对返回的包名、版本与公开访问。GitHub 私有仓库保持私有；公共 npm 发布会公开包内列明的 Skill 内容，二者不是同一个权限。
 
 ```bash
 npm whoami --registry https://registry.npmjs.org/
