@@ -1,5 +1,10 @@
 # 变更记录
 
+## 0.3.1
+
+- docs: describe automatic releases and maintainer checks (f5a481e)
+- ci: configure trusted npm publishing and release recovery [skip ci] (797d8ec)
+
 ## 0.3.0
 
 - 整理仓库首页、安装指南与开发手册，统一描述性语言和文档导航。

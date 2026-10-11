@@ -34,7 +34,7 @@ DISABLE_TELEMETRY=1 npx skills@1.7.2 add /path/to/yuyin-skills/skills/developmen
 
 ```bash
 npm install --prefix "$HOME/.local/share/yuyin-skills-package" \
-  @zhuzm/yuyin-skills@0.3.0 --ignore-scripts --no-audit --no-fund
+  @zhuzm/yuyin-skills@0.3.1 --ignore-scripts --no-audit --no-fund
 
 DISABLE_TELEMETRY=1 npx skills@1.7.2 add \
   "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyin-skills/skills/development/shared" \
@@ -47,12 +47,12 @@ npm 负责内容分发，`skills` CLI 负责 Agent 接入。内容包无运行�
 
 ## 离线安装
 
-离线归档由维护者按本文打包流程生成，可命名为 `yuyin-skills-v0.3.0-offline.zip`。归档包含源码、内容 tgz、已安装的 `skills` CLI、锁定依赖及许可证。
+离线归档由维护者按本文打包流程生成，可命名为 `yuyin-skills-v0.3.1-offline.zip`。归档包含源码、内容 tgz、已安装的 `skills` CLI、锁定依赖及许可证。
 
 解压后将来源目录放在稳定位置。在目标项目目录执行：
 
 ```bash
-PACK="/path/to/yuyin-skills-v0.3.0"
+PACK="/path/to/yuyin-skills-v0.3.1"
 node --version
 DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" \
   add "$PACK/skills/development/shared" -s yuyin-dev -a claude-code -a codex -y
@@ -66,7 +66,7 @@ DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" \
 
 ```bash
 npm install --prefix "$HOME/.local/share/yuyin-skills-package" \
-  "$PACK/zhuzm-yuyin-skills-0.3.0.tgz" \
+  "$PACK/zhuzm-yuyin-skills-0.3.1.tgz" \
   --offline --no-update-notifier --ignore-scripts --no-audit --no-fund
 
 DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" add \
@@ -150,7 +150,7 @@ npm publish --dry-run --ignore-scripts
 ```bash
 npm whoami --registry https://registry.npmjs.org/
 npm publish --access public --registry https://registry.npmjs.org/ --ignore-scripts
-npm view @zhuzm/yuyin-skills@0.3.0 version --registry https://registry.npmjs.org/
+npm view @zhuzm/yuyin-skills@0.3.1 version --registry https://registry.npmjs.org/
 ```
 
 登录、双因素认证与发布审批通过 npm 官方流程完成。发布后安装实际发布包验证内容。团队内部分发可使用现有私有 registry。
