@@ -74,7 +74,7 @@ $yuyin-dev 修复 定位并修复当前报错，保留现有行为，完成必�
 
 内容包名称为 **`@zhuzm/yuyin-skills`**，版本 **`0.3.0`**。包内包含技能、参考资料、规则与模板，无运行时依赖。Agent 接入由 `skills` CLI 完成。
 
-npm 安装方式、离线打包、更新和版本回退见[安装与分发指南](docs/installation.md)。
+npm 安装方式、离线打包、更新和版本回退见[安装与分发指南](docs/installation.md)。`main` 分支的分发内容更新通过 GitHub Actions 自动检查、递增版本并发布到 npm，发布记录见 [GitHub Releases](https://github.com/coder-zhuzm/yuyin-skills/releases)。
 
 ## 仓库结构
 

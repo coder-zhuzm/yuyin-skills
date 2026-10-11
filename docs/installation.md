@@ -154,3 +154,22 @@ npm view @zhuzm/yuyin-skills@0.3.0 version --registry https://registry.npmjs.org
 ```
 
 登录、双因素认证与发布审批通过 npm 官方流程完成。发布后安装实际发布包验证内容。团队内部分发可使用现有私有 registry。
+
+## 自动发版
+
+`main` 分支收到更新后，GitHub Actions 检查实际分发内容。技能、规则、模板及包内文档发生变化时，自动递增补丁版本、同步安装示例并发布到 npm；预留分类和历史文档的独立修改跳过发布。版本更新提交由仓库的临时 `GITHUB_TOKEN` 写入，不会递归触发发版。
+
+工作流为 `.github/workflows/publish.yml`。npm Trusted Publisher 绑定 GitHub 用户 `coder-zhuzm`、仓库 `yuyin-skills` 和工作流文件 `publish.yml`，并允许直接 `npm publish`。发布使用 OIDC 临时身份，无需配置长期 npm token。
+
+发布任务串行运行，检查失败时停止。候选版本、来源提交及归档摘要保存在 `.github/release-state.json`；失败后重跑同一工作流会恢复该候选版本，已公开的版本会核对内容后补齐标签和 GitHub Release。如果恢复期间已有新的分发内容提交，任务会在完成原候选版本后继续发布这些更新。标签和已有 npm 版本不会被覆盖。
+
+发布成功后验证公开 registry、归档摘要和实际安装内容，再创建 GitHub Release 并附上内容 tgz。较大版本更新可在 Actions 的 **Run workflow** 中填写稳定版本，例如 `0.4.0`；输入必须高于已发布版本，且需先完成已有候选版本。
+
+本地维护检查：
+
+```bash
+npm test
+npm run verify
+```
+
+自动发布仅更新分发来源。目标项目采用新版本时，仍需重新执行 `skills add` 并开启新会话。
