@@ -1,8 +1,10 @@
-# v0.3.0 实际验证
+# 验证记录
 
-日期：2026-10-11。环境：Linux、Node v24.19.0、npm 11.9.0、上游 skills 1.7.2。
+## v0.3.0 分发集成验证
 
-## 分发与安装
+日期：2026-10-11。记录环境：Linux、Node v24.19.0、npm 11.9.0、上游 skills 1.7.2。以下为该环境的既有验证记录。
+
+### 分发与安装
 
 执行标准 `npm ci --ignore-scripts --no-audit --no-fund`，由 package-lock.json 锁定上游及传递依赖。执行 `npm pack --ignore-scripts` 并测试真实生成的内容 tarball。
 
@@ -24,14 +26,22 @@
 
 另做实际 v0.2 Node CLI 的 setup → detach → 新 skills add 迁移，项目事实保留。
 
-现有 yuyin-dev 的全部 11 个源码文件与 v0.2.0 原包逐字节对照一致；本次不修改提示词或技能行为。旧 Skill 的合成任务验证仅作历史证据，不能证明真实业务效果。
+现有 yuyin-dev 的全部 11 个源码文件与 v0.2.0 原包逐字节对照一致；技能行为保持一致。旧 Skill 的合成任务验证仅作历史证据，不能证明真实业务效果。
 
-## npm 发布状态
+## v0.3.0 macOS 发布准备验证
 
-`npm publish --dry-run --ignore-scripts` 成功检查包内容，同时提示尚未登录。当前执行环境的 `npm whoami` 返回 ENEEDAUTH；用户自己的电脑上 `npm whoami` 返回 zhuzm。公开 registry 查询新包名返回 E404。**没有执行正式发布。** dry-run 成功不代表账号已在本环境授权 publish。
+日期：2026-10-11。环境：macOS、Node v24.21.0、npm 11.19.0、skills 1.7.2。
 
-## 仍待实机确认
+- 检查仓库 Markdown 的代码块与本地链接，确认包名与锁文件一致。
+- 安装锁定的维护依赖，生成并检查真实 npm tarball；内容包包含第三方许可，无运行时依赖、Git 元数据、历史工具或 `node_modules`。
+- 使用空缓存离线安装 tarball，核对 README 与全部 11 个技能文件的内容。
+- 在临时项目接入 Claude Code 与 Codex，验证共享副本、Claude Code 链接及 `list` 结果。
+- 验证完整移除命令 `remove yuyin-dev -y`，确认已有规则、Git 忽略配置与项目上下文保留。
 
-未运行公司的 CC/Codex 客户端、macOS、Windows 或公司业务系统；全局安装路径参考上游实现，本次只实测项目安装。测试期间 npm 自带更新通知曾尝试联网，加入 `--no-update-notifier` 后离线复测通过；指南已采用该命令。
+限定 Agent 的移除可能保留其他检测到的 Agent 仍使用的共享目录；完整移除与指定入口移除应分别验收。
 
-本机安装文件可读只证明文件接入。上班请在一个真实项目的新会话确认 Skill 可见，再试只读逻辑、Bug 和小功能。内网用本地路径与 ZIP 内 CLI，不使用首次 npx 下载；CLI 遥测关闭。本次没有配置账号、模型或网关。
+## 验证边界
+
+上述记录覆盖项目安装、分发与迁移。Agent 运行时识别、真实业务任务、Windows 和用户级安装仍需在目标环境验证。
+
+文件可读性证明安装内容可用；技能效果需通过新会话中的显式调用和真实任务验收确认。离线安装使用本地来源与归档内 CLI，关闭安装工具遥测及 npm 更新通知。

@@ -19,7 +19,8 @@
     "docs/development-workflow.md",
     "SOURCES.md",
     "CHANGELOG.md",
-    "VERIFICATION.md"
+    "VERIFICATION.md",
+    "THIRD_PARTY_LICENSES/"
   ],
   "scripts": {
     "skills": "skills",

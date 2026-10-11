@@ -1,8 +1,10 @@
-# 开发分类
+# 开发技能
 
-- shared：前后端都适用的开发方法；目前仅 yuyin-dev。
-- frontend：未来有专用 UI、交互、浏览器验证流程时再新增。
-- backend：未来有专用 API、数据、权限、任务流程时再新增。
-- fullstack：未来有明确跨端业务闭环的专用流程时再新增。
+| 分类 | 内容 | 状态 |
+| --- | --- | --- |
+| `shared` | 前端、后端与全栈共用的开发流程 | 已提供 [`yuyin-dev`](shared/yuyin-dev/SKILL.md) |
+| `frontend` | 界面、交互与浏览器验收 | 预留 |
+| `backend` | API、数据、权限与任务处理 | 预留 |
+| `fullstack` | 跨页面、接口与数据的业务流程 | 预留 |
 
-不要把同一份 Skill 复制三份。一个 Skill 只保留一个源码位置；catalog.json 用标签描述适用范围。当前使用现成 skills CLI，以 --skill 明确选择实际 Skill；catalog 仅用于分类说明，不是分类筛选器。
+每个技能保留一个源码位置，适用领域由 `catalog.json` 标签描述。安装通过 `skills` CLI 显式选择技能；分类索引用于文档说明。
