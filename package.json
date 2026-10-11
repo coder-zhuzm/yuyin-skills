@@ -1,0 +1,35 @@
+{
+  "name": "@coder-zhuzm/yuyin-skills",
+  "version": "0.3.0",
+  "description": "Yuyin development workflow skills for Claude Code and Codex",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coder-zhuzm/yuyin-skills.git"
+  },
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "files": [
+    "skills/development/shared/yuyin-dev/",
+    "rules/",
+    "templates/",
+    "catalog.json",
+    "docs/installation.md",
+    "docs/development-workflow.md",
+    "SOURCES.md",
+    "CHANGELOG.md",
+    "VERIFICATION.md"
+  ],
+  "scripts": {
+    "skills": "skills",
+    "pack:offline": "npm pack --ignore-scripts"
+  },
+  "devDependencies": {
+    "skills": "1.7.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "skills": [
+    {
+      "name": "yuyin-dev",
+      "path": "skills/development/shared/yuyin-dev",
+      "category": "development/shared",
+      "tags": [
+        "frontend",
+        "backend",
+        "fullstack"
+      ],
+      "status": "ready-for-project-trial"
+    }
+  ],
+  "reservedCategories": [
+    "development/frontend",
+    "development/backend",
+    "development/fullstack",
+    "life",
+    "content"
+  ],
+  "note": "Catalog is documentation. Install with the upstream skills CLI and explicit --skill / --agent options. Reserved categories have no installable skill."
+}

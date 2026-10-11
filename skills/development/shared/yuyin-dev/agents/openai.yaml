@@ -1,0 +1,4 @@
+interface:
+  display_name: "余音开发工作流"
+  short_description: "按任务范围处理新功能、故障、逻辑梳理与优化，给出实际验证和交接记录"
+  default_prompt: "使用 $yuyin-dev，按我当前任务选择流程并基于实际代码推进。"
