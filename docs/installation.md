@@ -2,36 +2,52 @@
 
 ## 环境与版本
 
-需要 Node.js、可用的 Claude Code 或 Codex。仓库维护和验证使用 `skills@1.7.2`，该版本需要 Node.js 22.20.0 或更高版本；默认安装命令不固定工具版本，请满足实际使用的 CLI 的环境要求。内容包无运行时依赖，维护与组合辅助命令仅在源码仓库提供。
+需要 Node.js 22.20.0 或更高版本、可用的 Claude Code 或 Codex。npm 命令入口复用运行依赖 `skills@1.7.2`，从本包读取技能内容。维护与组合辅助命令仅在源码仓库提供。
 
 当前提供 9 个技能，精确名称见 [catalog.json](../catalog.json)。旧发行版的内容以对应版本的索引为准。下列命令适用于 macOS/Linux，Windows 尚未验证。
 
 ## 快速安装
 
-在目标项目目录执行，按提示选择技能、开发工具和安装位置：
+在目标项目目录执行：
+
+```bash
+npx @zhuzm/yuyin-skills
+```
+
+默认将全部 9 个技能安装到当前项目，同时接入 Claude Code 和 Codex，无需选择技能或工具。npm 首次下载包时可能询问是否继续。
+
+本包和工具依赖从已配置的 npm 源获取，技能内容及 UI 审查规则随包提供，安装不从 GitHub 拉取。内网 npm 源需能提供 `@zhuzm/yuyin-skills`、`skills` 及其依赖。这个方式需要访问 npm，不是首次完全离线安装。
+
+使用包含命令入口的发行版本。v0.3.0–v0.3.3 的 npm 内容包不含命令入口，使用下文的两步安装。
+
+### 可选参数
+
+- 指定开发工具：增加 `-a claude-code codex`，只用其中一个时只填写对应名称。
+- 指定技能：增加 `-s <技能名...>`，例如 `-s yuyin-dev java-springboot`。
+- 用户级安装：增加 `-g`，默认范围为当前项目。
+- 独立副本：增加 `--copy`，默认 Claude Code 入口链接到共享副本。
+- 查看技能：增加 `--list`，仅读取包内索引，不安装技能。
+- 查看帮助或包版本：增加 `--help` 或 `--version`。
+
+工具版本由本包固定为 `skills@1.7.2`。需要固定技能内容版本时，在包名后增加 `@版本号`，选择包含命令入口的发行版。关闭遥测和技能免交互安装由入口自动处理，不必增加参数。
+
+例如，仅为 Codex 安装通用入口和 Spring 技能：
+
+```bash
+npx @zhuzm/yuyin-skills -a codex -s yuyin-dev java-springboot
+```
+
+入口只支持 Claude Code 和 Codex，拒绝额外来源和未知参数。安装前检查同名内容和目标目录的符号链接；发生冲突时停止，不自动覆盖。安装后检查 CLI 的结构化结果及每个技能的实际资源，失败时返回非零退出码，可能已有部分安装，应先检查目标目录再重试。
+
+### 从 GitHub 安装
+
+可以访问 GitHub 时，也可使用上游 CLI，按提示选择技能、工具和安装位置：
 
 ```bash
 npx skills add coder-zhuzm/yuyin-skills
 ```
 
-来源也可以替换为本地源码根目录或已安装内容包根目录。当前仓库无需 `--full-depth` 就能发现全部技能。
-
-### 可选参数
-
-- 固定工具版本：将 `npx skills` 换成 `npx skills@1.7.2`。工具版本与技能内容版本分别控制。
-- 指定开发工具：增加 `-a claude-code codex`，只用其中一个时只填写对应名称。
-- 指定技能：增加 `-s <技能名...>`，例如 `-s yuyin-dev java-springboot`。
-- 免交互安装：增加 `-y`。不指定 `-s` 时会选择全部 9 个技能；需要限定工具时同时指定 `-a`。
-- 用户级安装：增加 `-g`；默认安装范围为当前项目，交互模式可选择范围。
-- 关闭遥测：在命令前增加 `DISABLE_TELEMETRY=1`。
-
-例如，为 Claude Code 和 Codex 免交互安装全部技能：
-
-```bash
-npx skills add coder-zhuzm/yuyin-skills -a claude-code codex -y
-```
-
-`--all` 同时选择所有技能和所有支持的 Agent，并启用免交互，不能用来仅表示“安装全部技能”。已有同名内容可能被 CLI 更新，更新前应检查来源与手动修改。
+这条命令从 npm 获取 CLI，再从 GitHub 获取仓库；仅能访问 npm 时不能使用它。当前仓库无需 `--full-depth` 就能发现全部技能。上游 CLI 的 `--all` 同时选择所有技能和所有支持的 Agent，并启用免交互，与本包入口的默认行为不同。
 
 GitHub 的 `main` 表示当前源码快照；需要固定发行内容时使用发行 tag URL 或固定版本 npm 包。上游社区的最新变化只在本仓库同步后进入该来源。
 
@@ -52,16 +68,16 @@ npm run profiles -- add --profile core,react,spring \
 
 ## npm 内容包
 
-将已发布内容包安装到独立位置，然后在目标项目使用 `skills` CLI 接入。以下内容版本号与当前包元数据一致，发布准备时自动更新：
+### 旧内容包的两步安装
+
+v0.3.0–v0.3.3 的 npm 内容包没有命令入口。在目标项目目录执行以下两步也可避开 GitHub；新版仍可使用此方式。以下内容版本号与当前包元数据一致，发布准备时自动更新：
 
 ```bash
-npm install --prefix "$HOME/.local/share/yuyin-skills-package" \
-  @zhuzm/yuyin-skills@0.3.3 --ignore-scripts --no-audit --no-fund
-
-npx skills add "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyin-skills"
+npm install --prefix ~/.local/share/yuyin-skills @zhuzm/yuyin-skills@0.3.3
+npx skills add ~/.local/share/yuyin-skills/node_modules/@zhuzm/yuyin-skills
 ```
 
-精确技能组合见包内 `catalog.json`。源码辅助命令、维护脚本和维护依赖不随内容包分发；使用本地 CLI 或已准备的离线工具。
+第一步从 npm 下载内容包；第二步由上游 CLI 读取本地包，按提示接入。已有同名内容可能被上游 CLI 更新，应先检查手动修改。精确技能组合见包内 `catalog.json`。源码辅助命令和维护脚本不随 npm 包分发。
 
 ## 离线安装
 
@@ -71,17 +87,17 @@ npx skills add "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyi
 
 ```bash
 PACK="/path/to/yuyin-skills-v0.3.3"
-DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" add "$PACK"
-DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" list -a claude-code codex
+node "$PACK/bin/yuyin-skills.mjs"
+node "$PACK/bin/yuyin-skills.mjs" --list
 ```
 
-首次离线安装使用归档内 CLI，避免 `npx` 尝试下载。技能内容、UI 审查规则和许可随包保存；模型访问、Python Playwright 与业务第三方仍由目标环境提供。
+首次离线安装使用归档内入口和已准备的运行依赖，避免 `npx` 尝试下载。旧归档没有新入口时，使用 `DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" add "$PACK"`。技能内容、UI 审查规则和许可随包保存；模型访问、Python Playwright 与业务第三方仍由目标环境提供。
 
 ## 更新、回退与移除
 
 默认 CLI 将内容复制到 `.agents/skills/<name>`，Claude Code 入口链接到共享副本；`--copy` 使用独立副本。实际目录以 CLI 输出为准。安装副本与来源独立，源码更新或 npm 包升级不会自动改变目标项目。
 
-更新前检查来源和手动修改。确认后以同一来源和明确技能名单重新 `skills add`；组合辅助命令故意拒绝已有同名安装。回退使用保留的旧版本快照重新接入，并开启新会话。不要用直接更新社区来源的方式绕过本包锁定版本，否则该项目将使用另一套版本。
+更新前检查来源和手动修改。npm 命令入口和组合辅助命令都拒绝已有同名安装。需要更新或回退时，先按两步安装方式取得目标版本的本地内容包，再以明确技能名单运行 `skills add`，最后开启新会话；上游 CLI 可能覆盖已有同名内容。不要用直接更新社区来源的方式绕过本包锁定版本，否则该项目将使用另一套版本。
 
 完整移除指定技能，示例：
 

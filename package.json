@@ -10,7 +10,11 @@
   "engines": {
     "node": ">=22.20.0"
   },
+  "bin": {
+    "yuyin-skills": "bin/yuyin-skills.mjs"
+  },
   "files": [
+    "bin/yuyin-skills.mjs",
     "skills/development/shared/yuyin-dev/",
     "rules/",
     "templates/",
@@ -35,8 +39,10 @@
     "upstream:check": "node scripts/upstream.mjs check",
     "profiles": "node scripts/profiles.mjs"
   },
+  "dependencies": {
+    "skills": "1.7.2"
+  },
   "devDependencies": {
-    "skills": "1.7.2",
     "yaml": "2.9.1"
   },
   "publishConfig": {

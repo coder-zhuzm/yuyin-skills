@@ -61,10 +61,8 @@ function skillFiles(dir, prefix = '') {
 export function validatePackageContents(manifest, pkg, root) {
   assert.equal(manifest.name, pkg.name);
   assert.equal(manifest.version, pkg.version);
-  assert.ok(
-    !pkg.dependencies || Object.keys(pkg.dependencies).length === 0,
-    'Content package must have no runtime dependencies.',
-  );
+  assert.deepEqual(pkg.dependencies, { skills: '1.7.2' }, 'Only the pinned skills installer may be a runtime dependency.');
+  assert.deepEqual(pkg.bin, { 'yuyin-skills': 'bin/yuyin-skills.mjs' }, 'Unexpected npm command entry.');
   const files = new Set(manifest.files.map((file) => file.path));
   for (const file of files) {
     assert.ok(!/^(?:scripts|tests)\//.test(file), `Unexpected internal maintenance file: ${file}`);
@@ -82,11 +80,14 @@ export function validatePackageContents(manifest, pkg, root) {
   }
   for (const file of [
     'README.md',
+    'bin/yuyin-skills.mjs',
     'docs/installation.md',
     'docs/development-workflow.md',
     'THIRD_PARTY_LICENSES/VercelSkills-LICENSE.txt',
   ])
     assert.ok(files.has(file), `Missing distribution file: ${file}`);
+  assert.ok(readFileSync(join(root, pkg.bin['yuyin-skills']), 'utf8').startsWith('#!/usr/bin/env node\n'), 'npm entry must have a Node.js shebang');
+  assert.ok(lstatSync(join(root, pkg.bin['yuyin-skills'])).mode & 0o111, 'npm entry must be executable');
   const upstream = verifyUpstreams(root);
   const catalog = loadCatalog(root);
   resolveProfiles(catalog, Object.keys(catalog.profiles));
@@ -149,6 +150,8 @@ export function verify(root = process.cwd()) {
   assert.equal(lock.packages[''].name, pkg.name);
   assert.equal(lock.packages[''].version, pkg.version);
   assert.deepEqual(lock.packages[''].devDependencies, pkg.devDependencies);
+  assert.deepEqual(lock.packages[''].dependencies, pkg.dependencies);
+  assert.deepEqual(lock.packages[''].bin, pkg.bin);
   const files = [
     ...new Set(
       run('git', ['ls-files', '--cached', '--others', '--exclude-standard', '--', '*.md'], root)

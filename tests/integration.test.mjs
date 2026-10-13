@@ -121,6 +121,7 @@ test('verification rejects broken local links and private files in the public pa
     assert.throws(() => validateMarkdown(doc, scratch), /missing anchor/);
     writeFileSync(doc, '# Install\n\n[Outside](../private.md)\n');
     assert.throws(() => validateMarkdown(doc, scratch), /escapes repository/);
-    assert.throws(() => validatePackageContents({ name: '@zhuzm/yuyin-skills', version: '0.3.0', files: [{ path: '.npmrc' }] }, { name: '@zhuzm/yuyin-skills', version: '0.3.0', files: ['.npmrc'] }, scratch), /credential file/);
+    const pkg = JSON.parse(readFileSync(join(project, 'package.json'), 'utf8'));
+    assert.throws(() => validatePackageContents({ name: pkg.name, version: pkg.version, files: [{ path: '.npmrc' }] }, { ...pkg, files: ['.npmrc'] }, scratch), /credential file/);
   } finally { rmSync(scratch, { recursive: true, force: true }); }
 });

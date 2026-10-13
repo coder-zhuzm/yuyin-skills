@@ -185,7 +185,7 @@ for (const copy of [false, true])
       );
     }));
 
-test('the real content archive installs with an empty offline npm cache and connects all skills locally', () =>
+test('the real npm archive fetches its tool from npm and its single npx entry installs locally with network blocked', () =>
   temporary((scratch) => {
     const npm = (args) => {
       const result = spawnSync('npm', args, { cwd: root, encoding: 'utf8', timeout: 120_000 });
@@ -204,6 +204,13 @@ test('the real content archive installs with an empty offline npm cache and conn
         '--no-update-notifier',
       ]),
     );
+    const cache = join(scratch, 'npm-cache');
+    // Prepare npm-only downloads, then verify npm installation and npx execution offline.
+    npm([
+      'install', '--prefix', join(scratch, 'prepared'), join(scratch, archive.filename),
+      '--registry', 'https://registry.npmjs.org/', '--userconfig', '/dev/null',
+      '--cache', cache, '--ignore-scripts', '--no-audit', '--no-fund', '--no-update-notifier',
+    ]);
     const consumer = join(scratch, 'consumer');
     npm([
       'install',
@@ -218,30 +225,30 @@ test('the real content archive installs with an empty offline npm cache and conn
       '--userconfig',
       '/dev/null',
       '--cache',
-      join(scratch, 'empty-cache'),
+      cache,
     ]);
     const source = join(consumer, 'node_modules/@zhuzm/yuyin-skills');
     for (const file of archive.files)
       assert.deepEqual(readFileSync(join(source, file.path)), readFileSync(join(root, file.path)), file.path);
     const pkg = JSON.parse(readFileSync(join(source, 'package.json'), 'utf8'));
-    assert.deepEqual(Object.keys(pkg.dependencies ?? {}), []);
+    assert.deepEqual(pkg.dependencies, { skills: '1.7.2' });
+    assert.equal(JSON.parse(readFileSync(join(consumer, 'node_modules/skills/package.json'), 'utf8')).version, '1.7.2');
+    // Check the exact public command's bin inference using the installed new archive.
+    const listed = spawnSync('npx', ['--offline', '--yes', '--cache', cache, '--userconfig', '/dev/null', '@zhuzm/yuyin-skills', '--list'], {
+      cwd: consumer, encoding: 'utf8', timeout: 120_000,
+      env: { ...process.env, NODE_OPTIONS: offlineGuard(scratch) },
+    });
+    assert.equal(listed.status, 0, listed.stderr || listed.stdout);
+    assert.match(listed.stdout, /vercel-react-best-practices/);
     const target = join(scratch, 'project');
     mkdirSync(target);
     const catalog = loadCatalog(source),
       selected = resolveProfiles(catalog, Object.keys(catalog.profiles));
     const result = spawnSync(
-      process.execPath,
+      'npx',
       [
-        join(root, 'node_modules/skills/bin/cli.mjs'),
-        'add',
-        source,
-        '--full-depth',
-        '-s',
-        ...selected.map((skill) => skill.name),
-        '-a',
-        'codex',
-        'claude-code',
-        '-y',
+        '--offline', '--yes', '--cache', cache, '--userconfig', '/dev/null',
+        '--package', join(scratch, archive.filename), '--', 'yuyin-skills',
       ],
       {
         cwd: target,
@@ -256,5 +263,6 @@ test('the real content archive installs with an empty offline npm cache and conn
       },
     );
     assert.equal(result.status, 0, result.stderr || result.stdout);
+    assert.match(result.stdout, /Installed 9 skills/);
     verifyInstallation(selected, { target, agents: ['codex', 'claude-code'] }, source);
   }));

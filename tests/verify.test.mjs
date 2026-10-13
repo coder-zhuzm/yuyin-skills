@@ -61,3 +61,10 @@ test('a broad package directory never grants permission to distribute unmanaged 
     /Unmanaged|internal|File outside/,
   );
 });
+test('npm entry and pinned runtime dependency are mandatory and cannot widen the package boundary', () => {
+  const { pkg, manifest } = distribution();
+  assert.throws(() => validatePackageContents(manifest, { ...pkg, dependencies: { skills: 'latest' } }, root), /pinned skills/);
+  assert.throws(() => validatePackageContents(manifest, { ...pkg, dependencies: { ...pkg.dependencies, extra: '1.0.0' } }, root), /runtime dependency/);
+  assert.throws(() => validatePackageContents(manifest, { ...pkg, bin: { install: 'scripts/release.mjs' } }, root), /command entry/);
+  assert.throws(() => validatePackageContents({ ...manifest, files: manifest.files.filter(file => file.path !== pkg.bin['yuyin-skills']) }, pkg, root), /Missing distribution file/);
+});

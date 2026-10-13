@@ -6,15 +6,17 @@
 
 ## 快速开始
 
-准备好 Node.js 和 Claude Code 或 Codex，在目标项目目录执行：
+准备好 Node.js **22.20.0 或更高版本**和 Claude Code 或 Codex，在目标项目目录执行：
 
 ```bash
-npx skills add coder-zhuzm/yuyin-skills
+npx @zhuzm/yuyin-skills
 ```
 
-按提示选择技能、Claude Code / Codex，以及安装到当前项目还是用户级目录。当前提供 9 个技能，可按需选择。
+默认将全部 **9 个技能**安装到当前项目，并接入 **Claude Code 和 Codex**。工具及技能内容通过 npm 获取，安装读取包内快照，不需要访问 GitHub。已有同名技能时停止，避免覆盖手动修改。
 
-仓库维护和验证使用 Vercel [`skills`](https://github.com/vercel-labs/skills) **1.7.2**（需要 Node.js **22.20.0 或更高版本**）。需要固定工具版本时，将命令中的 `skills` 换成 `skills@1.7.2`。指定工具、免交互、关闭遥测及其他安装方式见[安装指南](docs/installation.md)。
+只安装到 Codex 时增加 `-a codex`，用户级安装增加 `-g`，查看技能增加 `--list`。入口复用固定版本的 Vercel [`skills`](https://github.com/vercel-labs/skills) **1.7.2**，自动关闭遥测。内网 npm 源需能提供本包和工具依赖。
+
+新入口需使用包含该功能的发行版本；v0.3.0–v0.3.3 的 npm 内容包采用[两步安装方式](docs/installation.md#旧内容包的两步安装)。指定技能、固定内容版本及其他安装方式也见[安装指南](docs/installation.md)。
 
 ### 调用
 
@@ -42,7 +44,7 @@ $yuyin-dev 分析 Node 服务的超时原因，先不修改。
 
 ## 内容与版本
 
-内容包名称为 **`@zhuzm/yuyin-skills`**，版本 **`0.3.3`**。源码版本字段由发布准备更新；实际发行内容以对应 tag 和 npm 包为准。包无运行时依赖，包含选定技能、资源、许可与上游锁定记录；Agent 接入仍由 `skills` CLI 完成。
+包名称为 **`@zhuzm/yuyin-skills`**，版本 **`0.3.3`**。源码版本字段由发布准备更新；实际发行内容以对应 tag 和 npm 包为准。包包含选定技能、资源、许可、上游锁定记录和 npm 命令入口；运行依赖为 `skills@1.7.2`，Agent 接入由它完成。
 
 新版本准备时获取白名单上游的最新内容，验证后锁定提交和逐文件摘要。同一版本的安装与发布重试使用原快照。已安装项目只在显式更新时采用新内容。
 
@@ -55,6 +57,7 @@ upstream/sources.json                 来源、适用技能与审查范围
 upstream/lock.json                    提交、文件摘要与适配记录
 catalog.json                         技能索引与安装组合
 scripts/                             同步、组合安装、验证和发布
+bin/yuyin-skills.mjs                 npm 安装入口
 rules/、templates/                   按项目需要手动采用
 ```
 
