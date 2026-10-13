@@ -1,5 +1,9 @@
 # 变更记录
 
+## 0.3.4
+
+- feat: install packaged skills with a single npm command (1d618ee)
+
 ## 0.3.3
 
 - Simplify installation docs (a3c9ac6)

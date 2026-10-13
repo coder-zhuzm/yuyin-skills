@@ -73,7 +73,7 @@ npm run profiles -- add --profile core,react,spring \
 v0.3.0–v0.3.3 的 npm 内容包没有命令入口。在目标项目目录执行以下两步也可避开 GitHub；新版仍可使用此方式。以下内容版本号与当前包元数据一致，发布准备时自动更新：
 
 ```bash
-npm install --prefix ~/.local/share/yuyin-skills @zhuzm/yuyin-skills@0.3.3
+npm install --prefix ~/.local/share/yuyin-skills @zhuzm/yuyin-skills@0.3.4
 npx skills add ~/.local/share/yuyin-skills/node_modules/@zhuzm/yuyin-skills
 ```
 
@@ -81,12 +81,12 @@ npx skills add ~/.local/share/yuyin-skills/node_modules/@zhuzm/yuyin-skills
 
 ## 离线安装
 
-离线归档包含源码、真实内容 tgz、已准备的 `skills` CLI 及锁定维护依赖，保留各包自带许可。归档由维护者生成，名称可用 `yuyin-skills-v0.3.3-offline.zip`；自动 GitHub Release 默认附内容 tgz，不自动提供含工具的离线 ZIP。
+离线归档包含源码、真实内容 tgz、已准备的 `skills` CLI 及锁定维护依赖，保留各包自带许可。归档由维护者生成，名称可用 `yuyin-skills-v0.3.4-offline.zip`；自动 GitHub Release 默认附内容 tgz，不自动提供含工具的离线 ZIP。
 
 在目标项目目录执行，将来源替换为实际稳定路径：
 
 ```bash
-PACK="/path/to/yuyin-skills-v0.3.3"
+PACK="/path/to/yuyin-skills-v0.3.4"
 node "$PACK/bin/yuyin-skills.mjs"
 node "$PACK/bin/yuyin-skills.mjs" --list
 ```
