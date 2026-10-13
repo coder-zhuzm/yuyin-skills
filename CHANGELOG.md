@@ -1,5 +1,10 @@
 # 变更记录
 
+## 0.3.2
+
+- chore: refresh curated upstream skill snapshots [skip ci] (3e9180f)
+- feat: curate reusable development skills and enable manual patch releases (6ab59d1)
+
 ## Unreleased
 
 - 手动发版留空版本自动分配新补丁版本；保留自动发布的变化检查和失败候选恢复，并明确 Actions 发布摘要。
