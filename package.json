@@ -1,7 +1,7 @@
 {
   "name": "@zhuzm/yuyin-skills",
   "version": "0.3.1",
-  "description": "Yuyin development workflow skills for Claude Code and Codex",
+  "description": "Curated React, Spring and Node development skills with reproducible upstream snapshots",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
@@ -20,13 +20,20 @@
     "SOURCES.md",
     "CHANGELOG.md",
     "VERIFICATION.md",
-    "THIRD_PARTY_LICENSES/"
+    "THIRD_PARTY_LICENSES/",
+    "skills/upstream/",
+    "upstream/sources.json",
+    "upstream/lock.json"
   ],
   "scripts": {
     "skills": "skills",
     "pack:offline": "npm pack --ignore-scripts",
     "test": "node --test tests/*.test.mjs",
-    "verify": "node scripts/verify.mjs"
+    "verify": "node scripts/verify.mjs",
+    "upstream:update": "node scripts/upstream.mjs update",
+    "upstream:restore": "node scripts/upstream.mjs restore",
+    "upstream:check": "node scripts/upstream.mjs check",
+    "profiles": "node scripts/profiles.mjs"
   },
   "devDependencies": {
     "skills": "1.7.2",

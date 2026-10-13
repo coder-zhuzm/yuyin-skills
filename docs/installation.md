@@ -1,175 +1,121 @@
 # 安装与分发指南
 
-## 环境与工具
+## 环境与版本
 
-- Node.js 22.20.0 或更高版本。
-- 已配置可用的 Claude Code 或 Codex，以及所需模型访问。
-- Vercel `skills` CLI 1.7.2，使用标准 `SKILL.md` 发现与安装技能。
+需要 Node.js 22.20.0 或更高版本、可用的 Claude Code 或 Codex。安装工具固定为 `skills@1.7.2`，内容包无运行时依赖。维护与组合辅助命令仅在源码仓库提供。
 
-以下命令适用于 macOS/Linux。`DISABLE_TELEMETRY=1` 关闭安装工具遥测。Windows 安装方式尚未验证。
+已发布旧版本可能只包含 `yuyin-dev`；使用前以对应版本的 `catalog.json` 为准。尚未发布的改造通过本地源码试用。下列命令适用于 macOS/Linux，Windows 尚未验证。
 
-## 在线安装
+## 从源码选择组合
 
-### GitHub 来源
-
-在目标项目目录执行：
+在本仓库准备维护工具，列出组合，再为已存在的目标项目安装：
 
 ```bash
-DISABLE_TELEMETRY=1 npx skills@1.7.2 add coder-zhuzm/yuyin-skills \
-  -s yuyin-dev -a claude-code -a codex -y
+npm ci --ignore-scripts --no-audit --no-fund
+npm run profiles -- list
+npm run profiles -- add --profile core,react,spring \
+  --target /path/to/project --agent codex,claude-code
 ```
 
-### 本地源码
+`core`、`react`、`spring`、`node`、`web-test` 可以叠加，技能名称去重。`--copy` 选择独立副本。辅助命令不会安装缺失工具，遇到现存同名技能或指向其他位置的目标入口停止，避免误覆盖。
 
-克隆仓库后，在目标项目目录执行，将路径替换为实际来源目录：
+默认 `core + react + spring` 适合主力开发；Node 与 Python Playwright 测试按需使用。安装内容不等于安装运行依赖，Python、浏览器及测试工具由项目环境提供。
+
+## 使用上游 CLI
+
+在目标项目目录执行。来源可以是仓库、本地源码根目录或已安装内容包根目录：
 
 ```bash
-DISABLE_TELEMETRY=1 npx skills@1.7.2 add /path/to/yuyin-skills/skills/development/shared \
-  -s yuyin-dev -a claude-code -a codex -y
+DISABLE_TELEMETRY=1 npx skills@1.7.2 add coder-zhuzm/yuyin-skills --full-depth \
+  -s yuyin-dev vercel-react-best-practices vercel-composition-patterns \
+     frontend-design web-design-guidelines java-springboot \
+  -a claude-code codex -y
 ```
 
-### npm 内容包
+只使用一个 Agent 时保留对应名称。默认项目级安装，用户级安装增加 `-g`。`--full-depth` 确保发现所有嵌套技能；不用 `--all`，避免把不适用能力全部装入项目。
 
-将内容包安装到独立目录，再通过 `skills` CLI 接入目标项目：
+GitHub 的 `main` 表示当前源码快照；需要固定发行内容时使用已验证的发行 tag URL 或固定版本 npm 包。上游社区的最新变化只在本仓库同步后进入该来源。
+
+## npm 内容包
+
+将已发布内容包安装到独立位置，然后在目标项目使用 `skills` CLI 接入。以下版本号是当前包元数据，正式准备发布时自动更新：
 
 ```bash
 npm install --prefix "$HOME/.local/share/yuyin-skills-package" \
   @zhuzm/yuyin-skills@0.3.1 --ignore-scripts --no-audit --no-fund
 
 DISABLE_TELEMETRY=1 npx skills@1.7.2 add \
-  "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyin-skills/skills/development/shared" \
-  -s yuyin-dev -a claude-code -a codex -y
+  "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyin-skills" --full-depth \
+  -s yuyin-dev vercel-react-best-practices vercel-composition-patterns \
+     frontend-design web-design-guidelines java-springboot \
+  -a claude-code codex -y
 ```
 
-npm 负责内容分发，`skills` CLI 负责 Agent 接入。内容包无运行时依赖。
-
-默认安装到当前项目。仅使用 Claude Code 时保留 `-a claude-code`，仅使用 Codex 时保留 `-a codex`；用户级安装添加 `-g`。需要独立副本时添加 `--copy`。
+精确技能组合见包内 `catalog.json`。源码辅助命令、维护脚本和维护依赖不随内容包分发；使用本地 CLI 或已准备的离线工具。
 
 ## 离线安装
 
-离线归档由维护者按本文打包流程生成，可命名为 `yuyin-skills-v0.3.1-offline.zip`。归档包含源码、内容 tgz、已安装的 `skills` CLI、锁定依赖及许可证。
+离线归档包含源码、真实内容 tgz、已准备的 `skills` CLI 及锁定维护依赖，保留各包自带许可。归档由维护者生成，名称可用 `yuyin-skills-v0.3.1-offline.zip`；自动 GitHub Release 默认附内容 tgz，不自动提供含工具的离线 ZIP。
 
-解压后将来源目录放在稳定位置。在目标项目目录执行：
+在目标项目目录执行，将来源替换为实际稳定路径：
 
 ```bash
 PACK="/path/to/yuyin-skills-v0.3.1"
-node --version
-DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" \
-  add "$PACK/skills/development/shared" -s yuyin-dev -a claude-code -a codex -y
-DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" \
-  list -a claude-code -a codex
+DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" add "$PACK" --full-depth \
+  -s yuyin-dev vercel-react-best-practices vercel-composition-patterns \
+     frontend-design web-design-guidelines java-springboot \
+  -a claude-code codex -y
+DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" list -a claude-code codex
 ```
 
-首次离线安装使用归档内的 CLI，避免 `npx` 尝试下载安装工具。环境中已有 `skills@1.7.2` 时可复用现有安装。
-
-也可先安装归档中的 npm 内容包，再接入 Agent：
-
-```bash
-npm install --prefix "$HOME/.local/share/yuyin-skills-package" \
-  "$PACK/zhuzm-yuyin-skills-0.3.1.tgz" \
-  --offline --no-update-notifier --ignore-scripts --no-audit --no-fund
-
-DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" add \
-  "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyin-skills/skills/development/shared" \
-  -s yuyin-dev -a claude-code -a codex -y
-```
-
-离线归档提供技能与安装工具；模型、网关和代理仍由目标环境配置。
+首次离线安装使用归档内 CLI，避免 `npx` 尝试下载。技能内容、UI 审查规则和许可随包保存；模型访问、Python Playwright 与业务第三方仍由目标环境提供。
 
 ## 更新、回退与移除
 
-项目安装时，CLI 将源码复制到 `.agents/skills/yuyin-dev`，Claude Code 的 `.claude/skills/yuyin-dev` 链接到该副本，Codex 读取标准目录。实际路径以 CLI 输出和 `list` 结果为准。
+默认 CLI 将内容复制到 `.agents/skills/<name>`，Claude Code 入口链接到共享副本；`--copy` 使用独立副本。实际目录以 CLI 输出为准。安装副本与来源独立，源码更新或 npm 包升级不会自动改变目标项目。
 
-安装副本与来源目录独立。修改源码或升级 npm 内容包后，在每个目标项目重新执行 `add`，并开启新 Agent 会话。同名安装副本可能被覆盖，个人修改应保存在独立来源目录。
+更新前检查来源和手动修改。确认后以同一来源和明确技能名单重新 `skills add`；组合辅助命令故意拒绝已有同名安装。回退使用保留的旧版本快照重新接入，并开启新会话。不要用直接更新社区来源的方式绕过本包锁定版本，否则该项目将使用另一套版本。
 
-版本回退使用保留的旧源码快照重新执行 `add`。离线安装需明确指定本地来源；`skills check/update` 适用于可访问的上游来源。
-
-完整移除当前项目中 `yuyin-dev` 的安装入口：
+完整移除指定技能，示例：
 
 ```bash
-DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" \
-  remove yuyin-dev -y
+DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" remove yuyin-dev -y
 ```
 
-如只移除指定 Agent 的入口，可添加 `-a claude-code` 或 `-a codex`；其他 Agent 仍使用的共享目录可能保留。移除用户级安装时添加 `-g`。执行覆盖或移除前，应备份安装副本中的手动修改；`-y` 仅用于跳过交互确认。
+移除特定 Agent 可增加 `-a codex` 或 `-a claude-code`，用户级增加 `-g`；共享目录可能因其他 Agent 仍使用而保留。CLI 不修改已有 `AGENTS.md`、`CLAUDE.md` 或项目事实。项目上下文模板与规则只在明确需要时手动采用。
 
-## 项目上下文与验收
+## 维护上游快照
 
-CLI 仅安装技能，保留现有 `CLAUDE.md`、`AGENTS.md`、`.gitignore` 和项目事实。项目上下文模板按需要手动采用：
-
-| 模板 | 用途 |
-| --- | --- |
-| `templates/project.md` | 项目入口、技术栈、启动与检查命令 |
-| `templates/constraints.md` | 业务边界与实施约束 |
-| `templates/glossary.md` | 领域术语与统一定义 |
-| `templates/task.md` | 复杂或跨会话任务状态 |
-
-可将模板放入目标项目的 `.ai-dev/`，填写实际信息，并在现有规则入口中引用。规则参考见 `rules/team-rules.md`；副本、链接和项目记录的 Git 跟踪策略由目标项目维护。
-
-安装后开启新会话，先验证只读逻辑梳理：
-
-```text
-Claude Code: /yuyin-dev 逻辑 梳理项目主流程，列出入口、调用链和重要分支，先不修改代码。
-Codex: $yuyin-dev 逻辑 梳理项目主流程，先不修改代码。
-```
-
-随后使用真实 Bug 和小功能验证改动范围、回归结果与证据完整性。文件安装检查与 Agent 运行时验证应分别记录。
-
-## 旧版迁移
-
-v0.1/v0.2 使用自制安装器。迁移前备份目标项目中的手动修改，再使用已安装的旧版工具解除接入：
+在源码仓库使用：
 
 ```bash
-# v0.2
-yuyin-dev detach --project "/path/to/project"
-
-# v0.1
-python3 tools/devpack.py detach --project "/path/to/project"
-```
-
-随后在目标项目执行新的 `skills add`。旧工具与新 CLI 应分别完成移除和安装，避免同时管理同名入口。若旧元数据或链接已被修改，应先检查状态与实际路径，再处理迁移。
-
-历史工具说明见 `docs/history/`。
-
-## 维护与发布
-
-通用开发技能的源码为 `skills/development/shared/yuyin-dev/`。新增技能使用对应分类目录，并更新 `catalog.json` 及 npm 包内容清单。CLI 升级应单独审阅版本变化并更新锁文件。
-
-在仓库目录安装维护工具并检查包内容：
-
-```bash
-npm ci --ignore-scripts --no-audit --no-fund
-npm pack --ignore-scripts
-npm publish --dry-run --ignore-scripts
-```
-
-离线归档包含完整源码、生成的 tgz，以及 `npm ci` 产生的 `node_modules`。保留 `THIRD_PARTY_LICENSES/` 和各依赖自带的许可文件。Git 不跟踪归档文件与 `node_modules`。
-
-正式 npm 发布需使用有 `@zhuzm` scope 权限的账号，核对版本与内容清单：
-
-```bash
-npm whoami --registry https://registry.npmjs.org/
-npm publish --access public --registry https://registry.npmjs.org/ --ignore-scripts
-npm view @zhuzm/yuyin-skills@0.3.1 version --registry https://registry.npmjs.org/
-```
-
-登录、双因素认证与发布审批通过 npm 官方流程完成。发布后安装实际发布包验证内容。团队内部分发可使用现有私有 registry。
-
-## 自动发版
-
-`main` 分支收到更新后，GitHub Actions 检查实际分发内容。技能、规则、模板及包内文档发生变化时，自动递增补丁版本、同步安装示例并发布到 npm；预留分类和历史文档的独立修改跳过发布。版本更新提交由仓库的临时 `GITHUB_TOKEN` 写入，不会递归触发发版。
-
-工作流为 `.github/workflows/publish.yml`。npm Trusted Publisher 绑定 GitHub 用户 `coder-zhuzm`、仓库 `yuyin-skills` 和工作流文件 `publish.yml`，并允许直接 `npm publish`。发布使用 OIDC 临时身份，无需配置长期 npm token。
-
-发布任务串行运行，检查失败时停止。候选版本、来源提交及归档摘要保存在 `.github/release-state.json`；失败后重跑同一工作流会恢复该候选版本，已公开的版本会核对内容后补齐标签和 GitHub Release。如果恢复期间已有新的分发内容提交，任务会在完成原候选版本后继续发布这些更新。标签和已有 npm 版本不会被覆盖。
-
-发布成功后验证公开 registry、归档摘要和实际安装内容，再创建 GitHub Release 并附上内容 tgz。较大版本更新可在 Actions 的 **Run workflow** 中填写稳定版本，例如 `0.4.0`；输入必须高于已发布版本，且需先完成已有候选版本。
-
-本地维护检查：
-
-```bash
+npm run upstream:update
+npm run upstream:check
+npm run upstream:restore
 npm test
 npm run verify
 ```
 
-自动发布仅更新分发来源。目标项目采用新版本时，仍需重新执行 `skills add` 并开启新会话。
+- `update`：读取 `upstream/sources.json` 白名单，解析最新提交，先构造并验证整批内容，再替换快照与锁文件。本地手动修改被拒绝覆盖。
+- `check`：仅用本地文件核对来源清单、技能集合、逐文件摘要和已审阅代码，无需联网。
+- `restore`：按 `upstream/lock.json` 的完整提交重建，需要可访问来源；不是离线下载命令。已修改的快照不会被强行覆盖。
+
+锁文件记录来源提交、资源摘要、文件模式与适配差异。上游脚本的路径和具体内容摘要均需在白名单中审阅，新脚本或已审阅脚本变化会停止同步。独立许可文件用已审阅全文摘要核对；README 中的许可声明单独核对章节，许可变化同样停止。同步过程不执行上游代码。
+
+业务偏好与项目适配写在自有入口或项目记录，避免手改快照。修改来源清单、脚本白名单或补丁后必须重新 `update`、查看 diff 并验证。
+
+## 自动发布
+
+`main` 的分发内容更新或手动运行发布工作流会进入发布准备。新准备先同步白名单的最新上游、执行验证，将新快照保存为可追溯提交，再沿用现有候选版本、npm OIDC 发布、摘要核对和 GitHub Release 流程。
+
+手动运行选择 `main`，`version` 留空即可自动发布下一个补丁版本，即使分发内容没有变化，也不必手动修改 `package.json`。填写版本时必须高于已发布版本；源码已经设置更高稳定版本时沿用该版本。自动 push 在没有分发内容变化时跳过发布。
+
+未公开候选的恢复只使用原提交归档，不重新获取最新上游。完成恢复后，后续新候选才同步上游。上游无法获取、补丁不再适用、许可或代码审查约束不满足时停止；不会静默用旧内容声称已更新。
+
+手动触发也优先恢复未公开候选；恢复后的第二次检查使用 `prepare --if-changed`，只在后续内容有变化时再发布，避免同一次恢复额外分配空版本。Actions 摘要分别显示跳过原因、准备/恢复的候选版本、校验后的实际发布结果，以及执行失败时的未完成提示。准备候选不代表发布成功。
+
+工作流在 `.github/workflows/publish.yml`。自动同步不创建定时任务；上游独立变化可在需要发版时手动运行工作流发现。目标项目仍需显式接入新版本。
+
+## 旧版迁移
+
+v0.1/v0.2 使用自制安装器。先备份目标项目中的手动修改，使用旧工具解除接入，再执行新的 `skills add`，避免两个安装器管理同名入口。历史命令见 [v0.2 说明](history/v0.2-npm-guide.md)与 [v0.1 说明](history/v0.1-development-workflow.md)。

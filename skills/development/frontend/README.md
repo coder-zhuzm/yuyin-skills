@@ -1,5 +1,3 @@
-# 前端技能
+# 前端开发
 
-预留分类，尚无可安装的专用技能。规划方向包括界面实现、交互、可访问性与浏览器验收。
-
-通用开发任务使用 [`yuyin-dev`](../shared/yuyin-dev/SKILL.md)。
+React 专业技能使用 skills/upstream 中的社区快照；组合名称为 react，精确路径见根目录 catalog.json。

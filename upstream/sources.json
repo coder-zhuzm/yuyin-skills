@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "vercel",
+      "repository": "vercel-labs/agent-skills",
+      "ref": "main",
+      "license": {
+        "spdx": "MIT",
+        "files": [
+          "README.md"
+        ],
+        "kind": "upstream-readme-declaration",
+        "declaration": {
+          "path": "README.md",
+          "heading": "## License",
+          "sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7"
+        }
+      },
+      "skills": [
+        {
+          "id": "react-best-practices",
+          "path": "skills/react-best-practices",
+          "name": "vercel-react-best-practices",
+          "reviewedScripts": [],
+          "licenseCopies": [
+            {
+              "path": "README.md",
+              "destination": "LICENSE-UPSTREAM.md"
+            }
+          ]
+        },
+        {
+          "id": "composition-patterns",
+          "path": "skills/composition-patterns",
+          "name": "vercel-composition-patterns",
+          "reviewedScripts": [],
+          "licenseCopies": [
+            {
+              "path": "README.md",
+              "destination": "LICENSE-UPSTREAM.md"
+            }
+          ]
+        },
+        {
+          "id": "web-design-guidelines",
+          "path": "skills/web-design-guidelines",
+          "name": "web-design-guidelines",
+          "reviewedScripts": [],
+          "licenseCopies": [
+            {
+              "path": "README.md",
+              "destination": "LICENSE-UPSTREAM.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "anthropic",
+      "repository": "anthropics/skills",
+      "ref": "main",
+      "license": {
+        "spdx": "Apache-2.0",
+        "files": [
+          "skills/frontend-design/LICENSE.txt",
+          "skills/webapp-testing/LICENSE.txt"
+        ],
+        "reviewedFiles": {
+          "skills/frontend-design/LICENSE.txt": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "skills/webapp-testing/LICENSE.txt": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362"
+        }
+      },
+      "skills": [
+        {
+          "id": "frontend-design",
+          "path": "skills/frontend-design",
+          "name": "frontend-design",
+          "reviewedScripts": [],
+          "licenseFiles": [
+            "skills/frontend-design/LICENSE.txt"
+          ]
+        },
+        {
+          "id": "webapp-testing",
+          "path": "skills/webapp-testing",
+          "name": "webapp-testing",
+          "reviewedScripts": [
+            "scripts/with_server.py",
+            "examples/console_logging.py",
+            "examples/element_discovery.py",
+            "examples/static_html_automation.py"
+          ],
+          "licenseFiles": [
+            "skills/webapp-testing/LICENSE.txt"
+          ],
+          "reviewedScriptHashes": {
+            "scripts/with_server.py": "b0dcf4918935b795f4eda9821579b9902119235ff4447f687a30286e7d0925fd",
+            "examples/console_logging.py": "ea46877289acb82da7e7ce59d0bc37c8977cd57e2a006d0c88d7a1c625bf95da",
+            "examples/element_discovery.py": "d63c89604a22f8845d724e95dda45db49b1bf57c25ce0a83afbb7b8da3d402f0",
+            "examples/static_html_automation.py": "9d533aafb875ee3ab8b8ebf8f5b9003ac8d999da3d09b285cce252e623140064"
+          }
+        }
+      ]
+    },
+    {
+      "id": "github",
+      "repository": "github/awesome-copilot",
+      "ref": "main",
+      "license": {
+        "spdx": "MIT",
+        "files": [
+          "LICENSE"
+        ],
+        "reviewedFiles": {
+          "LICENSE": "e32449d23085399adc1222f7a17408b730550258e51627c153cb108ca9955823"
+        }
+      },
+      "skills": [
+        {
+          "id": "java-springboot",
+          "path": "skills/java-springboot",
+          "name": "java-springboot",
+          "reviewedScripts": []
+        }
+      ]
+    },
+    {
+      "id": "wshobson",
+      "repository": "wshobson/agents",
+      "ref": "main",
+      "license": {
+        "spdx": "MIT",
+        "files": [
+          "LICENSE"
+        ],
+        "reviewedFiles": {
+          "LICENSE": "f89abb55d9f073f38f1703e4518f0613c788c6174be7f13b8dfe48a1c076c746"
+        }
+      },
+      "skills": [
+        {
+          "id": "nodejs-backend-patterns",
+          "path": "plugins/javascript-typescript/skills/nodejs-backend-patterns",
+          "name": "nodejs-backend-patterns",
+          "reviewedScripts": []
+        },
+        {
+          "id": "javascript-testing-patterns",
+          "path": "plugins/javascript-typescript/skills/javascript-testing-patterns",
+          "name": "javascript-testing-patterns",
+          "reviewedScripts": []
+        }
+      ]
+    },
+    {
+      "id": "web-interface",
+      "repository": "vercel-labs/web-interface-guidelines",
+      "ref": "main",
+      "license": {
+        "spdx": "MIT",
+        "files": [
+          "LICENSE"
+        ],
+        "reviewedFiles": {
+          "LICENSE": "6cd1609c9c12233507cdd2ce0d32e9a721e3c27494951be06b90090deeeb7af2"
+        }
+      },
+      "resources": [
+        {
+          "path": "command.md",
+          "destination": "vercel/web-design-guidelines/references/web-interface-guidelines.md",
+          "licenseDestination": "vercel/web-design-guidelines/references/WEB-INTERFACE-LICENSE.txt"
+        }
+      ]
+    }
+  ],
+  "patches": [
+    {
+      "id": "web-guidelines-local-snapshot",
+      "type": "replace-exact",
+      "path": "skills/upstream/vercel/web-design-guidelines/SKILL.md",
+      "before": "\nReview files for compliance with Web Interface Guidelines.\n\n## How It Works\n\n1. Fetch the latest guidelines from the source URL below\n2. Read the specified files (or prompt user for files/pattern)\n3. Check against all rules in the fetched guidelines\n4. Output findings in the terse `file:line` format\n\n## Guidelines Source\n\nFetch fresh guidelines before each review:\n\n```\nhttps://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md\n```\n\nUse WebFetch to retrieve the latest rules. The fetched content contains all the rules and output format instructions.\n\n## Usage\n\nWhen a user provides a file or pattern argument:\n1. Fetch guidelines from the source URL above\n2. Read the specified files\n3. Apply all rules from the fetched guidelines\n4. Output findings using the format specified in the guidelines\n\nIf no files specified, ask the user which files to review.\n",
+      "after": "\n\nReview UI code using the rules bundled in [references/web-interface-guidelines.md](references/web-interface-guidelines.md).\n\n## How to Review\n\n1. Read the local guideline snapshot; do not fetch remote rules during a review.\n2. Read the files requested by the user, preserving their design system and task scope.\n3. Check applicable rules and report actionable findings with file and line references.\n4. Distinguish static findings from behavior that needs a running page or browser verification.\n\nIf no files are specified, resolve the relevant scope from the current task; ask only when it cannot be determined.\n\n## Source and Adaptation\n\nThis file is adapted by yuyin-skills to use a release-locked local resource. The upstream skill normally fetches rules from [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md) at runtime. Source commits and this patch are recorded in the distribution's upstream lock. The local rule resource retains its [MIT license](references/WEB-INTERFACE-LICENSE.txt).\n",
+      "reason": "Read a locked local rule snapshot instead of fetching mutable main at runtime; preserve offline review and release reproducibility."
+    },
+    {
+      "id": "react-best-practices-compiled-rule-links",
+      "type": "rewrite-rule-links",
+      "path": "skills/upstream/vercel/react-best-practices/AGENTS.md",
+      "reason": "Fix compiled upstream document links to rule files kept in the bundled rules directory; no rule content changes."
+    },
+    {
+      "id": "composition-patterns-compiled-rule-links",
+      "type": "rewrite-rule-links",
+      "path": "skills/upstream/vercel/composition-patterns/AGENTS.md",
+      "reason": "Fix compiled upstream document links to rule files kept in the bundled rules directory; no rule content changes."
+    }
+  ]
+}

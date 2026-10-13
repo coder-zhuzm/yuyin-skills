@@ -1,112 +1,95 @@
 # yuyin-skills
 
-面向 Claude Code 与 Codex 的中文 Agent Skills 集合，提供开发任务工作流、工程规则和项目上下文模板，支持源码安装与 npm 离线分发。
+面向 Claude Code 与 Codex 的开发技能组合，优先服务 React、Java/Spring，兼顾 Node。`yuyin-dev` 提供中文任务入口；框架、设计与测试能力按需使用精选社区技能。
 
-目前提供通用开发技能 **`yuyin-dev`**，覆盖前端、后端与全栈任务。生活、自媒体及专用开发技能分类为预留目录。
+通用包保存开发方法与技术检查，具体业务、品牌、接口、有效 workaround 和部署环境留在目标项目。不会因为技能更新而要求项目迁移框架或持久层。
 
-## 功能概览
+## 技能组合
 
-`yuyin-dev` 根据任务意图选择工作流程，以项目源码、现有约束和实际验证结果为依据。
+| 组合 | 用途 | 内容 |
+| --- | --- | --- |
+| `core` | 分析、功能、修复、审查、交接 | `yuyin-dev` |
+| `react` | React 开发、组件设计与 UI | core、Vercel React / composition、Anthropic frontend-design、Web Interface Guidelines 本地快照 |
+| `spring` | Java/Spring | core、java-springboot；按现有版本、MyBatis/JPA 与目录结构使用 |
+| `node` | Node 后端与 JS/TS 测试 | core、nodejs-backend-patterns、javascript-testing-patterns |
+| `web-test` | 浏览器交互验收 | core、webapp-testing；需要 Python Playwright，已有测试工具优先 |
 
-| 任务类型 | 主要输出 |
-| --- | --- |
-| 功能开发 | 需求边界、实现结果与验收证据 |
-| Bug 修复 | 复现条件、原因定位、修复与回归验证 |
-| 可行性评估 | 接入点、约束、方案与实施成本 |
-| 逻辑梳理 | 入口、调用链、状态变化与代码定位 |
-| 性能优化 | 测量基线、瓶颈分析与前后对比 |
-| 代码审查 | 问题位置、触发条件、影响与修正建议 |
-| 交接与复盘 | 任务状态、验证记录与可执行改进 |
-
-技能支持只读分析与实施任务的区分；项目事实、业务代码和环境配置由目标项目维护。
-
-## 环境要求
-
-- Node.js **22.20.0 或更高版本**。
-- 已配置可用的 Claude Code 或 Codex。
-- 安装工具为 Vercel [`skills`](https://github.com/vercel-labs/skills) CLI，固定版本 **1.7.2**。
+精确技能名和路径见 [catalog.json](catalog.json)。安装组合可叠加，调用时仅读取当前任务需要的技能。
 
 ## 快速开始
 
-### 从 GitHub 安装
+需要 Node.js **22.20.0 或更高版本**，以及可用的 Claude Code 或 Codex。安装工具固定为 Vercel [`skills`](https://github.com/vercel-labs/skills) **1.7.2**。
 
-在目标项目目录执行：
+使用前核对来源版本的 `catalog.json`；旧发行版可能仅包含 `yuyin-dev`。当前源码可按下一节从本地试用。
 
-```bash
-DISABLE_TELEMETRY=1 npx skills@1.7.2 add coder-zhuzm/yuyin-skills \
-  -s yuyin-dev -a claude-code -a codex -y
-```
-
-默认安装到当前项目。仅使用一个 Agent 时，保留对应的 `-a` 参数；用户级安装添加 `-g`。首次执行需要下载安装工具，内网环境请参阅[离线安装指南](docs/installation.md#离线安装)。
-
-### 从本地源码安装
+在目标项目目录安装主要的 React + Spring 组合：
 
 ```bash
-git clone https://github.com/coder-zhuzm/yuyin-skills.git
+DISABLE_TELEMETRY=1 npx skills@1.7.2 add coder-zhuzm/yuyin-skills --full-depth \
+  -s yuyin-dev vercel-react-best-practices vercel-composition-patterns \
+     frontend-design web-design-guidelines java-springboot \
+  -a claude-code codex -y
 ```
 
-在目标项目目录执行，将来源路径替换为实际克隆目录的绝对路径：
+只使用一个 Agent 时保留对应名称。默认项目级安装，用户级安装增加 `-g`。同名内容可能被 CLI 更新，已有安装应先核对来源与手动改动。
+
+### 从本地源码选择组合
+
+在本仓库安装维护依赖后执行。目标项目必须已存在，路径替换为实际绝对路径：
 
 ```bash
-DISABLE_TELEMETRY=1 npx skills@1.7.2 add /path/to/yuyin-skills/skills/development/shared \
-  -s yuyin-dev -a claude-code -a codex -y
+npm ci --ignore-scripts --no-audit --no-fund
+npm run profiles -- list
+npm run profiles -- add --profile core,react,spring \
+  --target /path/to/project --agent codex,claude-code
 ```
 
-### 调用技能
+该辅助命令只复用本地 `skills` CLI，不联网安装工具；遇到已有同名技能停止，避免误覆盖。源码安装、npm 内容包与离线使用的完整说明见[安装指南](docs/installation.md)。
 
-安装后开启新的 Agent 会话，并显式调用：
+### 调用
 
-**Claude Code**
+安装后开启新会话。Codex 使用 `$yuyin-dev`，Claude Code 使用 `/yuyin-dev`：
 
 ```text
-/yuyin-dev 逻辑 梳理项目主流程，列出入口、调用链和重要分支，先不修改代码。
+$yuyin-dev 给当前 React 页面增加筛选功能，沿用现有组件库。
+$yuyin-dev 排查 Spring 接口重复提交的问题，保留现有持久层。
+$yuyin-dev 分析 Node 服务的超时原因，先不修改。
 ```
 
-**Codex**
+可以直接调用已安装的上游技能。`yuyin-dev` 负责结合项目事实选择能力，不会因为某个技能缺失而自动安装或升级。
 
-```text
-$yuyin-dev 修复 定位并修复当前报错，保留现有行为，完成必要的回归验证。
-```
+## 内容与版本
 
-更多任务示例与验收方式见[开发工作流](docs/development-workflow.md)。
+内容包名称为 **`@zhuzm/yuyin-skills`**，版本 **`0.3.1`**。源码版本字段由发布准备更新；实际发行内容以对应 tag 和 npm 包为准。包无运行时依赖，包含选定技能、资源、许可与上游锁定记录；Agent 接入仍由 `skills` CLI 完成。
 
-## npm 分发
-
-内容包名称为 **`@zhuzm/yuyin-skills`**，版本 **`0.3.1`**。包内包含技能、参考资料、规则与模板，无运行时依赖。Agent 接入由 `skills` CLI 完成。
-
-npm 安装方式、离线打包、更新和版本回退见[安装与分发指南](docs/installation.md)。`main` 分支的分发内容更新通过 GitHub Actions 自动检查、递增版本并发布到 npm，发布记录见 [GitHub Releases](https://github.com/coder-zhuzm/yuyin-skills/releases)。
+新版本准备时获取白名单上游的最新内容，验证后锁定提交和逐文件摘要。同一版本的安装与发布重试使用原快照。已安装项目只在显式更新时采用新内容。
 
 ## 仓库结构
 
 ```text
-yuyin-skills/
-├── skills/
-│   ├── development/
-│   │   ├── shared/yuyin-dev/   # 通用开发技能及按任务组织的参考资料
-│   │   ├── frontend/          # 前端专用技能（预留）
-│   │   ├── backend/           # 后端专用技能（预留）
-│   │   └── fullstack/         # 全栈专用技能（预留）
-│   ├── life/                  # 生活工作流（预留）
-│   └── content/               # 自媒体工作流（预留）
-├── rules/                     # 通用工程规则
-├── templates/                 # 项目、约束、术语与任务模板
-├── docs/                      # 安装、开发流程与历史版本说明
-├── THIRD_PARTY_LICENSES/       # 第三方许可文本
-└── catalog.json               # 技能分类与状态索引
+skills/development/shared/yuyin-dev/  自有入口与通用方法
+skills/upstream/                     精选上游内容与许可快照
+upstream/sources.json                 来源、适用技能与审查范围
+upstream/lock.json                    提交、文件摘要与适配记录
+catalog.json                         技能索引与安装组合
+scripts/                             同步、组合安装、验证和发布
+rules/、templates/                   按项目需要手动采用
 ```
 
-每个技能保留一个源码位置，适用领域通过 `catalog.json` 标签描述。规则与模板按项目需要手动采用。
+## 维护与来源
 
-## 文档
+```bash
+npm run upstream:update    # 获取白名单来源最新内容，失败不发布
+npm run upstream:check     # 离线核对快照
+npm run upstream:restore   # 按锁定提交重建，需要能访问来源
+npm test
+npm run verify
+```
 
-- [安装、更新、回退与发布](docs/installation.md)
-- [开发工作流与任务示例](docs/development-workflow.md)
-- [来源与适配说明](SOURCES.md)
-- [验证记录与适用边界](VERIFICATION.md)
-- [版本变更记录](CHANGELOG.md)
+- [安装、更新、离线与发布](docs/installation.md)
+- [开发工作流与适用边界](docs/development-workflow.md)
+- [来源、许可与适配](SOURCES.md)
+- [验证记录与未覆盖范围](VERIFICATION.md)
+- [变更记录](CHANGELOG.md)
 
-`docs/history/` 保存旧版工具说明，用于迁移参考；现行安装方式以安装指南为准。
-
-## 许可
-
-本项目的许可标识为 `UNLICENSED`。第三方组件遵循各自的许可条款，详见[来源与适配说明](SOURCES.md)及 `THIRD_PARTY_LICENSES/`。
+自有内容保持 `UNLICENSED`；第三方内容保留各自许可。不得直接修改上游快照来保存个人偏好，适配条件放在自有入口，业务事实放在目标项目。

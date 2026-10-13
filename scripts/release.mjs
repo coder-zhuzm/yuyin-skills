@@ -11,6 +11,28 @@ const registry = 'https://registry.npmjs.org';
 const stateFile = '.github/release-state.json';
 function contentPaths() { return ['package.json', 'package-lock.json', 'README.md', ...json('package.json').files]; }
 
+export async function refreshReleaseSources({ pendingVersion, publishedVersions, refresh }) {
+  // A persisted, unpublished candidate must keep exactly its original bytes.
+  if (pendingVersion && !publishedVersions.includes(pendingVersion)) return false;
+  await refresh();
+  return true;
+}
+
+async function refreshAndCommitUpstreams() {
+  const { syncUpstreams } = await import('./upstream.mjs');
+  await syncUpstreams({ mode: 'update' });
+  const paths = ['upstream/lock.json', 'skills/upstream'];
+  if (!git('status', '--porcelain', '--', ...paths)) return;
+  // Validate the new snapshot before it becomes a release source. Never execute
+  // scripts from a downloaded skill as part of synchronization or publication.
+  run('npm', ['test']);
+  run('npm', ['run', 'verify']);
+  git('add', '--', ...paths);
+  git('commit', '-m', 'chore: refresh curated upstream skill snapshots [skip ci]');
+  // createCandidate pushes this snapshot and its candidate together. A rejected
+  // fast-forward therefore prevents npm publication, as in the existing flow.
+}
+
 function versionParts(version) {
   if (!/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(version ?? '')) throw new Error(`Invalid stable version: ${version}`);
   const parts = version.split('.').map(Number);
@@ -25,7 +47,7 @@ function compare(a, b) {
 function stableVersions(versions) {
   return versions.filter(version => /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(version)).sort(compare);
 }
-export function planRelease({ currentVersion, publishedVersions, changed, requestedVersion = '', pendingVersion }) {
+export function planRelease({ currentVersion, publishedVersions, changed, requestedVersion = '', pendingVersion, manual = false }) {
   versionParts(currentVersion);
   const highest = stableVersions(publishedVersions).at(-1);
   if (!highest) throw new Error('No published stable version; bootstrap the package manually first.');
@@ -41,10 +63,25 @@ export function planRelease({ currentVersion, publishedVersions, changed, reques
     return { version: requestedVersion, resume: false };
   }
   if (compare(currentVersion, highest) > 0) return { version: currentVersion, resume: false };
-  if (!changed) return null;
+  if (!changed && !manual) return null;
   const parts = versionParts(highest); parts[2]++;
   const version = parts.join('.'); versionParts(version);
   return { version, resume: false };
+}
+export function planWorkflowRelease({ eventName, changedOnly = false, ...inputs }) {
+  if (!['push', 'workflow_dispatch'].includes(eventName)) throw new Error(`Unsupported release event: ${eventName}`);
+  return planRelease({ ...inputs, manual: eventName === 'workflow_dispatch' && !changedOnly });
+}
+export function preparationSummary(plan, { highest, eventName, changedOnly = false } = {}) {
+  if (!plan) return `跳过发布：没有新的分发内容。当前已发布版本为 **v${highest}**。\n\n`;
+  if (plan.resume) return `恢复候选版本 **v${plan.version}**：复用已保存的归档，等待发布与校验。\n\n`;
+  const trigger = changedOnly ? '恢复后的内容检查' : eventName === 'workflow_dispatch' ? '手动触发' : '自动触发';
+  return `${trigger}：已准备新版本 **v${plan.version}**，等待发布与公开包校验。\n\n`;
+}
+function reportPreparation(plan, context) {
+  const summary = preparationSummary(plan, context);
+  console.log(summary.trim());
+  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary);
 }
 export function syncVersionReferences(text, version, file) {
   versionParts(version);
@@ -178,25 +215,34 @@ function requireMainWorkflow() {
   if (process.env.GITHUB_ACTIONS !== 'true' || process.env.GITHUB_REPOSITORY !== repository || process.env.GITHUB_REF !== 'refs/heads/main') throw new Error('Release mutations are allowed only in this repository main-branch GitHub workflow.');
   if (git('status', '--porcelain')) throw new Error('Release requires a clean tracked working tree.');
 }
-async function prepare(requestedVersion) {
+async function prepare(requestedVersion, { changedOnly = false } = {}) {
   requireMainWorkflow();
   let data = await metadata(); const previous = state();
   if (previous && data.versions[previous.version]) data = await completeCandidate(previous, data);
   const currentVersion = json('package.json').version;
   const highest = stableVersions(Object.keys(data.versions)).at(-1);
-  const planned = planRelease({ currentVersion, publishedVersions: Object.keys(data.versions), pendingVersion: previous?.version, requestedVersion, changed: changedSince(highest) });
-  if (!planned) { output({ publish: 'false' }); return; }
+  const context = { eventName: process.env.GITHUB_EVENT_NAME, changedOnly, highest };
+  const inputs = { currentVersion, publishedVersions: Object.keys(data.versions), pendingVersion: previous?.version, requestedVersion };
+  // Reject invalid version requests before synchronizing or committing sources.
+  planWorkflowRelease({ ...inputs, ...context, changed: false });
+  // Resolve once per new preparation, before deciding whether there is anything
+  // to release. A manual run can therefore release upstream-only changes.
+  await refreshReleaseSources({ pendingVersion: previous?.version, publishedVersions: Object.keys(data.versions), refresh: refreshAndCommitUpstreams });
+  const planned = planWorkflowRelease({ ...inputs, ...context, changed: changedSince(highest) });
+  if (!planned) { reportPreparation(null, context); output({ publish: 'false', reason: 'no-content-changes' }); return; }
   const destination = join(process.env.RUNNER_TEMP ?? tmpdir(), 'yuyin-release');
   if (planned.resume) {
     const snapshot = packCommit(candidateCommit());
     try {
       if (snapshot.shasum !== previous.shasum) throw new Error('Pending release archive changed; refusing to publish it.');
       mkdirSync(destination, { recursive: true }); const archive = join(destination, snapshot.filename); copyFileSync(snapshot.archive, archive);
+      reportPreparation(planned, context);
       output({ publish: 'true', version: planned.version, archive, resumed: 'true' });
     } finally { rmSync(snapshot.scratch, { recursive: true, force: true }); }
     return;
   }
   const candidate = createCandidate(planned.version, highest, destination);
+  reportPreparation(planned, context);
   output({ publish: 'true', version: candidate.version, archive: candidate.archive, resumed: 'false' });
 }
 export function createCandidate(version, baselineVersion, destination) {
@@ -224,13 +270,22 @@ export function createCandidate(version, baselineVersion, destination) {
 
 async function main() {
   const command = process.argv[2];
-  if (command === 'prepare') return prepare(process.env.RELEASE_VERSION?.trim() ?? '');
+  const flags = process.argv.slice(3);
+  if (command === 'prepare') {
+    if (flags.length && (flags.length !== 1 || flags[0] !== '--if-changed')) throw new Error('Usage: release.mjs prepare [--if-changed]');
+    return prepare(process.env.RELEASE_VERSION?.trim() ?? '', { changedOnly: flags.includes('--if-changed') });
+  }
+  if (flags.length) throw new Error('finalize accepts no options');
   if (command === 'finalize') {
     requireMainWorkflow(); const candidate = state(); if (!candidate) throw new Error('No prepared release candidate.');
     await completeCandidate(candidate, await metadata(), true);
-    if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `Published and verified **${packageName}@${candidate.version}**.\n\n[GitHub Release](https://github.com/${repository}/releases/tag/v${candidate.version}) · [npm](https://www.npmjs.com/package/${packageName}/v/${candidate.version})\n`);
+    if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `已发布并验证 **${packageName}@${candidate.version}**。\n\n[GitHub Release](https://github.com/${repository}/releases/tag/v${candidate.version}) · [npm](https://www.npmjs.com/package/${packageName}/v/${candidate.version})\n`);
     return;
   }
   throw new Error('Usage: node scripts/release.mjs prepare|finalize');
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) main().catch(error => { console.error(error.message); process.exitCode = 1; });
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) main().catch(error => {
+  console.error(error.message);
+  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, '发布未完成：执行失败，请查看失败步骤日志。\n\n');
+  process.exitCode = 1;
+});

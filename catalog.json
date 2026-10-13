@@ -1,23 +1,98 @@
 {
+  "schemaVersion": 1,
   "skills": [
     {
       "name": "yuyin-dev",
       "path": "skills/development/shared/yuyin-dev",
       "category": "development/shared",
-      "tags": [
-        "frontend",
-        "backend",
-        "fullstack"
-      ],
-      "status": "ready-for-project-trial"
+      "status": "ready-for-project-trial",
+      "scope": "Task workflow; project constraints and evidence first."
+    },
+    {
+      "name": "vercel-react-best-practices",
+      "path": "skills/upstream/vercel/react-best-practices",
+      "category": "development/frontend",
+      "status": "ready-for-project-trial",
+      "scope": "React/Next.js performance; apply only rules supported by the actual framework."
+    },
+    {
+      "name": "vercel-composition-patterns",
+      "path": "skills/upstream/vercel/composition-patterns",
+      "category": "development/frontend",
+      "status": "ready-for-project-trial",
+      "scope": "React components; React 19-specific rules require React 19."
+    },
+    {
+      "name": "frontend-design",
+      "path": "skills/upstream/anthropic/frontend-design",
+      "category": "development/frontend",
+      "status": "ready-for-project-trial",
+      "scope": "New UI or explicit design work; existing design systems take precedence."
+    },
+    {
+      "name": "web-design-guidelines",
+      "path": "skills/upstream/vercel/web-design-guidelines",
+      "category": "development/frontend",
+      "status": "ready-for-project-trial",
+      "scope": "UI review using locked local Web Interface Guidelines."
+    },
+    {
+      "name": "java-springboot",
+      "path": "skills/upstream/github/java-springboot",
+      "category": "development/backend",
+      "status": "ready-for-project-trial",
+      "scope": "Spring practices; preserve existing Java/Spring, MyBatis/JPA and package structure."
+    },
+    {
+      "name": "nodejs-backend-patterns",
+      "path": "skills/upstream/wshobson/nodejs-backend-patterns",
+      "category": "development/backend",
+      "status": "ready-for-project-trial",
+      "scope": "Optional Node patterns; examples do not prescribe a new framework or architecture."
+    },
+    {
+      "name": "javascript-testing-patterns",
+      "path": "skills/upstream/wshobson/javascript-testing-patterns",
+      "category": "development/shared",
+      "status": "ready-for-project-trial",
+      "scope": "Optional JS/TS testing; use existing test framework."
+    },
+    {
+      "name": "webapp-testing",
+      "path": "skills/upstream/anthropic/webapp-testing",
+      "category": "development/shared",
+      "status": "ready-for-project-trial",
+      "scope": "Optional Python Playwright; runtime tools must already be available or explicitly provisioned."
     }
   ],
+  "profiles": {
+    "core": [
+      "yuyin-dev"
+    ],
+    "react": [
+      "yuyin-dev",
+      "vercel-react-best-practices",
+      "vercel-composition-patterns",
+      "frontend-design",
+      "web-design-guidelines"
+    ],
+    "spring": [
+      "yuyin-dev",
+      "java-springboot"
+    ],
+    "node": [
+      "yuyin-dev",
+      "nodejs-backend-patterns",
+      "javascript-testing-patterns"
+    ],
+    "web-test": [
+      "yuyin-dev",
+      "webapp-testing"
+    ]
+  },
   "reservedCategories": [
-    "development/frontend",
-    "development/backend",
-    "development/fullstack",
     "life",
     "content"
   ],
-  "note": "Catalog is documentation. Install with the upstream skills CLI and explicit --skill / --agent options. Reserved categories have no installable skill."
+  "note": "Profiles select installed content; yuyin-dev reads only applicable skills. Upstream snapshots are updated during new release preparation."
 }

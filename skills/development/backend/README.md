@@ -1,5 +1,3 @@
-# 后端技能
+# 后端开发
 
-预留分类，尚无可安装的专用技能。规划方向包括API、数据模型、权限、租户隔离、事务与幂等。
-
-通用开发任务使用 [`yuyin-dev`](../shared/yuyin-dev/SKILL.md)。
+Java/Spring 为主要组合 spring；Node 组合 node 按需安装。专业技能保留上游来源，现有框架与持久层优先。

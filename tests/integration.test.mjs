@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createCandidate, packCommit, syncVersionReferences } from '../scripts/release.mjs';
+import { createCandidate, packCommit, planWorkflowRelease, syncVersionReferences } from '../scripts/release.mjs';
 import { validateMarkdown, validatePackageContents } from '../scripts/verify.mjs';
 
 const project = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -15,7 +15,7 @@ function command(cwd, executable, ...args) {
   assert.equal(result.status, 0, result.stderr || result.stdout);
   return result.stdout.trim();
 }
-function fixture() {
+function fixture({ changed = true } = {}) {
   const scratch = mkdtempSync(join(tmpdir(), 'yuyin-release-test-'));
   const tree = join(scratch, 'source'), remote = join(scratch, 'remote.git');
   cpSync(project, tree, { recursive: true, filter: path => relative(project, path) !== '.github/release-state.json' && !['.git', 'node_modules'].some(dir => relative(project, path) === dir || relative(project, path).startsWith(`${dir}/`)) });
@@ -36,21 +36,47 @@ function fixture() {
   command(scratch, 'git', 'init', '--bare', remote);
   command(tree, 'git', 'remote', 'add', 'origin', remote);
   command(tree, 'git', 'push', 'origin', 'HEAD:main');
-  writeFileSync(join(tree, 'README.md'), `${readFileSync(join(tree, 'README.md'), 'utf8')}\nPackage content update for release validation.\n`);
-  command(tree, 'git', 'add', 'README.md'); command(tree, 'git', 'commit', '-m', 'Update package content');
-  command(tree, 'git', 'push', 'origin', 'HEAD:main');
+  if (changed) {
+    writeFileSync(join(tree, 'README.md'), `${readFileSync(join(tree, 'README.md'), 'utf8')}\nPackage content update for release validation.\n`);
+    command(tree, 'git', 'add', 'README.md'); command(tree, 'git', 'commit', '-m', 'Update package content');
+    command(tree, 'git', 'push', 'origin', 'HEAD:main');
+  }
   return { scratch, tree, remote };
 }
-function inFixture(callback) {
-  const context = fixture(); const previousCwd = process.cwd(); const previousCache = process.env.NPM_CONFIG_CACHE;
-  process.chdir(context.tree); process.env.NPM_CONFIG_CACHE = join(context.scratch, 'npm-cache');
+function inFixture(callback, options) {
+  const context = fixture(options); const previousCwd = process.cwd(); const previousCache = process.env.npm_config_cache;
+  process.chdir(context.tree); process.env.npm_config_cache = join(context.scratch, 'npm-cache');
   try { callback(context); }
   finally {
     process.chdir(previousCwd);
-    if (previousCache === undefined) delete process.env.NPM_CONFIG_CACHE; else process.env.NPM_CONFIG_CACHE = previousCache;
+    if (previousCache === undefined) delete process.env.npm_config_cache; else process.env.npm_config_cache = previousCache;
     rmSync(context.scratch, { recursive: true, force: true });
   }
 }
+
+test('manual preparation creates a real new archive without editing the version or distribution first', () => inFixture(({ tree, scratch, remote }) => {
+  assert.equal(command(tree, 'git', 'diff', 'v0.3.0', 'HEAD', '--stat'), '');
+  const planned = planWorkflowRelease({ eventName: 'workflow_dispatch', currentVersion: '0.3.0', publishedVersions: ['0.3.0'], changed: false });
+  const candidate = createCandidate(planned.version, '0.3.0', join(scratch, 'archives'));
+  assert.equal(candidate.version, '0.3.1');
+  assert.equal(JSON.parse(readFileSync(join(tree, 'package.json'), 'utf8')).version, '0.3.1');
+  assert.equal(command(remote, 'git', 'rev-parse', 'refs/heads/main'), candidate.commit);
+  const snapshot = packCommit(candidate.commit);
+  try { assert.equal(snapshot.shasum, candidate.shasum); }
+  finally { rmSync(snapshot.scratch, { recursive: true, force: true }); }
+}, { changed: false }));
+
+test('an actual CLI failure records an incomplete release in the Actions summary', () => {
+  const scratch = mkdtempSync(join(tmpdir(), 'yuyin-summary-test-'));
+  try {
+    const summary = join(scratch, 'summary.md');
+    const result = spawnSync(process.execPath, [join(project, 'scripts/release.mjs'), 'prepare', '--unknown'], { encoding: 'utf8', env: { ...process.env, GITHUB_STEP_SUMMARY: summary } });
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /Usage/);
+    assert.match(readFileSync(summary, 'utf8'), /发布未完成/);
+    assert.doesNotMatch(readFileSync(summary, 'utf8'), /已发布并验证/);
+  } finally { rmSync(scratch, { recursive: true, force: true }); }
+});
 
 test('a real release candidate synchronizes references, persists identity and remains reproducible after later edits', () => inFixture(({ tree, scratch, remote }) => {
   const source = command(tree, 'git', 'rev-parse', 'HEAD');
