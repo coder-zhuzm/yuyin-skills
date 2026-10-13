@@ -2,9 +2,38 @@
 
 ## 环境与版本
 
-需要 Node.js 22.20.0 或更高版本、可用的 Claude Code 或 Codex。安装工具固定为 `skills@1.7.2`，内容包无运行时依赖。维护与组合辅助命令仅在源码仓库提供。
+需要 Node.js、可用的 Claude Code 或 Codex。仓库维护和验证使用 `skills@1.7.2`，该版本需要 Node.js 22.20.0 或更高版本；默认安装命令不固定工具版本，请满足实际使用的 CLI 的环境要求。内容包无运行时依赖，维护与组合辅助命令仅在源码仓库提供。
 
-已发布旧版本可能只包含 `yuyin-dev`；使用前以对应版本的 `catalog.json` 为准。尚未发布的改造通过本地源码试用。下列命令适用于 macOS/Linux，Windows 尚未验证。
+当前提供 9 个技能，精确名称见 [catalog.json](../catalog.json)。旧发行版的内容以对应版本的索引为准。下列命令适用于 macOS/Linux，Windows 尚未验证。
+
+## 快速安装
+
+在目标项目目录执行，按提示选择技能、开发工具和安装位置：
+
+```bash
+npx skills add coder-zhuzm/yuyin-skills
+```
+
+来源也可以替换为本地源码根目录或已安装内容包根目录。当前仓库无需 `--full-depth` 就能发现全部技能。
+
+### 可选参数
+
+- 固定工具版本：将 `npx skills` 换成 `npx skills@1.7.2`。工具版本与技能内容版本分别控制。
+- 指定开发工具：增加 `-a claude-code codex`，只用其中一个时只填写对应名称。
+- 指定技能：增加 `-s <技能名...>`，例如 `-s yuyin-dev java-springboot`。
+- 免交互安装：增加 `-y`。不指定 `-s` 时会选择全部 9 个技能；需要限定工具时同时指定 `-a`。
+- 用户级安装：增加 `-g`；默认安装范围为当前项目，交互模式可选择范围。
+- 关闭遥测：在命令前增加 `DISABLE_TELEMETRY=1`。
+
+例如，为 Claude Code 和 Codex 免交互安装全部技能：
+
+```bash
+npx skills add coder-zhuzm/yuyin-skills -a claude-code codex -y
+```
+
+`--all` 同时选择所有技能和所有支持的 Agent，并启用免交互，不能用来仅表示“安装全部技能”。已有同名内容可能被 CLI 更新，更新前应检查来源与手动修改。
+
+GitHub 的 `main` 表示当前源码快照；需要固定发行内容时使用发行 tag URL 或固定版本 npm 包。上游社区的最新变化只在本仓库同步后进入该来源。
 
 ## 从源码选择组合
 
@@ -19,36 +48,17 @@ npm run profiles -- add --profile core,react,spring \
 
 `core`、`react`、`spring`、`node`、`web-test` 可以叠加，技能名称去重。`--copy` 选择独立副本。辅助命令不会安装缺失工具，遇到现存同名技能或指向其他位置的目标入口停止，避免误覆盖。
 
-默认 `core + react + spring` 适合主力开发；Node 与 Python Playwright 测试按需使用。安装内容不等于安装运行依赖，Python、浏览器及测试工具由项目环境提供。
-
-## 使用上游 CLI
-
-在目标项目目录执行。来源可以是仓库、本地源码根目录或已安装内容包根目录：
-
-```bash
-DISABLE_TELEMETRY=1 npx skills@1.7.2 add coder-zhuzm/yuyin-skills --full-depth \
-  -s yuyin-dev vercel-react-best-practices vercel-composition-patterns \
-     frontend-design web-design-guidelines java-springboot \
-  -a claude-code codex -y
-```
-
-只使用一个 Agent 时保留对应名称。默认项目级安装，用户级安装增加 `-g`。`--full-depth` 确保发现所有嵌套技能；不用 `--all`，避免把不适用能力全部装入项目。
-
-GitHub 的 `main` 表示当前源码快照；需要固定发行内容时使用已验证的发行 tag URL 或固定版本 npm 包。上游社区的最新变化只在本仓库同步后进入该来源。
+示例中的 `core + react + spring` 适合 React 与 Java/Spring 开发；组合需通过 `--profile` 明确选择，普通 CLI 不识别这些组合名。Node 与 Python Playwright 测试按需使用。安装内容不等于安装运行依赖，Python、浏览器及测试工具由项目环境提供。
 
 ## npm 内容包
 
-将已发布内容包安装到独立位置，然后在目标项目使用 `skills` CLI 接入。以下版本号是当前包元数据，正式准备发布时自动更新：
+将已发布内容包安装到独立位置，然后在目标项目使用 `skills` CLI 接入。以下内容版本号与当前包元数据一致，发布准备时自动更新：
 
 ```bash
 npm install --prefix "$HOME/.local/share/yuyin-skills-package" \
   @zhuzm/yuyin-skills@0.3.2 --ignore-scripts --no-audit --no-fund
 
-DISABLE_TELEMETRY=1 npx skills@1.7.2 add \
-  "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyin-skills" --full-depth \
-  -s yuyin-dev vercel-react-best-practices vercel-composition-patterns \
-     frontend-design web-design-guidelines java-springboot \
-  -a claude-code codex -y
+npx skills add "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyin-skills"
 ```
 
 精确技能组合见包内 `catalog.json`。源码辅助命令、维护脚本和维护依赖不随内容包分发；使用本地 CLI 或已准备的离线工具。
@@ -61,10 +71,7 @@ DISABLE_TELEMETRY=1 npx skills@1.7.2 add \
 
 ```bash
 PACK="/path/to/yuyin-skills-v0.3.2"
-DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" add "$PACK" --full-depth \
-  -s yuyin-dev vercel-react-best-practices vercel-composition-patterns \
-     frontend-design web-design-guidelines java-springboot \
-  -a claude-code codex -y
+DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" add "$PACK"
 DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" list -a claude-code codex
 ```
 
@@ -79,10 +86,10 @@ DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" list -a claude-
 完整移除指定技能，示例：
 
 ```bash
-DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" remove yuyin-dev -y
+npx skills remove yuyin-dev
 ```
 
-移除特定 Agent 可增加 `-a codex` 或 `-a claude-code`，用户级增加 `-g`；共享目录可能因其他 Agent 仍使用而保留。CLI 不修改已有 `AGENTS.md`、`CLAUDE.md` 或项目事实。项目上下文模板与规则只在明确需要时手动采用。
+离线时将 `npx skills` 换成 `DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs"`。移除特定 Agent 可增加 `-a codex` 或 `-a claude-code`，用户级增加 `-g`；共享目录可能因其他 Agent 仍使用而保留。CLI 不修改已有 `AGENTS.md`、`CLAUDE.md` 或项目事实。项目上下文模板与规则只在明确需要时手动采用。
 
 ## 维护上游快照
 

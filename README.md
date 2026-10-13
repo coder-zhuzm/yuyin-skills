@@ -4,47 +4,17 @@
 
 通用包保存开发方法与技术检查，具体业务、品牌、接口、有效 workaround 和部署环境留在目标项目。不会因为技能更新而要求项目迁移框架或持久层。
 
-## 技能组合
-
-| 组合 | 用途 | 内容 |
-| --- | --- | --- |
-| `core` | 分析、功能、修复、审查、交接 | `yuyin-dev` |
-| `react` | React 开发、组件设计与 UI | core、Vercel React / composition、Anthropic frontend-design、Web Interface Guidelines 本地快照 |
-| `spring` | Java/Spring | core、java-springboot；按现有版本、MyBatis/JPA 与目录结构使用 |
-| `node` | Node 后端与 JS/TS 测试 | core、nodejs-backend-patterns、javascript-testing-patterns |
-| `web-test` | 浏览器交互验收 | core、webapp-testing；需要 Python Playwright，已有测试工具优先 |
-
-精确技能名和路径见 [catalog.json](catalog.json)。安装组合可叠加，调用时仅读取当前任务需要的技能。
-
 ## 快速开始
 
-需要 Node.js **22.20.0 或更高版本**，以及可用的 Claude Code 或 Codex。安装工具固定为 Vercel [`skills`](https://github.com/vercel-labs/skills) **1.7.2**。
-
-使用前核对来源版本的 `catalog.json`；旧发行版可能仅包含 `yuyin-dev`。当前源码可按下一节从本地试用。
-
-在目标项目目录安装主要的 React + Spring 组合：
+准备好 Node.js 和 Claude Code 或 Codex，在目标项目目录执行：
 
 ```bash
-DISABLE_TELEMETRY=1 npx skills@1.7.2 add coder-zhuzm/yuyin-skills --full-depth \
-  -s yuyin-dev vercel-react-best-practices vercel-composition-patterns \
-     frontend-design web-design-guidelines java-springboot \
-  -a claude-code codex -y
+npx skills add coder-zhuzm/yuyin-skills
 ```
 
-只使用一个 Agent 时保留对应名称。默认项目级安装，用户级安装增加 `-g`。同名内容可能被 CLI 更新，已有安装应先核对来源与手动改动。
+按提示选择技能、Claude Code / Codex，以及安装到当前项目还是用户级目录。当前提供 9 个技能，可按需选择。
 
-### 从本地源码选择组合
-
-在本仓库安装维护依赖后执行。目标项目必须已存在，路径替换为实际绝对路径：
-
-```bash
-npm ci --ignore-scripts --no-audit --no-fund
-npm run profiles -- list
-npm run profiles -- add --profile core,react,spring \
-  --target /path/to/project --agent codex,claude-code
-```
-
-该辅助命令只复用本地 `skills` CLI，不联网安装工具；遇到已有同名技能停止，避免误覆盖。源码安装、npm 内容包与离线使用的完整说明见[安装指南](docs/installation.md)。
+仓库维护和验证使用 Vercel [`skills`](https://github.com/vercel-labs/skills) **1.7.2**（需要 Node.js **22.20.0 或更高版本**）。需要固定工具版本时，将命令中的 `skills` 换成 `skills@1.7.2`。指定工具、免交互、关闭遥测及其他安装方式见[安装指南](docs/installation.md)。
 
 ### 调用
 
@@ -57,6 +27,18 @@ $yuyin-dev 分析 Node 服务的超时原因，先不修改。
 ```
 
 可以直接调用已安装的上游技能。`yuyin-dev` 负责结合项目事实选择能力，不会因为某个技能缺失而自动安装或升级。
+
+## 技能组合
+
+| 组合 | 用途 | 内容 |
+| --- | --- | --- |
+| `core` | 分析、功能、修复、审查、交接 | `yuyin-dev` |
+| `react` | React 开发、组件设计与 UI | core、Vercel React / composition、Anthropic frontend-design、Web Interface Guidelines 本地快照 |
+| `spring` | Java/Spring | core、java-springboot；按现有版本、MyBatis/JPA 与目录结构使用 |
+| `node` | Node 后端与 JS/TS 测试 | core、nodejs-backend-patterns、javascript-testing-patterns |
+| `web-test` | 浏览器交互验收 | core、webapp-testing；需要 Python Playwright，已有测试工具优先 |
+
+精确技能名和路径见 [catalog.json](catalog.json)。这些组合用于[本地源码辅助安装](docs/installation.md#从源码选择组合)，可以叠加；普通 CLI 按技能名称选择。调用时仅读取当前任务需要的技能。
 
 ## 内容与版本
 
