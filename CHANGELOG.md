@@ -1,5 +1,9 @@
 # 变更记录
 
+## 0.3.3
+
+- Simplify installation docs (a3c9ac6)
+
 ## 0.3.2
 
 - chore: refresh curated upstream skill snapshots [skip ci] (3e9180f)

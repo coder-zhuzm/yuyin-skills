@@ -56,7 +56,7 @@ npm run profiles -- add --profile core,react,spring \
 
 ```bash
 npm install --prefix "$HOME/.local/share/yuyin-skills-package" \
-  @zhuzm/yuyin-skills@0.3.2 --ignore-scripts --no-audit --no-fund
+  @zhuzm/yuyin-skills@0.3.3 --ignore-scripts --no-audit --no-fund
 
 npx skills add "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyin-skills"
 ```
@@ -65,12 +65,12 @@ npx skills add "$HOME/.local/share/yuyin-skills-package/node_modules/@zhuzm/yuyi
 
 ## 离线安装
 
-离线归档包含源码、真实内容 tgz、已准备的 `skills` CLI 及锁定维护依赖，保留各包自带许可。归档由维护者生成，名称可用 `yuyin-skills-v0.3.2-offline.zip`；自动 GitHub Release 默认附内容 tgz，不自动提供含工具的离线 ZIP。
+离线归档包含源码、真实内容 tgz、已准备的 `skills` CLI 及锁定维护依赖，保留各包自带许可。归档由维护者生成，名称可用 `yuyin-skills-v0.3.3-offline.zip`；自动 GitHub Release 默认附内容 tgz，不自动提供含工具的离线 ZIP。
 
 在目标项目目录执行，将来源替换为实际稳定路径：
 
 ```bash
-PACK="/path/to/yuyin-skills-v0.3.2"
+PACK="/path/to/yuyin-skills-v0.3.3"
 DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" add "$PACK"
 DISABLE_TELEMETRY=1 node "$PACK/node_modules/skills/bin/cli.mjs" list -a claude-code codex
 ```
