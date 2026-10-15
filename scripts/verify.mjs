@@ -7,6 +7,8 @@ import { pathToFileURL } from 'node:url';
 import YAML from 'yaml';
 import { verifyUpstreams } from './upstream.mjs';
 import { loadCatalog, resolveProfiles } from './profiles.mjs';
+import { verifyEvals, loadCases } from './evals.mjs';
+import { validateBehaviorReport } from './behavior.mjs';
 
 function run(command, args, cwd) {
   const result = spawnSync(command, args, {
@@ -65,12 +67,13 @@ export function validatePackageContents(manifest, pkg, root) {
   assert.deepEqual(pkg.bin, { 'yuyin-skills': 'bin/yuyin-skills.mjs' }, 'Unexpected npm command entry.');
   const files = new Set(manifest.files.map((file) => file.path));
   for (const file of files) {
-    assert.ok(!/^(?:scripts|tests)\//.test(file), `Unexpected internal maintenance file: ${file}`);
+    assert.ok(!/^(?:scripts|tests|evals)\//.test(file), `Unexpected internal maintenance file: ${file}`);
     assert.ok(
       !/(?:^|\/)(?:\.git|\.github|\.env(?:\..*)?|\.npmrc|node_modules|__pycache__)(?:\/|$)/.test(file),
       `Unexpected internal or credential file: ${file}`,
     );
     assert.ok(!file.startsWith('docs/history/'), `History tool leaked into package: ${file}`);
+    assert.ok(!file.startsWith('docs/plans/'), `Implementation plan leaked into package: ${file}`);
     assert.ok(!file.includes('..') && !file.startsWith('/'), `Invalid archive path: ${file}`);
     const declared = ['README.md', 'package.json', ...(pkg.files ?? [])];
     assert.ok(
@@ -122,7 +125,38 @@ export function validatePackageContents(manifest, pkg, root) {
   for (const file of ['catalog.json', 'upstream/sources.json', 'upstream/lock.json'])
     assert.ok(files.has(file), `Missing distribution manifest: ${file}`);
 }
+export function validateCiWorkflow(workflow) {
+  assert.deepEqual(Object.keys(workflow.on).sort(), ['pull_request', 'workflow_dispatch']);
+  assert.deepEqual(workflow.on.pull_request.branches, ['main']);
+  assert.deepEqual(workflow.permissions, { contents: 'read' });
+  assert.deepEqual(Object.keys(workflow.jobs), ['test']);
+  const job = workflow.jobs.test;
+  assert.equal(job['runs-on'], 'ubuntu-latest');
+  assert.ok(job['timeout-minutes'] > 0 && job['timeout-minutes'] <= 20);
+  assert.equal(job.if, undefined, 'Required validation must always run.');
+  assert.ok(!job['continue-on-error'], 'Failed validation must fail the job.');
+  if (job.permissions) assert.deepEqual(job.permissions, { contents: 'read' });
+  const checkout = job.steps.find(step => step.uses?.startsWith('actions/checkout@'));
+  assert.ok(checkout, 'CI must check out the event revision.');
+  assert.equal(checkout.with?.ref, undefined, 'CI must validate the event revision.');
+  assert.equal(checkout.with?.['persist-credentials'], false);
+  for (const step of job.steps) {
+    if (step.uses) assert.match(step.uses, /@[a-f0-9]{40}$/);
+    assert.ok(
+      !/npm\s+publish|scripts\/release\.mjs|evals:run|scripts\/evals\.mjs\s+run/.test(step.run || ''),
+      'Pure validation must not publish or execute paid model evaluations.',
+    );
+  }
+  for (const command of ['npm test', 'npm run verify']) {
+    const step = job.steps.find(step => step.run === command);
+    assert.ok(step, `Missing required CI check: ${command}`);
+    assert.equal(step.if, undefined, `Required CI check must always run: ${command}`);
+    assert.ok(!step['continue-on-error'], `Required CI check must be blocking: ${command}`);
+  }
+  assert.ok(!JSON.stringify(workflow).includes('secrets.'), 'Pure validation needs no secrets.');
+}
 function validateWorkflow(root) {
+  validateCiWorkflow(YAML.parse(readFileSync(join(root, '.github/workflows/ci.yml'), 'utf8')));
   const workflow = YAML.parse(readFileSync(join(root, '.github/workflows/publish.yml'), 'utf8'));
   assert.deepEqual(workflow.on.push.branches, ['main']);
   assert.equal(workflow.concurrency['cancel-in-progress'], false);
@@ -161,6 +195,9 @@ export function verify(root = process.cwd()) {
   ];
   for (const file of files) validateMarkdown(join(root, file), root);
   validateWorkflow(root);
+  const evals = verifyEvals(root);
+  const behaviorReport = JSON.parse(readFileSync(join(root, 'evals/upstream-changes.json'), 'utf8'));
+  validateBehaviorReport(behaviorReport, JSON.parse(readFileSync(join(root, 'upstream/lock.json'), 'utf8')), loadCases(root));
   const scratch = mkdtempSync(join(tmpdir(), 'yuyin-pack-check-'));
   try {
     const [manifest] = JSON.parse(
@@ -181,7 +218,7 @@ export function verify(root = process.cwd()) {
     );
     validatePackageContents(manifest, pkg, root);
     console.log(
-      `Verified ${files.length} Markdown files, workflow permissions and ${manifest.entryCount} distribution files for ${pkg.name}@${pkg.version}.`,
+      `Verified ${files.length} Markdown files, ${evals.cases} fixture checks, pending behavior report, workflow permissions and ${manifest.entryCount} distribution files for ${pkg.name}@${pkg.version}. Model behavior requires separate run artifacts and trace review.`,
     );
   } finally {
     rmSync(scratch, { recursive: true, force: true });

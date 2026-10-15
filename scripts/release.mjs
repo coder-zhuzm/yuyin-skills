@@ -21,12 +21,14 @@ export async function refreshReleaseSources({ pendingVersion, publishedVersions,
 async function refreshAndCommitUpstreams() {
   const { syncUpstreams } = await import('./upstream.mjs');
   await syncUpstreams({ mode: 'update' });
-  const paths = ['upstream/lock.json', 'skills/upstream'];
+  const paths = ['upstream/lock.json', 'skills/upstream', 'evals/upstream-changes.json'];
   if (!git('status', '--porcelain', '--', ...paths)) return;
   // Validate the new snapshot before it becomes a release source. Never execute
   // scripts from a downloaded skill as part of synchronization or publication.
   run('npm', ['test']);
   run('npm', ['run', 'verify']);
+  const report = json('evals/upstream-changes.json');
+  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `上游变化：${report.changes.length} 个文件；受影响或仍待验收案例：${report.affectedCases.join('、') || '无'}。真实模型行为验收未由发布任务执行，记录为待验证；详见 evals/upstream-changes.json。\n\n`);
   git('add', '--', ...paths);
   git('commit', '-m', 'chore: refresh curated upstream skill snapshots [skip ci]');
   // createCandidate pushes this snapshot and its candidate together. A rejected

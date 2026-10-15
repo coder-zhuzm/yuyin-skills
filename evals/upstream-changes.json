@@ -1,0 +1,235 @@
+{
+  "schemaVersion": 1,
+  "baseLockSha256": "26399060bb212e0296f34a3f92941d40c9e6e4506f34f557dcbdcb5c893a7b03",
+  "targetLockSha256": "5265b4f311a91cc3ee844a4d1ed2cb5bd626a3e91870bb58e8fdb1564462b4d3",
+  "casesSha256": "129f4191aeb029db581ac3b7e48a88d393f5f59f57023719d14c79ae5b254e1f",
+  "changes": [
+    {
+      "path": "skills/upstream/anthropic/webapp-testing/SKILL.md",
+      "beforeSha256": "f714fd5a3b2982e68f08ed35696c9610f1d9f01158392f20f51226c8f21deecc",
+      "afterSha256": "d4d3e987f2d806b40d039ad84c741dc4544b98b53a6b64f57fc8d2b00cec1470",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "skills": [
+        "webapp-testing"
+      ],
+      "cases": [
+        "js-playwright"
+      ],
+      "reviewAreas": [
+        "trigger-scope",
+        "workflow",
+        "tool-dependencies",
+        "external-actions"
+      ],
+      "removed": [
+        "Inspect the existing browser testing tools first and use them when available, including JavaScript/TypeScript Playwright. The Python workflow below is an option when suitable, not a requirement to introduce a second test stack. Do not install packages or browsers without task authorization. If runtime tools are missing, separate source review from actual browser execution and report the unverified scope."
+      ],
+      "added": [
+        "Inspect the existing browser testing tools first and use them when available, including JavaScript/TypeScript Playwright. The Python workflow below is an option when suitable, not a requirement to introduce a second test stack. Do not install packages or browsers without task authorization. If runtime tools are missing, separate source review from actual browser execution and report the unverified scope. Only report an environment component as missing if it was actually checked; missing project packages do not prove that system browsers are absent."
+      ],
+      "excerptTruncated": false
+    }
+  ],
+  "inheritedPendingCases": [
+    "js-playwright",
+    "node-readonly",
+    "react-local",
+    "small-copy",
+    "spring-mybatis"
+  ],
+  "affectedCases": [
+    "js-playwright",
+    "node-readonly",
+    "react-local",
+    "small-copy",
+    "spring-mybatis"
+  ],
+  "uncoveredSkills": [
+    "frontend-design"
+  ],
+  "unmappedPaths": [],
+  "coverage": [
+    {
+      "caseId": "js-playwright",
+      "host": "codex",
+      "mode": "explicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "js-playwright",
+      "host": "codex",
+      "mode": "implicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "js-playwright",
+      "host": "codex",
+      "mode": "direct",
+      "status": "pending"
+    },
+    {
+      "caseId": "js-playwright",
+      "host": "claude",
+      "mode": "explicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "js-playwright",
+      "host": "claude",
+      "mode": "implicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "js-playwright",
+      "host": "claude",
+      "mode": "direct",
+      "status": "pending"
+    },
+    {
+      "caseId": "node-readonly",
+      "host": "codex",
+      "mode": "explicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "node-readonly",
+      "host": "codex",
+      "mode": "implicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "node-readonly",
+      "host": "codex",
+      "mode": "direct",
+      "status": "pending"
+    },
+    {
+      "caseId": "node-readonly",
+      "host": "claude",
+      "mode": "explicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "node-readonly",
+      "host": "claude",
+      "mode": "implicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "node-readonly",
+      "host": "claude",
+      "mode": "direct",
+      "status": "pending"
+    },
+    {
+      "caseId": "react-local",
+      "host": "codex",
+      "mode": "explicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "react-local",
+      "host": "codex",
+      "mode": "implicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "react-local",
+      "host": "codex",
+      "mode": "direct",
+      "status": "pending"
+    },
+    {
+      "caseId": "react-local",
+      "host": "claude",
+      "mode": "explicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "react-local",
+      "host": "claude",
+      "mode": "implicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "react-local",
+      "host": "claude",
+      "mode": "direct",
+      "status": "pending"
+    },
+    {
+      "caseId": "small-copy",
+      "host": "codex",
+      "mode": "explicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "small-copy",
+      "host": "codex",
+      "mode": "implicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "small-copy",
+      "host": "codex",
+      "mode": "direct",
+      "status": "pending"
+    },
+    {
+      "caseId": "small-copy",
+      "host": "claude",
+      "mode": "explicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "small-copy",
+      "host": "claude",
+      "mode": "implicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "small-copy",
+      "host": "claude",
+      "mode": "direct",
+      "status": "pending"
+    },
+    {
+      "caseId": "spring-mybatis",
+      "host": "codex",
+      "mode": "explicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "spring-mybatis",
+      "host": "codex",
+      "mode": "implicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "spring-mybatis",
+      "host": "codex",
+      "mode": "direct",
+      "status": "pending"
+    },
+    {
+      "caseId": "spring-mybatis",
+      "host": "claude",
+      "mode": "explicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "spring-mybatis",
+      "host": "claude",
+      "mode": "implicit",
+      "status": "pending"
+    },
+    {
+      "caseId": "spring-mybatis",
+      "host": "claude",
+      "mode": "direct",
+      "status": "pending"
+    }
+  ],
+  "evidencePolicy": "Mechanical checks do not prove model behavior. Inspect run artifacts and traceReview separately; this generated report never grants a behavior pass."
+}

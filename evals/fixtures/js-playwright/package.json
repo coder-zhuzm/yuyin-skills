@@ -1,0 +1,1 @@
+{"name":"eval-js-browser","private":true,"type":"module","scripts":{"test:e2e":"playwright test"},"devDependencies":{"@playwright/test":"1.48.0"}}

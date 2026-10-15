@@ -15,7 +15,7 @@
 | React 渲染、请求瀑布、包体或性能 | `vercel-react-best-practices` | 先确认普通 React 或 Next.js；服务端组件、框架缓存及服务端请求规则仅用于支持的框架环境。性能结论需要测量或具体证据 |
 | React 组件 API、状态归属、组合设计 | `vercel-composition-patterns` | 组件复杂度确实相关时采用；React 19 API 不用于 React 18，不为小改动重组全站组件 |
 | 新页面或明确的视觉设计任务 | `frontend-design` | 已有项目优先设计系统、组件库和用户品牌；小修复不触发整体视觉重做 |
-| Java/Spring 业务、接口与测试 | `java-springboot` | 从 Maven/Gradle 确认 Java、Spring 版本；保留现有 MyBatis/JPA 和目录方式。上游 JPA、按业务域组织的建议只在当前栈适用或用户明确授权选型时采用，禁止据此强制迁移 |
+| Java/Spring 业务、接口与测试 | [Spring 实务](spring.md)，按需使用 `java-springboot` | 涉及接口调用链、数据一致性或测试选择时读本地参考；从 Maven/Gradle 确认 Java、Spring 版本，保留现有 MyBatis/JPA 和目录方式。上游 JPA、按业务域组织的建议只在当前栈适用或用户明确授权选型时采用，禁止据此强制迁移 |
 | Node 后端实现 | `nodejs-backend-patterns` | 可选。确认运行时、框架及模块格式，按实际复杂度选用；示例中的 Express/Fastify 或分层结构不自动成为项目要求 |
 | JavaScript/TypeScript 测试 | `javascript-testing-patterns` | 可选。优先现有测试框架和行为测试，核对与 Node 技能引用的依赖是否实际可用 |
 | 页面交互与浏览器验收 | `webapp-testing` | 可选。该来源使用 Python Playwright 及辅助脚本；已有浏览器测试体系优先，不为验收自动引入第二套体系。缺运行依赖时报告范围，不宣称完成浏览器验收 |

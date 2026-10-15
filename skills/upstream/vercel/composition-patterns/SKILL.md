@@ -14,6 +14,10 @@ metadata:
 
 # React Composition Patterns
 
+## Project Compatibility
+
+Confirm the installed React version and the component problem before selecting a pattern. React 19 APIs are inapplicable to React 18. Preserve existing components and libraries for local fixes; composition advice does not authorize an application-wide refactor or a framework upgrade.
+
 Composition patterns for building flexible, maintainable React components. Avoid
 boolean prop proliferation by using compound components, lifting state, and
 composing internals. These patterns make codebases easier for both humans and AI

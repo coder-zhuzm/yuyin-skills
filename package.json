@@ -34,7 +34,10 @@
     "pack:offline": "npm pack --ignore-scripts",
     "test": "node --test tests/*.test.mjs",
     "verify": "node scripts/verify.mjs",
+    "evals:check": "node scripts/evals.mjs check",
+    "evals:run": "node scripts/evals.mjs run",
     "upstream:update": "node scripts/upstream.mjs update",
+    "upstream:adapt": "node scripts/upstream.mjs update --locked",
     "upstream:restore": "node scripts/upstream.mjs restore",
     "upstream:check": "node scripts/upstream.mjs check",
     "profiles": "node scripts/profiles.mjs"

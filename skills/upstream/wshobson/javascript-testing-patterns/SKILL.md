@@ -5,6 +5,10 @@ description: Implement comprehensive testing strategies using Jest, Vitest, and 
 
 # JavaScript Testing Patterns
 
+## Project Compatibility
+
+Use the existing test runner and available dependencies first, including node:test or existing JS/TS Playwright. Jest/Vitest/Testing Library examples do not require replacing the current tools or installing a second stack. Choose tests proportional to the requested behavior, use independent expected values, and report checks that could not be executed.
+
 Comprehensive guide for implementing robust testing strategies in JavaScript/TypeScript applications using modern testing frameworks and best practices.
 
 ## When to Use This Skill

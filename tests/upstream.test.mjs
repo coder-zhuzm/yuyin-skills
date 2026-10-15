@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, symlinkSync } from 'node:fs';
+import { chmodSync, mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -167,4 +167,59 @@ test('README license declarations are independently reviewed from unrelated docu
   await syncUpstreams(f);
   f.files[0].content = '# Source\n\n## License\n\nGPL-3.0\n';
   await assert.rejects(syncUpstreams(f), /License content changed/);
+});
+test('locked update reapplies declared patches without advancing source commits and records affected cases', async t => {
+  const f = fixture(t);
+  await syncUpstreams(f);
+  mkdirSync(join(f.root, 'evals'));
+  writeFileSync(join(f.root, 'evals/manifest.json'), JSON.stringify({ cases: [{ id: 'demo-task', skills: ['demo'] }] }));
+  const path = join(f.root, 'upstream/sources.json'), manifest = JSON.parse(readFileSync(path));
+  manifest.patches = [{ id: 'compatibility', type: 'replace-exact', path: 'skills/upstream/example/demo/SKILL.md', before: 'Example skill.', after: 'Example skill preserving project tools.', reason: 'Project compatibility' }];
+  writeFileSync(path, JSON.stringify(manifest));
+  const refs = [];
+  await syncUpstreams({ ...f, locked: true, loadSource: async (source, ref) => { refs.push(ref); return f.loadSource(source, ref); } });
+  assert.deepEqual(refs, ['a'.repeat(40)]);
+  assert.match(readFileSync(join(f.root, 'skills/upstream/example/demo/SKILL.md'), 'utf8'), /preserving project tools/);
+  const report = JSON.parse(readFileSync(join(f.root, 'evals/upstream-changes.json')));
+  assert.deepEqual(report.affectedCases, ['demo-task']);
+  assert.ok(report.coverage.every(c => c.status === 'pending'));
+  const before = readFileSync(join(f.root, 'evals/upstream-changes.json'), 'utf8');
+  await syncUpstreams({ ...f, mode: 'restore' });
+  assert.equal(readFileSync(join(f.root, 'evals/upstream-changes.json'), 'utf8'), before, 'Restore must not erase pending behavior evidence');
+});
+test('locked update rejects a loader returning a different commit', async t => {
+  const f = fixture(t); await syncUpstreams(f);
+  const before = readFileSync(join(f.root, 'upstream/lock.json'), 'utf8');
+  await assert.rejects(syncUpstreams({ ...f, locked: true, loadSource: async () => ({ commit: 'b'.repeat(40), files: f.files }) }), /commit differs/i);
+  assert.equal(readFileSync(join(f.root, 'upstream/lock.json'), 'utf8'), before);
+});
+test('a failed behavior-report replacement rolls back the lock and snapshot together', async t => {
+  const f = fixture(t);
+  mkdirSync(join(f.root, 'evals'));
+  writeFileSync(join(f.root, 'evals/manifest.json'), JSON.stringify({ cases: [{ id: 'demo-task', skills: ['demo'] }] }));
+  await syncUpstreams(f);
+  const lock = readFileSync(join(f.root, 'upstream/lock.json'), 'utf8');
+  const report = readFileSync(join(f.root, 'evals/upstream-changes.json'), 'utf8');
+  f.files[2].content = 'Updated guide';
+  chmodSync(join(f.root, 'evals'), 0o500);
+  try { await assert.rejects(syncUpstreams(f), /EACCES|EPERM/); }
+  finally { chmodSync(join(f.root, 'evals'), 0o700); }
+  assert.equal(readFileSync(join(f.root, 'upstream/lock.json'), 'utf8'), lock);
+  assert.equal(readFileSync(join(f.root, 'evals/upstream-changes.json'), 'utf8'), report);
+  verifyUpstreams(f.root);
+});
+test('case-only changes remap pending coverage even when the locked snapshot is unchanged', async t => {
+  const f = fixture(t); mkdirSync(join(f.root, 'evals'));
+  const path = join(f.root, 'evals/manifest.json');
+  writeFileSync(path, JSON.stringify({ cases: [] })); await syncUpstreams(f);
+  assert.deepEqual(JSON.parse(readFileSync(join(f.root, 'evals/upstream-changes.json'))).uncoveredSkills, ['demo']);
+  const lock = readFileSync(join(f.root, 'upstream/lock.json'), 'utf8');
+  writeFileSync(path, JSON.stringify({ cases: [{ id: 'demo-task', skills: ['demo'] }] }));
+  await syncUpstreams({ ...f, locked: true });
+  assert.equal(readFileSync(join(f.root, 'upstream/lock.json'), 'utf8'), lock);
+  const report = JSON.parse(readFileSync(join(f.root, 'evals/upstream-changes.json')));
+  assert.deepEqual(report.uncoveredSkills, []);
+  assert.deepEqual(report.affectedCases, ['demo-task']);
+  assert.ok(report.changes.length > 0, 'Remapping must retain the original change evidence');
+  assert.equal(report.coverage.length, 6);
 });

@@ -5,6 +5,10 @@ description: 'Get best practices for developing applications with Spring Boot.'
 
 # Spring Boot Best Practices
 
+## Project Compatibility
+
+Confirm Java/Spring versions, persistence technology and project conventions from the build and source first. Preserve existing MyBatis/JPA, package structure and response contracts. JPA, domain packaging and test examples below apply only when compatible with the project or explicitly requested; they do not authorize migration, upgrades or installing dependencies. Report unavailable verification accurately.
+
 Your goal is to help me write high-quality Spring Boot applications by following established best practices.
 
 ## Project Setup & Structure
