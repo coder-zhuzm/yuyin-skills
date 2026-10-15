@@ -1,5 +1,10 @@
 # 变更记录
 
+## 0.3.5
+
+- chore: refresh curated upstream skill snapshots [skip ci] (41c5532)
+- feat: validate skill behavior and add pull request CI (e5dbaad)
+
 ## 0.3.4
 
 - feat: install packaged skills with a single npm command (1d618ee)
