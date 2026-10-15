@@ -60,6 +60,9 @@ test('a broad package directory never grants permission to distribute unmanaged 
       ),
     /Unmanaged|internal|File outside/,
   );
+  for (const path of ['evals/manifest.json', 'docs/plans/plan.md']) {
+    assert.throws(() => validatePackageContents(extra(path), { ...pkg, files: [...pkg.files, 'evals/', 'docs/'] }, root), /internal|plan/);
+  }
 });
 test('npm entry and pinned runtime dependency are mandatory and cannot widen the package boundary', () => {
   const { pkg, manifest } = distribution();

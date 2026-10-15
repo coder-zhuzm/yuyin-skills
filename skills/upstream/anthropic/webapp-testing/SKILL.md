@@ -6,6 +6,10 @@ license: Complete terms in LICENSE.txt
 
 # Web Application Testing
 
+## Project Compatibility
+
+Inspect the existing browser testing tools first and use them when available, including JavaScript/TypeScript Playwright. The Python workflow below is an option when suitable, not a requirement to introduce a second test stack. Do not install packages or browsers without task authorization. If runtime tools are missing, separate source review from actual browser execution and report the unverified scope. Only report an environment component as missing if it was actually checked; missing project packages do not prove that system browsers are absent.
+
 To test local web applications, write native Python Playwright scripts.
 
 **Helper Scripts Available**:

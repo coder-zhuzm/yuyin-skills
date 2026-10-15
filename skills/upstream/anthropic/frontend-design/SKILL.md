@@ -6,6 +6,10 @@ license: Complete terms in LICENSE.txt
 
 # Frontend Design
 
+## Project Compatibility
+
+For existing products, preserve the established design system, component library, brand and requested scope unless a redesign is authorized. Apply the creative process below to new UI or explicit design work; a small copy, behavior or style fix does not require a new visual identity or a full design interview.
+
 Approach this as the design lead at a design studio known for giving every client a distinct visual identity that is not mistaken for anyone else's. This client has already rejected proposals that felt cliché or templated, and is paying for a distinctive point of view: make deliberate, opinionated choices about palette, typography, and layout that are specific to this brief, and take aesthetic risk if justified.
 
 ## Ground your designs in the subject matter

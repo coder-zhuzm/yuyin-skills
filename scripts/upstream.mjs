@@ -18,6 +18,7 @@ import { spawnSync, execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { pathToFileURL } from 'node:url';
 import YAML from 'yaml';
+import { buildBehaviorReport, lockDigest, validateBehaviorReport } from './behavior.mjs';
 
 const digest = (data) => createHash('sha256').update(data).digest('hex');
 const json = (file) => JSON.parse(readFileSync(file, 'utf8'));
@@ -327,6 +328,7 @@ export function verifyUpstreams(root = process.cwd()) {
 export async function syncUpstreams({
   root = process.cwd(),
   mode = 'update',
+  locked = false,
   loadSource = loadGitSource,
 } = {}) {
   root = resolve(root);
@@ -336,6 +338,8 @@ export async function syncUpstreams({
   const m = manifest(root),
     lockPath = join(root, 'upstream/lock.json'),
     old = existsSync(lockPath) ? json(lockPath) : null;
+  const oldLockBytes = old ? readFileSync(lockPath) : null;
+  assert.ok(!locked || (mode === 'update' && old), 'Locked adaptation requires an existing lock and update mode');
   if (old) inspectLock(root, old, { allowMissing: mode === 'restore' });
   else assert.ok(!existsSync(join(root, snapshot)), 'Unmanaged snapshot directory already exists');
   if (mode === 'restore') {
@@ -348,7 +352,7 @@ export async function syncUpstreams({
     patches = [];
   const fetched = await Promise.allSettled(
     m.data.sources.map(async (source) => {
-      const requested = mode === 'restore' ? old.sources.find((s) => s.id === source.id)?.commit : source.ref;
+      const requested = mode === 'restore' || locked ? old.sources.find((s) => s.id === source.id && s.repository === source.repository)?.commit : source.ref;
       assert.ok(requested, `Missing locked source ${source.id}`);
       return { source, requested, loaded: await loadSource(source, requested) };
     }),
@@ -367,7 +371,7 @@ export async function syncUpstreams({
   for (const item of fetched) {
     const { source, requested, loaded } = item.value;
     assert.match(loaded.commit, /^[a-f0-9]{40}$/);
-    if (mode === 'restore') assert.equal(loaded.commit, requested, 'Source commit differs from lock');
+    if (mode === 'restore' || locked) assert.equal(loaded.commit, requested, 'Source commit differs from lock');
     const upstream = new Map();
     for (const f of loaded.files) {
       safePath(f.path);
@@ -464,10 +468,22 @@ export async function syncUpstreams({
       .map(([path, f]) => ({ path, sha256: digest(f.content), mode: f.mode })),
   };
   if (mode === 'restore') assert.deepEqual(next, old, 'Restored snapshot differs from lock');
+  const reportPath = 'evals/upstream-changes.json';
+  const hasCases = mode === 'update' && existsSync(join(root, 'evals/manifest.json'));
+  if (hasCases) noLinks(root, reportPath);
+  const previousReportBytes = hasCases && existsSync(join(root, reportPath)) ? readFileSync(join(root, reportPath)) : null;
+  const needsReport = hasCases && (!previousReportBytes || stable(old) !== stable(next) || JSON.parse(previousReportBytes).casesSha256 !== lockDigest(json(join(root, 'evals/manifest.json')).cases));
+  const report = needsReport ? buildBehaviorReport({ old, next,
+    cases: json(join(root, 'evals/manifest.json')).cases,
+    previous: previousReportBytes ? JSON.parse(previousReportBytes) : undefined,
+    beforeText: path => readFileSync(join(root, path), 'utf8'),
+    afterText: path => files.get(path).content.toString(),
+  }) : null;
+  if (report) validateBehaviorReport(report, next, json(join(root, 'evals/manifest.json')).cases);
   // Stage and validate the complete batch before replacing any previous snapshot.
   const stage = mkdtempSync(join(root, '.upstream-stage-'));
   let moved = false,
-    installed = false;
+    installed = false, lockInstalled = false, reportInstalled = false;
   try {
     for (const [path, f] of files) {
       mkdirSync(join(stage, posix.dirname(path)), { recursive: true });
@@ -478,6 +494,7 @@ export async function syncUpstreams({
     writeFileSync(join(stage, 'upstream/sources.json'), readFileSync(join(root, 'upstream/sources.json')));
     writeFileSync(join(stage, 'upstream/lock.json'), stable(next));
     verifyUpstreams(stage);
+    if (report) writeFileSync(join(stage, 'behavior-report.json'), stable(report));
     // Recheck immediately before mutation to avoid overwriting edits made while fetching.
     if (old) inspectLock(root, old, { allowMissing: mode === 'restore' });
     else assert.ok(!existsSync(join(root, snapshot)), 'Snapshot appeared while fetching');
@@ -486,6 +503,8 @@ export async function syncUpstreams({
       m.hash,
       'Manifest changed while fetching',
     );
+    if (old) assert.deepEqual(readFileSync(lockPath), oldLockBytes, 'Lock changed while fetching');
+    if (needsReport) assert.deepEqual(existsSync(join(root, reportPath)) ? readFileSync(join(root, reportPath)) : null, previousReportBytes, 'Behavior report changed while fetching');
     mkdirSync(join(root, 'skills'), { recursive: true });
     if (existsSync(join(root, snapshot))) {
       renameSync(join(root, snapshot), join(stage, 'previous'));
@@ -493,8 +512,17 @@ export async function syncUpstreams({
     }
     renameSync(join(stage, snapshot), join(root, snapshot));
     installed = true;
-    if (mode === 'update') renameSync(join(stage, 'upstream/lock.json'), lockPath);
+    if (mode === 'update') { renameSync(join(stage, 'upstream/lock.json'), lockPath); lockInstalled = true; }
+    if (report) { renameSync(join(stage, 'behavior-report.json'), join(root, reportPath)); reportInstalled = true; }
   } catch (error) {
+    if (reportInstalled) {
+      if (previousReportBytes) writeFileSync(join(root, reportPath), previousReportBytes);
+      else rmSync(join(root, reportPath));
+    }
+    if (lockInstalled) {
+      if (oldLockBytes) writeFileSync(lockPath, oldLockBytes);
+      else rmSync(lockPath);
+    }
     if (installed) rmSync(join(root, snapshot), { recursive: true, force: true });
     if (moved) renameSync(join(stage, 'previous'), join(root, snapshot));
     throw error;
@@ -505,12 +533,13 @@ export async function syncUpstreams({
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   try {
-    const mode = process.argv[2];
+    const mode = process.argv[2], flags = process.argv.slice(3);
     assert.ok(
       ['update', 'restore', 'check'].includes(mode),
-      'Usage: node scripts/upstream.mjs update|restore|check',
+      'Usage: node scripts/upstream.mjs update [--locked]|restore|check',
     );
-    const r = mode === 'check' ? verifyUpstreams() : await syncUpstreams({ mode });
+    assert.ok(flags.length === 0 || (mode === 'update' && flags.length === 1 && flags[0] === '--locked'), 'Only update accepts --locked');
+    const r = mode === 'check' ? verifyUpstreams() : await syncUpstreams({ mode, locked: flags.includes('--locked') });
     console.log(
       `Upstream ${mode}: ${r.skills.length} skills, ${r.files.length} files, ${r.sources} sources.`,
     );

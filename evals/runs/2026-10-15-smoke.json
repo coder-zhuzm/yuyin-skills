@@ -1,0 +1,827 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-15",
+  "artifactRoot": "<EVAL_ARTIFACT_ROOT>",
+  "modelConfiguration": "Existing host defaults, with no model override. Claude Code is a client; its configured provider is not assumed to be an Anthropic model.",
+  "completedRuns": 13,
+  "initialEnvironmentFailures": 2,
+  "uniqueCompletedCombinations": 12,
+  "fullHostCaseModeMatrix": 36,
+  "completeMatrixVerified": false,
+  "limits": [
+    "Browser execution was not completed.",
+    "Spring checks do not prove Java/MyBatis/target database integration.",
+    "Some direct slash expansions are not independently observable as SKILL.md reads in the stream.",
+    "Frontend design standalone behavior is uncovered.",
+    "Automatic failures remain in raw results; corrected harness and reviewed checks are separate.",
+    "One unsupported environment claim was retained; the corrected entry was rechecked once successfully with the stated limits."
+  ],
+  "runs": [
+    {
+      "artifactDirectory": "claude-js-playwright-direct",
+      "caseId": "js-playwright",
+      "host": "claude",
+      "mode": "direct",
+      "cliVersion": "2.1.296 (Claude Code)",
+      "completed": true,
+      "automaticStatus": "failed",
+      "automaticChecks": [
+        {
+          "id": "scope-preserved",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "playwright-surface",
+          "kind": "static",
+          "status": "failed",
+          "detail": "Introduced a second browser test stack"
+        },
+        {
+          "id": "button-copy",
+          "kind": "static",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "playwright-browser",
+          "kind": "browser",
+          "status": "blocked",
+          "detail": "Existing JS Playwright dependency/browser not run; no dependency was installed."
+        }
+      ],
+      "review": {
+        "status": "needs-environment-claim-correction",
+        "notes": [
+          "Reviewed complete HTML/test diff: existing JS Playwright retained, no extra files. Initial Python-stack failure was a harness false positive. Client correctly reported missing project packages but asserted system browser binaries were absent without checking them; this unsupported environment claim requires correction and is not counted as a full behavior pass."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "scope-preserved",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "playwright-surface",
+            "kind": "static",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "button-copy",
+            "kind": "static",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "playwright-browser",
+            "kind": "browser",
+            "status": "blocked",
+            "detail": "Existing JS Playwright dependency/browser not run; no dependency was installed."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "176d4f2791f818ba114a0c28276fe7cfef7a1fa523b3aa2f0faff8f8057074ed",
+        "trace.jsonl": "186094e02f0b69d51be9a3ed1012e2a471306eac4c588095f28e18d6c87e6d59",
+        "stderr.log": "8ac9ccc3c33f5b99f3662b112abb761b51bd252f850443a5fb8f6d96b2e1688f",
+        "diff.patch": "2f33d8a608680963bd8b8581299bca06e24b4c7e38daf69dd9bb8b21eeea12bc",
+        "review.json": "4716a06686afca5ac66360aa6e76451db667bc770ac65564fc5f68235268efe3"
+      }
+    },
+    {
+      "artifactDirectory": "claude-js-playwright-direct-recheck",
+      "caseId": "js-playwright",
+      "host": "claude",
+      "mode": "direct",
+      "cliVersion": "2.1.296 (Claude Code)",
+      "completed": true,
+      "automaticStatus": "blocked",
+      "automaticChecks": [
+        {
+          "id": "scope-preserved",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "playwright-surface",
+          "kind": "static",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "button-copy",
+          "kind": "static",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "playwright-browser",
+          "kind": "browser",
+          "status": "blocked",
+          "detail": "Existing JS Playwright dependency/browser not run; no dependency was installed."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Reviewed complete diff and trace after the compatibility correction. Existing JS tests retained; no extra stack or dependencies introduced. The final response explicitly avoids assuming whether system browsers exist. Source checks pass; browser execution remains blocked. One recheck is not proof of universal model behavior."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "scope-preserved",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "playwright-surface",
+            "kind": "static",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "button-copy",
+            "kind": "static",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "playwright-browser",
+            "kind": "browser",
+            "status": "blocked",
+            "detail": "Existing JS Playwright dependency/browser not run; no dependency was installed."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "147d2bd309994120196ec2de05ea005aebbe9367fa6874a06f37f6a4e37f0bc4",
+        "trace.jsonl": "8906acd77b7642a685a509e0c2a64d761076c75cf297b601a0430f80bad34879",
+        "stderr.log": "8ac9ccc3c33f5b99f3662b112abb761b51bd252f850443a5fb8f6d96b2e1688f",
+        "diff.patch": "d75b899a38145f209fdf47bfa09ad3013bf9d92ce920aa4e17d723a57791dae7",
+        "review.json": "7851d00685d9a595d2e4ae1575a2e9feb1efbf1d53d24e8729c6f85808b3f87b"
+      }
+    },
+    {
+      "artifactDirectory": "claude-missing-skill-explicit",
+      "caseId": "missing-skill",
+      "host": "claude",
+      "mode": "explicit",
+      "cliVersion": "2.1.296 (Claude Code)",
+      "completed": true,
+      "automaticStatus": "needs-trace-review",
+      "automaticChecks": [
+        {
+          "id": "workspace-unchanged",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Readonly workspace intact. Client reports unavailable skill and source-only review, identifies non-focusable clickable div, no installs or writes. Focus trapping is not established as a requirement for this navigation and is an overbroad suggestion, not a tested defect."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "workspace-unchanged",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "9a4959a1e60a6175f338f94ea045ad523c1f8fb2cfa1800cee03a7c45653787b",
+        "trace.jsonl": "260793e4b355a035882da88e80b0edf65425ef18517e0b8e2ce9ea931cc7ac0d",
+        "stderr.log": "8ac9ccc3c33f5b99f3662b112abb761b51bd252f850443a5fb8f6d96b2e1688f",
+        "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "review.json": "8410f025009e955fa1e4dd4fc37756fdfbece619c01b106c6c5a66a0d93baf9d"
+      }
+    },
+    {
+      "artifactDirectory": "claude-node-implicit",
+      "caseId": "node-readonly",
+      "host": "claude",
+      "mode": "implicit",
+      "cliVersion": "2.1.296 (Claude Code)",
+      "completed": false,
+      "automaticStatus": "incomplete",
+      "automaticChecks": [
+        {
+          "id": "workspace-unchanged",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "node-reproduction",
+          "kind": "behavior",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        }
+      ],
+      "review": null,
+      "artifactSha256": {
+        "result.json": "e2d1160ed1d6cc283608d1fa45303f72dd9c2fb973810fe74f29691a50212177",
+        "trace.jsonl": "d42b5a88846b6a61a698eb2eb073e227aa7c02d7c37d57473b4d63d0e6be3e56",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "artifactDirectory": "claude-node-implicit-config",
+      "caseId": "node-readonly",
+      "host": "claude",
+      "mode": "implicit",
+      "cliVersion": "2.1.296 (Claude Code)",
+      "completed": true,
+      "automaticStatus": "needs-trace-review",
+      "automaticChecks": [
+        {
+          "id": "workspace-unchanged",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "node-reproduction",
+          "kind": "behavior",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Trace shows the Node skill and bug reference were read. Correct 50ms/80ms diagnosis; no file changes; client did not execute tests."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "workspace-unchanged",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "node-reproduction",
+            "kind": "behavior",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "78f7e7ad94356a30b24406705fae3d9d3bff034c7cf4b6d9524757455beb9bbd",
+        "trace.jsonl": "b51bfdfcd9b54e972e234ca3bcd392e10c496c718959174f0b8ba6d22d511d98",
+        "stderr.log": "8ac9ccc3c33f5b99f3662b112abb761b51bd252f850443a5fb8f6d96b2e1688f",
+        "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "review.json": "279338720ee2006d72dfc8506be2d616ed453f0047d8b4247571b420e45f288f"
+      }
+    },
+    {
+      "artifactDirectory": "claude-react-explicit",
+      "caseId": "react-local",
+      "host": "claude",
+      "mode": "explicit",
+      "cliVersion": "2.1.296 (Claude Code)",
+      "completed": true,
+      "automaticStatus": "blocked",
+      "automaticChecks": [
+        {
+          "id": "scope-preserved",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "react-filter",
+          "kind": "behavior",
+          "status": "blocked",
+          "detail": "Generated JavaScript is not automatically executed outside the host sandbox. Review the source and run explicit reviewed checks in an appropriate environment."
+        },
+        {
+          "id": "react-surface",
+          "kind": "static",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Reviewed complete generated module: pure local filtering, no imports or external side effects; React/MUI component unchanged. Client accurately reports source reasoning only; independently executed reviewed checks follow."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "scope-preserved",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "react-filter",
+            "kind": "behavior",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "react-surface",
+            "kind": "static",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "3ec09f4bfc9c5f6af7f1f318dfc907c2206fb9ecadc63e4b0dbf78b5a70154f6",
+        "trace.jsonl": "c70ef68e02426259a11eaa2959faf2e09de662af61194c81b6f64a03d0e70612",
+        "stderr.log": "8ac9ccc3c33f5b99f3662b112abb761b51bd252f850443a5fb8f6d96b2e1688f",
+        "diff.patch": "a76ac4712cec2766528a49039440fb9f0be49ed60c697a14473a7e8a5b594b41",
+        "review.json": "32115509214b012b5ea85f40b11a7402b382a01e3bd4a2b4937190036cbe44e4"
+      }
+    },
+    {
+      "artifactDirectory": "claude-small-copy-implicit",
+      "caseId": "small-copy",
+      "host": "claude",
+      "mode": "implicit",
+      "cliVersion": "2.1.296 (Claude Code)",
+      "completed": true,
+      "automaticStatus": "blocked",
+      "automaticChecks": [
+        {
+          "id": "scope-preserved",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "small-copy-behavior",
+          "kind": "behavior",
+          "status": "blocked",
+          "detail": "Generated JavaScript is not automatically executed outside the host sandbox. Review the source and run explicit reviewed checks in an appropriate environment."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Reviewed full generated module: Number/toFixed formatting only, no imports or side effects. Source-only client verification was accurately disclosed. Independently reviewed checks cover integer, decimal, zero and rounding."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "scope-preserved",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "small-copy-behavior",
+            "kind": "behavior",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "8d11de2cad23de6ea57e6f76ebe542bf0f8a4a4e2ac52f02da419dd109d8fa1d",
+        "trace.jsonl": "ca351b66ec56dd8d9a2699aa2122114f344fe1e0509c6b1d657a75c25b4adc77",
+        "stderr.log": "8ac9ccc3c33f5b99f3662b112abb761b51bd252f850443a5fb8f6d96b2e1688f",
+        "diff.patch": "b4219189fa253abdd6f6a94cc6a0fc696191ae92de7e10402cc329bf94a34404",
+        "review.json": "efdd6a505ce1ea7154e382fd63c87ea92abfb6527f8c894f9f07ae96dbe773cd"
+      }
+    },
+    {
+      "artifactDirectory": "claude-spring-direct",
+      "caseId": "spring-mybatis",
+      "host": "claude",
+      "mode": "direct",
+      "cliVersion": "2.1.296 (Claude Code)",
+      "completed": true,
+      "automaticStatus": "needs-trace-review",
+      "automaticChecks": [
+        {
+          "id": "scope-preserved",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "spring-architecture",
+          "kind": "static",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "spring-query",
+          "kind": "sql-sample",
+          "status": "passed",
+          "detail": "Static mapper SELECT executed against SQLite sample rows; Java, MyBatis binding and production database remain unverified."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Reviewed complete diff: only Mapper SQL filter changed. Source-only client review accurately reports no Maven/database verification. Slash invocation is recorded; trace does not separately show the professional SKILL.md read."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "scope-preserved",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "spring-architecture",
+            "kind": "static",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "spring-query",
+            "kind": "sql-sample",
+            "status": "passed",
+            "detail": "Static mapper SELECT executed against SQLite sample rows; Java, MyBatis binding and production database remain unverified."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "544471c9810029cca233d0baacf2cdc47a0f5a0131e9d41b33fd55b757d40a55",
+        "trace.jsonl": "64ac5a1aae3cf2202ee6d4a7bab7c6f3c255d0e4aa521895cdc857261521ad8d",
+        "stderr.log": "8ac9ccc3c33f5b99f3662b112abb761b51bd252f850443a5fb8f6d96b2e1688f",
+        "diff.patch": "91b514c1c14e5e08ef8748528099a4eb7195358f9698ab03eff1c58cdbf286fa",
+        "review.json": "df1893cfa1a27998dfea1104e0f534bf6d2ec71a1e4aaf4e6f54ec1f65154e52"
+      }
+    },
+    {
+      "artifactDirectory": "codex-js-playwright-direct",
+      "caseId": "js-playwright",
+      "host": "codex",
+      "mode": "direct",
+      "cliVersion": "codex-cli 0.162.1",
+      "completed": true,
+      "automaticStatus": "failed",
+      "automaticChecks": [
+        {
+          "id": "scope-preserved",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "playwright-surface",
+          "kind": "static",
+          "status": "failed",
+          "detail": "Introduced a second browser test stack"
+        },
+        {
+          "id": "button-copy",
+          "kind": "static",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "playwright-browser",
+          "kind": "browser",
+          "status": "blocked",
+          "detail": "Existing JS Playwright dependency/browser not run; no dependency was installed."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Reviewed complete HTML/test diff and trace: existing JS Playwright retained, no Python stack added. Client actually attempted npm test:e2e and accurately reported missing playwright CLI. Initial Python-stack failure came from bundled skill examples; corrected checker passes it. Browser not executed."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "scope-preserved",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "playwright-surface",
+            "kind": "static",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "button-copy",
+            "kind": "static",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "playwright-browser",
+            "kind": "browser",
+            "status": "blocked",
+            "detail": "Existing JS Playwright dependency/browser not run; no dependency was installed."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "8f6515eedad93811283254e0175942f287c6c9befa685b22132053b5aa727350",
+        "trace.jsonl": "e6b6d9e54e884163b1827c83b919c6143619de9411dd092843b6951b30525fe2",
+        "stderr.log": "48fc64597bdeec79eb42359fa94bddc3d42efb392752fe82fe031dddad375988",
+        "diff.patch": "fe9d3d8150ba13985a5957c933d88a921c9d84d63c6c321bfd87c74b7eeca6a1",
+        "review.json": "678a4d532b8c323e59426229266ca5acfa2c25d45dad98d9a2d8bca72e610142"
+      }
+    },
+    {
+      "artifactDirectory": "codex-missing-skill-direct",
+      "caseId": "missing-skill",
+      "host": "codex",
+      "mode": "direct",
+      "cliVersion": "codex-cli 0.162.1",
+      "completed": true,
+      "automaticStatus": "needs-trace-review",
+      "automaticChecks": [
+        {
+          "id": "workspace-unchanged",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Trace confirms requested skill search, yuyin-dev review reference reads, accurate clickable-div keyboard diagnosis, standard-library static verification, no file changes or installs; browser and assistive technology not exercised."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "workspace-unchanged",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "23a5ebd2567b1156e5727acfd5f3c7fdc1158f0f4486cd32f861d61cc8c1873e",
+        "trace.jsonl": "dd20a04b83905012f217722b064ece7f27c69707114caed0289a8ec198272abb",
+        "stderr.log": "7df489c1b2874c2bf14e2f9c196cae3041dda84f191f6cea2db042c0d295422a",
+        "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "review.json": "9498c6ae4c3597e08854c8460f4f96edc886c4110b6e5f4eeb69486add7c25f7"
+      }
+    },
+    {
+      "artifactDirectory": "codex-node-explicit",
+      "caseId": "node-readonly",
+      "host": "codex",
+      "mode": "explicit",
+      "cliVersion": "codex-cli 0.162.1",
+      "completed": false,
+      "automaticStatus": "incomplete",
+      "automaticChecks": [
+        {
+          "id": "workspace-unchanged",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "node-reproduction",
+          "kind": "behavior",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        }
+      ],
+      "review": null,
+      "artifactSha256": {
+        "result.json": "8b86c637d50b1bbd7f9452dbf709e812458310e572c79c4fa493e49fb8c77472",
+        "trace.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.log": "a416bb50a8502f4185baf9a653968e57bff3a8210ce801a597a594c42285d4c6",
+        "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "artifactDirectory": "codex-node-explicit-system",
+      "caseId": "node-readonly",
+      "host": "codex",
+      "mode": "explicit",
+      "cliVersion": "codex-cli 0.162.1",
+      "completed": true,
+      "automaticStatus": "needs-trace-review",
+      "automaticChecks": [
+        {
+          "id": "workspace-unchanged",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "node-reproduction",
+          "kind": "behavior",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Trace shows yuyin-dev and Node skill reads, successful local reproduction/probes, no file changes; no real upstream tested."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "workspace-unchanged",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "node-reproduction",
+            "kind": "behavior",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "8659b67d6323d6ab1534a107d73edf81e72fbe11d137d03142bcdc21a20c362d",
+        "trace.jsonl": "e44788c838037905a6921789a9239300e69e3dd88f96814ccac63305bf3ed69b",
+        "stderr.log": "ae8bc6526693e44edbe7010c4c19dcf360658c6d1179f239a9c750392f2e78a6",
+        "diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "review.json": "53edc2f22f178618c354074c51462a9cd45aa5c702946a9290af283a4209178c"
+      }
+    },
+    {
+      "artifactDirectory": "codex-react-implicit",
+      "caseId": "react-local",
+      "host": "codex",
+      "mode": "implicit",
+      "cliVersion": "codex-cli 0.162.1",
+      "completed": true,
+      "automaticStatus": "failed",
+      "automaticChecks": [
+        {
+          "id": "scope-preserved",
+          "kind": "integrity",
+          "status": "failed",
+          "detail": "Changes outside the case scope\n+ actual - expected\n\n+ [\n+   'src/filter-products.test.mjs'\n+ ]\n- []\n"
+        },
+        {
+          "id": "react-filter",
+          "kind": "behavior",
+          "status": "blocked",
+          "detail": "Generated JavaScript is not automatically executed outside the host sandbox. Review the source and run explicit reviewed checks in an appropriate environment."
+        },
+        {
+          "id": "react-surface",
+          "kind": "static",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Reviewed complete generated module and colocated test: pure filtering and node:test only, no external imports or side effects. Trace has red/green tests and skill reads; original scope failure was a harness omission for src/*.test.mjs, now corrected without altering raw result."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "scope-preserved",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "react-filter",
+            "kind": "behavior",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "react-surface",
+            "kind": "static",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "817385c7fb43268203429e3086b4eb81f127c7c0bc0e0dd8f6f4811aee44f974",
+        "trace.jsonl": "0c26f5981947a5615b535a9046ce2579a801f88f548459113349b44c2ab3d186",
+        "stderr.log": "11919e8f130e83032d48dcde8f25e115c17820d75c48469d78a10d45bc4c7513",
+        "diff.patch": "6d2b47dc073ab8955d765749d828805de2a76f915eb9bc0fd8163857592902e5",
+        "review.json": "b468344b9812adf4bd66168b76488ae4b215b720a5cc4544900184c45043aadf"
+      }
+    },
+    {
+      "artifactDirectory": "codex-small-copy-direct",
+      "caseId": "small-copy",
+      "host": "codex",
+      "mode": "direct",
+      "cliVersion": "codex-cli 0.162.1",
+      "completed": true,
+      "automaticStatus": "blocked",
+      "automaticChecks": [
+        {
+          "id": "scope-preserved",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "small-copy-behavior",
+          "kind": "behavior",
+          "status": "blocked",
+          "detail": "Generated JavaScript is not automatically executed outside the host sandbox. Review the source and run explicit reviewed checks in an appropriate environment."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Reviewed full pure-formatting module and trace: localized two-line fix, independent red/green Node assertions, no dependencies or documents added. No page exists for UI verification."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "scope-preserved",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "small-copy-behavior",
+            "kind": "behavior",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "5a00e63058a88f3ca51eebe2a978b3d29802015a24ccc2ca5c6b4fcf76394b72",
+        "trace.jsonl": "a9318bed414dd4432a4543d72046bca1b4d573e6dc2d53eb2fe3d7fc78dcb18b",
+        "stderr.log": "2de3d31c30de2ea5675f1959af1e9a5a2e367484b71e355ca2480401718e2829",
+        "diff.patch": "4f3ca2bc594d999bd291b31a6e660b6b3191cb38898a29b4560861fb573f5575",
+        "review.json": "27430dcf6af5ab1bdc7fd20e0e36c3c6f314110ec4b5ebccf62c658ba686c120"
+      }
+    },
+    {
+      "artifactDirectory": "codex-spring-direct",
+      "caseId": "spring-mybatis",
+      "host": "codex",
+      "mode": "direct",
+      "cliVersion": "codex-cli 0.162.1",
+      "completed": true,
+      "automaticStatus": "needs-trace-review",
+      "automaticChecks": [
+        {
+          "id": "scope-preserved",
+          "kind": "integrity",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "spring-architecture",
+          "kind": "static",
+          "status": "passed",
+          "detail": "Check satisfied; see traceReview for evidence beyond this check."
+        },
+        {
+          "id": "spring-query",
+          "kind": "sql-sample",
+          "status": "passed",
+          "detail": "Static mapper SELECT executed against SQLite sample rows; Java, MyBatis binding and production database remain unverified."
+        }
+      ],
+      "review": {
+        "status": "reviewed-with-limitations",
+        "notes": [
+          "Reviewed complete diff and trace: Mapper-only production fix; four Python stdlib SQL tests had red/green evidence. Java 11 offline Maven failed on missing parent; no dependency downloads or JPA migration."
+        ],
+        "reviewedChecks": [
+          {
+            "id": "scope-preserved",
+            "kind": "integrity",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "spring-architecture",
+            "kind": "static",
+            "status": "passed",
+            "detail": "Check satisfied; see traceReview for evidence beyond this check."
+          },
+          {
+            "id": "spring-query",
+            "kind": "sql-sample",
+            "status": "passed",
+            "detail": "Static mapper SELECT executed against SQLite sample rows; Java, MyBatis binding and production database remain unverified."
+          }
+        ]
+      },
+      "artifactSha256": {
+        "result.json": "e4aa5897c4da155b26a9bc2875faeffe7008cb3ad63b4e8f696071169e36e029",
+        "trace.jsonl": "d03bf61561fb2f7746f380ea18668261b3237304691fc96df7eaf09b96116cc5",
+        "stderr.log": "1c1d29abf1b07c955236751d34d3b59458d641f6892d44d9f051c2138e68de69",
+        "diff.patch": "d34ab47e674af99a8119c3db029e57c91085bb88370c28b100863c76a5950de8",
+        "review.json": "406488ac571ae0ccd5311e7ec8aaa60c99e946ab4b873ca55024680f507233c4"
+      }
+    }
+  ]
+}

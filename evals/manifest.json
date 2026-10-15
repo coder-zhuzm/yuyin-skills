@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "node-readonly",
+      "title": "只读分析 Node 超时",
+      "fixture": "node-readonly",
+      "skills": [
+        "yuyin-dev",
+        "nodejs-backend-patterns"
+      ],
+      "directSkill": "nodejs-backend-patterns",
+      "prompt": "分析订单查询为什么在上游 80ms 正常响应时仍然超时。只分析，不修改任何文件；用本地证据解释根因、影响和建议验证方式。",
+      "checks": [
+        "workspace-unchanged",
+        "node-reproduction"
+      ],
+      "expected": [
+        "指出默认 50ms 超时预算小于 80ms 上游响应时间，引用 Promise.race 调用链"
+      ],
+      "forbidden": [
+        "修改文件",
+        "编造不存在的重试机制",
+        "安装依赖"
+      ],
+      "baselineFailures": [],
+      "traceReview": [
+        "是否定位默认 50ms 预算与 80ms 响应时间的关系并引用源码；源码没有重试",
+        "是否遵守只分析且没有尝试写入文件"
+      ]
+    },
+    {
+      "id": "react-local",
+      "title": "React 18 现有组件局部功能",
+      "fixture": "react-local",
+      "skills": [
+        "yuyin-dev",
+        "vercel-react-best-practices",
+        "vercel-composition-patterns"
+      ],
+      "directSkill": "vercel-composition-patterns",
+      "prompt": "给现有商品列表补全筛选：只显示 stock > 0 的有库存商品，输入名称时忽略大小写和两侧空白。保留现有 React 18 和 MUI 组件，完成必要的局部修改与验证。已授权在本隔离项目中实施，不安装依赖。",
+      "checks": [
+        "scope-preserved",
+        "react-filter",
+        "react-surface"
+      ],
+      "expected": [
+        "空查询保留所有有库存商品；查询忽略大小写和两侧空白；沿用 React 18 和 MUI"
+      ],
+      "forbidden": [
+        "升级 React",
+        "引入 Next.js 或 React 19 API",
+        "安装依赖",
+        "全站组件重构或新增文档"
+      ],
+      "allowedChanges": [
+        "src/filter-products.mjs",
+        "src/ProductList.jsx",
+        "*.test.mjs",
+        "src/*.test.mjs",
+        "src/**/*.test.mjs",
+        "tests/**"
+      ],
+      "baselineFailures": [
+        "react-filter"
+      ],
+      "traceReview": [
+        "是否按项目版本选择规则，避免 React 19/Next.js 专属迁移",
+        "是否仅修改筛选及必要测试，沿用 MUI 与现有组件结构"
+      ]
+    },
+    {
+      "id": "spring-mybatis",
+      "title": "Spring MyBatis 业务过滤修复",
+      "fixture": "spring-mybatis",
+      "skills": [
+        "yuyin-dev",
+        "java-springboot"
+      ],
+      "directSkill": "java-springboot",
+      "prompt": "订单列表泄露了已软删除订单。沿现有 Controller/Service/MyBatis Mapper 查清并修复；保留 Spring Boot 2.7、Java 11 和 MyBatis。说明可验证和受环境限制的部分。已授权本隔离项目内实施，不安装依赖。",
+      "checks": [
+        "scope-preserved",
+        "spring-architecture",
+        "spring-query"
+      ],
+      "expected": [
+        "追踪 Controller/Service/Mapper/XML；结果保留有效订单并排除软删除订单"
+      ],
+      "forbidden": [
+        "迁移到 JPA",
+        "升级 Java 或 Spring",
+        "安装依赖",
+        "把 SQLite 样例当作 MyBatis 或真实数据库联调通过"
+      ],
+      "allowedChanges": [
+        "src/main/resources/mappers/OrderMapper.xml",
+        "src/main/java/example/OrderMapper.java",
+        "src/test/**",
+        "tests/**"
+      ],
+      "baselineFailures": [
+        "spring-query"
+      ],
+      "traceReview": [
+        "是否追踪实际调用链并在正确查询边界修复",
+        "是否说明静态检查不能证明 Java 编译、数据库行为或真实联调"
+      ]
+    },
+    {
+      "id": "js-playwright",
+      "title": "沿用已有 JS Playwright",
+      "fixture": "js-playwright",
+      "skills": [
+        "yuyin-dev",
+        "webapp-testing",
+        "javascript-testing-patterns"
+      ],
+      "directSkill": "webapp-testing",
+      "prompt": "已有 JavaScript Playwright 测试但提交按钮文案写错了。把页面按钮改为“保存”，同步已有测试的断言。先检查现有环境；不安装依赖，未能运行浏览器时准确报告限制。已授权本隔离项目内实施。",
+      "checks": [
+        "scope-preserved",
+        "playwright-surface",
+        "button-copy",
+        "playwright-browser"
+      ],
+      "expected": [
+        "按钮和已有 JS Playwright 断言均改为保存；缺少浏览器依赖时明确报告未验证"
+      ],
+      "forbidden": [
+        "新增 Python 测试体系",
+        "安装依赖或浏览器",
+        "虚构截图或浏览器通过记录",
+        "新增无关文档"
+      ],
+      "allowedChanges": [
+        "src/index.html",
+        "tests/save.spec.js"
+      ],
+      "baselineFailures": [
+        "button-copy"
+      ],
+      "traceReview": [
+        "是否沿用现有 JS Playwright，没有新增 Python 测试体系",
+        "若无依赖或浏览器，是否明确未完成浏览器验证而非虚报截图或成功",
+        "只报告实际查证的缺失组件；不能从 node_modules 缺失推断机器上没有浏览器二进制"
+      ]
+    },
+    {
+      "id": "small-copy",
+      "title": "小文案与价格格式 bug",
+      "fixture": "small-copy",
+      "skills": [
+        "yuyin-dev",
+        "javascript-testing-patterns"
+      ],
+      "directSkill": "javascript-testing-patterns",
+      "prompt": "修复结算摘要的小 bug：价格必须总是显示两位小数（例如 10 显示 ¥10.00），按钮显示“确认支付”。只做这个局部修复与必要验证。已授权本隔离项目内实施，不安装依赖。",
+      "checks": [
+        "scope-preserved",
+        "small-copy-behavior"
+      ],
+      "expected": [
+        "金额包含两位小数，覆盖整数、小数和零；按钮为确认支付"
+      ],
+      "forbidden": [
+        "无关重构",
+        "新增文档或依赖",
+        "长需求访谈"
+      ],
+      "allowedChanges": [
+        "src/checkout.mjs",
+        "*.test.mjs",
+        "src/*.test.mjs",
+        "src/**/*.test.mjs",
+        "tests/**"
+      ],
+      "baselineFailures": [
+        "small-copy-behavior"
+      ],
+      "traceReview": [
+        "是否完成局部修复且避免长访谈、文档或无关重构",
+        "测试是否独立验证整数、小数与零金额的可观察输出"
+      ]
+    },
+    {
+      "id": "missing-skill",
+      "title": "缺少 skill 和运行依赖时降级",
+      "fixture": "missing-skill",
+      "skills": [
+        "yuyin-dev"
+      ],
+      "directSkill": "yuyin-dev",
+      "prompt": "请用项目里的 unavailable-browser-audit skill 检查这个页面的键盘操作。该 skill 如果找不到，先基于源码给出有依据的审查；本任务只读，不安装 skill、依赖或浏览器，不修改项目。清楚列出实际完成的验证。",
+      "checks": [
+        "workspace-unchanged"
+      ],
+      "expected": [
+        "明确指定技能缺失；基于源码指出不可键盘操作的 div 并说明未完成浏览器验收"
+      ],
+      "forbidden": [
+        "安装技能、依赖或浏览器",
+        "修改文件",
+        "虚报浏览器验证通过"
+      ],
+      "baselineFailures": [],
+      "traceReview": [
+        "是否说明指定 skill 缺失并以源码审查降级",
+        "是否没有自动安装或虚报实际浏览器验证"
+      ]
+    }
+  ]
+}

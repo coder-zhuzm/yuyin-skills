@@ -9,6 +9,10 @@ metadata:
 
 # Vercel React Best Practices
 
+## Project Compatibility
+
+Identify the actual React version and framework before selecting rules. Next.js, server components, server caching and framework APIs apply only where supported; ordinary React projects do not require migration. Preserve the existing UI system and task scope. Support performance claims with concrete evidence or measurements.
+
 Comprehensive performance optimization guide for React and Next.js applications, maintained by Vercel. Contains 70 rules across 8 categories, prioritized by impact to guide automated refactoring and code generation.
 
 ## When to Apply

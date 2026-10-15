@@ -195,6 +195,62 @@
       "type": "rewrite-rule-links",
       "path": "skills/upstream/vercel/composition-patterns/AGENTS.md",
       "reason": "Fix compiled upstream document links to rule files kept in the bundled rules directory; no rule content changes."
+    },
+    {
+      "id": "github-java-springboot-project-compatibility",
+      "type": "replace-exact",
+      "path": "skills/upstream/github/java-springboot/SKILL.md",
+      "before": "\n# Spring Boot Best Practices\n",
+      "after": "\n# Spring Boot Best Practices\n\n## Project Compatibility\n\nConfirm Java/Spring versions, persistence technology and project conventions from the build and source first. Preserve existing MyBatis/JPA, package structure and response contracts. JPA, domain packaging and test examples below apply only when compatible with the project or explicitly requested; they do not authorize migration, upgrades or installing dependencies. Report unavailable verification accurately.\n",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "anthropic-webapp-testing-project-compatibility",
+      "type": "replace-exact",
+      "path": "skills/upstream/anthropic/webapp-testing/SKILL.md",
+      "before": "\n# Web Application Testing\n",
+      "after": "\n# Web Application Testing\n\n## Project Compatibility\n\nInspect the existing browser testing tools first and use them when available, including JavaScript/TypeScript Playwright. The Python workflow below is an option when suitable, not a requirement to introduce a second test stack. Do not install packages or browsers without task authorization. If runtime tools are missing, separate source review from actual browser execution and report the unverified scope. Only report an environment component as missing if it was actually checked; missing project packages do not prove that system browsers are absent.\n",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "vercel-react-best-practices-project-compatibility",
+      "type": "replace-exact",
+      "path": "skills/upstream/vercel/react-best-practices/SKILL.md",
+      "before": "\n# Vercel React Best Practices\n",
+      "after": "\n# Vercel React Best Practices\n\n## Project Compatibility\n\nIdentify the actual React version and framework before selecting rules. Next.js, server components, server caching and framework APIs apply only where supported; ordinary React projects do not require migration. Preserve the existing UI system and task scope. Support performance claims with concrete evidence or measurements.\n",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "vercel-composition-patterns-project-compatibility",
+      "type": "replace-exact",
+      "path": "skills/upstream/vercel/composition-patterns/SKILL.md",
+      "before": "\n# React Composition Patterns\n",
+      "after": "\n# React Composition Patterns\n\n## Project Compatibility\n\nConfirm the installed React version and the component problem before selecting a pattern. React 19 APIs are inapplicable to React 18. Preserve existing components and libraries for local fixes; composition advice does not authorize an application-wide refactor or a framework upgrade.\n",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "anthropic-frontend-design-project-compatibility",
+      "type": "replace-exact",
+      "path": "skills/upstream/anthropic/frontend-design/SKILL.md",
+      "before": "\n# Frontend Design\n",
+      "after": "\n# Frontend Design\n\n## Project Compatibility\n\nFor existing products, preserve the established design system, component library, brand and requested scope unless a redesign is authorized. Apply the creative process below to new UI or explicit design work; a small copy, behavior or style fix does not require a new visual identity or a full design interview.\n",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "wshobson-nodejs-backend-patterns-project-compatibility",
+      "type": "replace-exact",
+      "path": "skills/upstream/wshobson/nodejs-backend-patterns/SKILL.md",
+      "before": "\n# Node.js Backend Patterns\n",
+      "after": "\n# Node.js Backend Patterns\n\n## Project Compatibility\n\nDetermine the existing runtime version, framework, module format and task scope first. Preserve JavaScript/TypeScript and CommonJS/ESM choices; framework, TypeScript and layering examples below are options, not migration requirements. Read-only analysis remains read-only. Add dependencies only when required and authorized, and distinguish source conclusions from executed tests.\n",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "wshobson-javascript-testing-patterns-project-compatibility",
+      "type": "replace-exact",
+      "path": "skills/upstream/wshobson/javascript-testing-patterns/SKILL.md",
+      "before": "\n# JavaScript Testing Patterns\n",
+      "after": "\n# JavaScript Testing Patterns\n\n## Project Compatibility\n\nUse the existing test runner and available dependencies first, including node:test or existing JS/TS Playwright. Jest/Vitest/Testing Library examples do not require replacing the current tools or installing a second stack. Choose tests proportional to the requested behavior, use independent expected values, and report checks that could not be executed.\n",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
     }
   ]
 }

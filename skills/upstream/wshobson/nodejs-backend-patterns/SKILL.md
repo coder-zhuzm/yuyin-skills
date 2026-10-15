@@ -5,6 +5,10 @@ description: Build production-ready Node.js backend services with Express/Fastif
 
 # Node.js Backend Patterns
 
+## Project Compatibility
+
+Determine the existing runtime version, framework, module format and task scope first. Preserve JavaScript/TypeScript and CommonJS/ESM choices; framework, TypeScript and layering examples below are options, not migration requirements. Read-only analysis remains read-only. Add dependencies only when required and authorized, and distinguish source conclusions from executed tests.
+
 Comprehensive guidance for building scalable, maintainable, and production-ready Node.js backend applications with modern frameworks, architectural patterns, and best practices.
 
 ## When to Use This Skill

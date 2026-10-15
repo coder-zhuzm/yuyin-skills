@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "manifestSha256": "60ca92e4f32ff04e93e42ae084771a1ac19984cd9a6f469a938b75c5d9ca653e",
+  "manifestSha256": "fd1e7ccd2e2fbfe45aebcbc76de49e963b21b8fb7d309141832db0167420362b",
   "sources": [
     {
       "id": "vercel",
@@ -154,6 +154,55 @@
       "beforeSha256": "89e3ddd58fcf99a53a50e25dfd21b8cde1be5f10b7df6bacd3dfa6796932f516",
       "afterSha256": "89e3ddd58fcf99a53a50e25dfd21b8cde1be5f10b7df6bacd3dfa6796932f516",
       "reason": "Fix compiled upstream document links to rule files kept in the bundled rules directory; no rule content changes."
+    },
+    {
+      "id": "github-java-springboot-project-compatibility",
+      "path": "skills/upstream/github/java-springboot/SKILL.md",
+      "beforeSha256": "574898202ce298557226c49d35036a6e9e66a1cb205ea15c44db298e6d74e3bd",
+      "afterSha256": "3e91293cedbe081349bdb9e8c17f93143fa358389217f41399536ceded5c26f2",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "anthropic-webapp-testing-project-compatibility",
+      "path": "skills/upstream/anthropic/webapp-testing/SKILL.md",
+      "beforeSha256": "51b7349e77ec63b7744a6f63647e7566a0b4d2e301121cc10e8c2113af6556a2",
+      "afterSha256": "d4d3e987f2d806b40d039ad84c741dc4544b98b53a6b64f57fc8d2b00cec1470",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "vercel-react-best-practices-project-compatibility",
+      "path": "skills/upstream/vercel/react-best-practices/SKILL.md",
+      "beforeSha256": "71ed7794962fa6e803ee83030517b5b93a9f70fbfeb431ec4535c5480a8d8355",
+      "afterSha256": "6ce8aba984a07271e198c25ef3c3a9054c60379a6076a42f268919bfbb650b61",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "vercel-composition-patterns-project-compatibility",
+      "path": "skills/upstream/vercel/composition-patterns/SKILL.md",
+      "beforeSha256": "e38e0eaa609316b10423a9a138ed95e35099accd3f735585295c8a8f165c28a3",
+      "afterSha256": "e35e33a23b324f47ff45daf8d4a41a260ac785c54f47a90ebcc67db638b04ed8",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "anthropic-frontend-design-project-compatibility",
+      "path": "skills/upstream/anthropic/frontend-design/SKILL.md",
+      "beforeSha256": "d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3",
+      "afterSha256": "7c087403b3a4caafb55fe931ad0b683122ec70aba1b81c5afcea9795eaf401c0",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "wshobson-nodejs-backend-patterns-project-compatibility",
+      "path": "skills/upstream/wshobson/nodejs-backend-patterns/SKILL.md",
+      "beforeSha256": "d52e1150accdc27e916f0962c9ba0872fcbe8a7d849d905dcc795c0f9d05aeae",
+      "afterSha256": "d005ddb4f343f9f5fbab5a7c9dc934d6ffb022d2d482c31ca0e551f6c99ac1b3",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "wshobson-javascript-testing-patterns-project-compatibility",
+      "path": "skills/upstream/wshobson/javascript-testing-patterns/SKILL.md",
+      "beforeSha256": "d99e1d7344ca7b87395c7e49f6c635ea67fe16d57f4698d72c78d405020f5782",
+      "afterSha256": "5ab2b9f3f125fcae0ff9f0296c938d9cb62e3b24359e70ddacfc311147d78d20",
+      "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
     }
   ],
   "files": [
@@ -164,7 +213,7 @@
     },
     {
       "path": "skills/upstream/anthropic/frontend-design/SKILL.md",
-      "sha256": "d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3",
+      "sha256": "7c087403b3a4caafb55fe931ad0b683122ec70aba1b81c5afcea9795eaf401c0",
       "mode": "100644"
     },
     {
@@ -194,7 +243,7 @@
     },
     {
       "path": "skills/upstream/anthropic/webapp-testing/SKILL.md",
-      "sha256": "51b7349e77ec63b7744a6f63647e7566a0b4d2e301121cc10e8c2113af6556a2",
+      "sha256": "d4d3e987f2d806b40d039ad84c741dc4544b98b53a6b64f57fc8d2b00cec1470",
       "mode": "100644"
     },
     {
@@ -204,7 +253,7 @@
     },
     {
       "path": "skills/upstream/github/java-springboot/SKILL.md",
-      "sha256": "574898202ce298557226c49d35036a6e9e66a1cb205ea15c44db298e6d74e3bd",
+      "sha256": "3e91293cedbe081349bdb9e8c17f93143fa358389217f41399536ceded5c26f2",
       "mode": "100644"
     },
     {
@@ -279,7 +328,7 @@
     },
     {
       "path": "skills/upstream/vercel/composition-patterns/SKILL.md",
-      "sha256": "e38e0eaa609316b10423a9a138ed95e35099accd3f735585295c8a8f165c28a3",
+      "sha256": "e35e33a23b324f47ff45daf8d4a41a260ac785c54f47a90ebcc67db638b04ed8",
       "mode": "100644"
     },
     {
@@ -664,7 +713,7 @@
     },
     {
       "path": "skills/upstream/vercel/react-best-practices/SKILL.md",
-      "sha256": "71ed7794962fa6e803ee83030517b5b93a9f70fbfeb431ec4535c5480a8d8355",
+      "sha256": "6ce8aba984a07271e198c25ef3c3a9054c60379a6076a42f268919bfbb650b61",
       "mode": "100644"
     },
     {
@@ -699,7 +748,7 @@
     },
     {
       "path": "skills/upstream/wshobson/javascript-testing-patterns/SKILL.md",
-      "sha256": "d99e1d7344ca7b87395c7e49f6c635ea67fe16d57f4698d72c78d405020f5782",
+      "sha256": "5ab2b9f3f125fcae0ff9f0296c938d9cb62e3b24359e70ddacfc311147d78d20",
       "mode": "100644"
     },
     {
@@ -719,7 +768,7 @@
     },
     {
       "path": "skills/upstream/wshobson/nodejs-backend-patterns/SKILL.md",
-      "sha256": "d52e1150accdc27e916f0962c9ba0872fcbe8a7d849d905dcc795c0f9d05aeae",
+      "sha256": "d005ddb4f343f9f5fbab5a7c9dc934d6ffb022d2d482c31ca0e551f6c99ac1b3",
       "mode": "100644"
     }
   ]

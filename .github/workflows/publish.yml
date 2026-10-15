@@ -20,6 +20,7 @@ on:
       - 'THIRD_PARTY_LICENSES/**'
       - 'scripts/**'
       - 'tests/**'
+      - 'evals/**'
       - '.github/workflows/publish.yml'
   workflow_dispatch:
     inputs:
