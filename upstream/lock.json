@@ -41,7 +41,7 @@
       "id": "github",
       "repository": "github/awesome-copilot",
       "ref": "main",
-      "commit": "156736fb63e965b2f547a1460f3b5972c46e6b24",
+      "commit": "36e95dfda72140a68f577d5c894a551607606bd3",
       "license": {
         "spdx": "MIT",
         "files": [
