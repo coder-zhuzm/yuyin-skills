@@ -1,5 +1,13 @@
 # 变更记录
 
+## 0.3.6
+
+- chore: authorize limited-evidence patch release (da4c7d0)
+- docs: record trial todo and pre-release evidence audit (d39757f)
+- fix: clarify judgment evidence and record bounded model checks (d8b14da)
+- feat: add focused development workflows and intent evaluations (10de985)
+- fix: correct skill examples and gate reviewed releases (7deb653)
+
 ## 0.3.5
 
 - chore: refresh curated upstream skill snapshots [skip ci] (41c5532)
