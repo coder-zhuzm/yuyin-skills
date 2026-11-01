@@ -4,7 +4,7 @@
 [![npm downloads](https://img.shields.io/npm/dt/@zhuzm/yuyin-skills?logo=npm)](https://www.npmjs.com/package/@zhuzm/yuyin-skills)
 [![publish](https://img.shields.io/github/actions/workflow/status/coder-zhuzm/yuyin-skills/publish.yml?branch=main&label=publish&logo=githubactions&logoColor=white)](https://github.com/coder-zhuzm/yuyin-skills/actions/workflows/publish.yml)
 [![node version](https://img.shields.io/node/v/@zhuzm/yuyin-skills?logo=nodedotjs&logoColor=white)](https://nodejs.org)
-[![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey)](https://github.com/coder-zhuzm/yuyin-skills)
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 面向 Claude Code 与 Codex 的开发技能组合，优先服务 React、Java/Spring，兼顾 Node。`yuyin-dev` 提供中文任务入口；框架、设计与测试能力按需使用精选社区技能。
 
@@ -83,4 +83,4 @@ npm run verify
 - [验证记录与未覆盖范围](VERIFICATION.md)
 - [变更记录](CHANGELOG.md)
 
-自有内容保持 `UNLICENSED`；第三方内容保留各自许可。不得直接修改上游快照来保存个人偏好，适配条件放在自有入口，业务事实放在目标项目。
+自有内容遵循 [MIT](LICENSE) 许可；第三方内容保留各自许可。不得直接修改上游快照来保存个人偏好，适配条件放在自有入口，业务事实放在目标项目。

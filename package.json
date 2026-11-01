@@ -2,7 +2,7 @@
   "name": "@zhuzm/yuyin-skills",
   "version": "0.3.6",
   "description": "Curated React, Spring and Node development skills with reproducible upstream snapshots",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/coder-zhuzm/yuyin-skills.git"
@@ -24,6 +24,7 @@
     "SOURCES.md",
     "CHANGELOG.md",
     "VERIFICATION.md",
+    "LICENSE",
     "THIRD_PARTY_LICENSES/",
     "skills/upstream/",
     "upstream/sources.json",

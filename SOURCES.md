@@ -33,7 +33,7 @@ Vercel CLI 安装会排除技能里的 `metadata.json` 和缓存目录，这是�
 
 自有中文入口曾参考 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) 的源码驱动与上下文方法，以及 [mattpocock/skills](https://github.com/mattpocock/skills) 的需求澄清与复盘方法。此类方法参考不视为依赖，也不承诺同步其完整工作流。
 
-本项目自有内容保持 `UNLICENSED`。第三方内容遵循各自许可，包元数据不能覆盖上游条款。保留上游声明、许可与适配记录；新增来源需核对实际选定文件及附带资源。
+本项目自有内容遵循 [MIT](LICENSE) 许可。第三方内容遵循各自许可，包元数据不能覆盖上游条款。保留上游声明、许可与适配记录；新增来源需核对实际选定文件及附带资源。
 
 ## 分发工具
 
