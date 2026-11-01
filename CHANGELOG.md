@@ -1,5 +1,10 @@
 # 变更记录
 
+## 0.3.7
+
+- docs: add MIT license and update package metadata [skip ci] (9477801)
+- docs: add npm and project badges to README [skip ci] (e67dd7c)
+
 ## 0.3.6
 
 - chore: authorize limited-evidence patch release (da4c7d0)
