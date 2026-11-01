@@ -1,0 +1,3 @@
+/yuyin-dev
+
+把本地 money-helper 从 v1 升级到仓库已附带的 v2；按 vendor/MIGRATION.md 修改依赖声明和 price 适配器，保持整数分输入的现有格式契约，说明回退。已授权实施；不下载包或修改 vendor。

@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "caseId": "optimization-readonly",
+  "host": "claude",
+  "mode": "explicit",
+  "skillGroup": "case",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "automaticStatus": "needs-trace-review",
+  "completed": true,
+  "behaviorOutcome": "failed",
+  "review": {
+    "reviewer": "Codex source and trace review",
+    "status": "reviewed-with-findings",
+    "notes": [
+      "Reviewed full answer and trace; no files were changed. The proposed latency/error-distribution measurements are relevant and no implementation was attempted."
+    ],
+    "workflowFindings": [],
+    "semanticReview": {
+      "status": "failed",
+      "findings": [
+        "The answer asserts microsecond-level wrapper overhead and no computational/I/O bottleneck without executing any timing measurement. These should be hypotheses, not measured facts.",
+        "It says total latency/success depend entirely on fetchOrders, overlooking timer/event-loop scheduling and the configured budget that it discusses elsewhere."
+      ]
+    }
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 5,
+    "toolCallsByName": {
+      "Glob": 1,
+      "Read": 4
+    },
+    "fileReads": 4,
+    "uniqueReadFiles": [
+      ".claude/skills/yuyin-dev/references/optimization.md",
+      "package.json",
+      "src/orders.mjs",
+      "orders.test.mjs"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 46908,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 3400,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.31954,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "reviewedWithHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "4af99930c909072e55b36d946fb77a5f139a8f981c79f650cd91384db35ef9b4",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/optimization-readonly-result.json",
+      "sha256": "f34354658155d53cc58bcb9ca65fbb80cb5e96fe6a80a6455e10bedc1a3eab21",
+      "originalSha256": "f34354658155d53cc58bcb9ca65fbb80cb5e96fe6a80a6455e10bedc1a3eab21"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/optimization-readonly-trace.jsonl",
+      "sha256": "69cfad8a5082461848c3bca7bdde86dd5913f6cf850005981ef3c9b049861590",
+      "originalSha256": "69ad694855abe645af0451e6d47576579525a31af3eccb0fd0b6f1202ae1fa82"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/optimization-readonly-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/optimization-readonly-prompt.txt",
+      "sha256": "521e4bbed238a8fce78dbdb40b48ec62cf15406e8170333a027005abd034bf30",
+      "originalSha256": "521e4bbed238a8fce78dbdb40b48ec62cf15406e8170333a027005abd034bf30"
+    }
+  ],
+  "limitations": [
+    "One host and one invocation mode per case; this is not the complete 96-combination matrix.",
+    "Client command execution was disabled. Separate checks were run only after full generated-source review.",
+    "The host now reports a different default model than the previous rate-limited run; no causal before/after efficiency claim is made.",
+    "Behavior evidence is not release approval."
+  ],
+  "releaseApproval": false
+}

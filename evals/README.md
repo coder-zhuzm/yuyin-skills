@@ -42,7 +42,7 @@ Codex 使用 read-only/workspace-write 沙箱和 ephemeral 会话。Claude 保�
 
 ## 新增意图与专项案例
 
-`refactor-local` 检查去重前后输出与输入不变；`tests-only` 仅允许测试文件变化，人工审阅后再运行生成测试，并要求它们识别错误总额和丢失 VIP 折扣两个受控变异。测试首次通过适用于已有正确行为，不要求为了制造红灯修改生产代码。
+`refactor-local` 检查去重前后输出与输入不变；`tests-only` 仅允许测试文件变化，支持 `.test.js`、`.test.mjs`、`.test.cjs` 以及 `test/`、`tests/` 目录。人工审阅后再运行生成测试，并要求它们识别错误总额和丢失 VIP 折扣两个受控变异。测试首次通过适用于已有正确行为，不要求为了制造红灯修改生产代码。
 
 `upgrade-local` 使用仓库内虚构 SDK 的 v1/v2，检查指定依赖声明、适配器和整数分契约。它不下载依赖、不证明 npm 解析或真实供应商兼容。review、optimization、context、handoff 各有只读案例；设计、本地 UI 审查与 React 性能直接调用也有对应案例。UI 的按钮结构检查属于静态证据，真实键盘、焦点及布局仍需浏览器验收。
 

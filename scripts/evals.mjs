@@ -66,7 +66,7 @@ function sameDependencies(workspace, fixture, allowed = {}) {
   }
 }
 function checkGeneratedTests(workspace, reviewed) {
-  const files = Object.keys(snapshot(workspace)).filter(p => !p.startsWith('.') && !p.startsWith('node_modules/') && /\.test\.mjs$/.test(p));
+  const files = Object.keys(snapshot(workspace)).filter(p => !p.startsWith('.') && !p.startsWith('node_modules/') && /\.test\.[cm]?js$/.test(p));
   assert.ok(files.length, 'No behavior test was added');
   if (!reviewed) throw new BlockedCheck('Generated tests require source review before execution or mutation checks.');
   const scratch = mkdtempSync(join(tmpdir(), 'yuyin-test-mutations-'));

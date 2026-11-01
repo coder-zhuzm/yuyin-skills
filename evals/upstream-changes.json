@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baseLockSha256": "a5adb9c28895a47909d2e6734cedcab003bf76eeeceb23a24fd918551f948c14",
   "targetLockSha256": "f362d4bd6886a1502b549de2c2dc9c284e282633ba5faf1e8849d684e7da639c",
-  "casesSha256": "d1874ff250aa2a0d49c17164eed2049c01bc680785cf1118c95123095ba09c0a",
+  "casesSha256": "30aa19960f0f4c60367fb86daec899a4adeee714a02193fe9c95d089c2a92558",
   "changes": [
     {
       "path": "skills/upstream/vercel/web-design-guidelines/SKILL.md",

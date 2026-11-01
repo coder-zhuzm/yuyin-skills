@@ -1,0 +1,16 @@
+diff --git a<RUN_DIR>/before/package.json b<RUN_DIR>/project/package.json
+index 79b73e0..aa8109b 100644
+--- a<RUN_DIR>/before/package.json
++++ b<RUN_DIR>/project/package.json
+@@ -1 +1 @@
+-{"name":"eval-upgrade-local","private":true,"type":"module","dependencies":{"money-helper":"file:vendor/v1"}}
++{"name":"eval-upgrade-local","private":true,"type":"module","dependencies":{"money-helper":"file:vendor/v2"}}
+diff --git a<RUN_DIR>/before/src/price.mjs b<RUN_DIR>/project/src/price.mjs
+index e50fbe5..61de98c 100644
+--- a<RUN_DIR>/before/src/price.mjs
++++ b<RUN_DIR>/project/src/price.mjs
+@@ -1,2 +1,2 @@
+-import { currency } from '../vendor/v1/index.mjs';
+-export function displayPrice(cents) { return currency(cents); }
++import { formatMoney } from '../vendor/v2/index.mjs';
++export function displayPrice(cents) { return formatMoney({ cents }); }

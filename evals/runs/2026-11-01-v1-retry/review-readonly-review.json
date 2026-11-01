@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "caseId": "review-readonly",
+  "host": "claude",
+  "mode": "explicit",
+  "skillGroup": "case",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "automaticStatus": "needs-trace-review",
+  "completed": true,
+  "behaviorOutcome": "failed",
+  "review": {
+    "reviewer": "Codex source and trace review",
+    "status": "reviewed-with-findings",
+    "notes": [
+      "Reviewed full final answer, source, fixture test and trace. Scope remained read-only and review.md was read. The budget-vs-80ms explanation is supported, but two items were promoted from conditional contract risks to definite bugs."
+    ],
+    "workflowFindings": [],
+    "semanticReview": {
+      "status": "failed",
+      "findings": [
+        "The source does not require cancellation of fetchOrders after timeout; absent AbortSignal support alone does not establish a defect or a persistent resource leak.",
+        "No caller or documented contract requires null options to be accepted; classifying its TypeError as a definite defect is unsupported.",
+        "The answer also describes the request as strictly bounded by budgetMs although synchronous fetchOrders work is invoked before timer creation. No timing experiment was performed."
+      ]
+    }
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 7,
+    "toolCallsByName": {
+      "Read": 4,
+      "Glob": 3
+    },
+    "fileReads": 4,
+    "uniqueReadFiles": [
+      "src/orders.mjs",
+      ".claude/skills/yuyin-dev/references/review.md",
+      "orders.test.mjs",
+      "package.json"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 46846,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 6392,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.39403,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "reviewedWithHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "be39d154deca11166cad051fefdaa01a02631bb7759d76116a1284f7eef46ab5",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/review-readonly-result.json",
+      "sha256": "b1116f927fd0354903db9387711bc71e2060868c2979a665e6c248889801a320",
+      "originalSha256": "b1116f927fd0354903db9387711bc71e2060868c2979a665e6c248889801a320"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/review-readonly-trace.jsonl",
+      "sha256": "b642e0def69732be7015a5a916bf7e4faac66f56c6694569ff63738d5ed99b30",
+      "originalSha256": "437dd9377ba442c9cbee11a61ca0bb8746783b7905bf98e9ca76efba01e07fe0"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/review-readonly-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/review-readonly-prompt.txt",
+      "sha256": "670d65930238bb05f9e4e3d19023b7810fb2b486be72600a2f57a0e37960f752",
+      "originalSha256": "670d65930238bb05f9e4e3d19023b7810fb2b486be72600a2f57a0e37960f752"
+    }
+  ],
+  "limitations": [
+    "One host and one invocation mode per case; this is not the complete 96-combination matrix.",
+    "Client command execution was disabled. Separate checks were run only after full generated-source review.",
+    "The host now reports a different default model than the previous rate-limited run; no causal before/after efficiency claim is made.",
+    "Behavior evidence is not release approval."
+  ],
+  "releaseApproval": false
+}

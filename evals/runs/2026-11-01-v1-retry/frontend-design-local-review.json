@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "caseId": "frontend-design-local",
+  "host": "claude",
+  "mode": "direct",
+  "skillGroup": "case",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "automaticStatus": "needs-trace-review",
+  "completed": true,
+  "behaviorOutcome": "passed",
+  "review": {
+    "reviewer": "Codex source and trace review",
+    "status": "reviewed-with-limitations",
+    "notes": [
+      "Reviewed complete generated HTML/CSS and trace. A native type=button replaced the clickable div, original menu-opening action and Chinese content were retained, and no external resources or libraries were introduced.",
+      "Static structure checks passed. Browser rendering, keyboard events and assistive technology were not exercised by this review."
+    ],
+    "workflowFindings": [
+      "The generated CSS also changes body typography/margins and nav/main spacing; this exceeds a strict control-only interpretation of the requested local change. Visual impact remains unverified."
+    ],
+    "semanticReview": {
+      "status": "passed",
+      "findings": []
+    }
+  },
+  "reviewedChecks": [
+    {
+      "id": "scope-preserved",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "ui-accessible-button",
+      "kind": "static",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 6,
+    "toolCallsByName": {
+      "Glob": 3,
+      "Read": 2,
+      "Edit": 1
+    },
+    "fileReads": 2,
+    "uniqueReadFiles": [
+      "package.json",
+      "src/index.html"
+    ],
+    "skillFileReads": 0,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 60932,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 5759,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.448635,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "reviewedWithHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "32463410641cd27c2f7091ba542aa2e61ce10a7d3e500ee07bc52ace9a533bfa",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/frontend-design-local-result.json",
+      "sha256": "b6be41e72df899ab29a377cfa1309584db05bb2bcd4edc25d1842fc6a980fd3e",
+      "originalSha256": "b6be41e72df899ab29a377cfa1309584db05bb2bcd4edc25d1842fc6a980fd3e"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/frontend-design-local-trace.jsonl",
+      "sha256": "c96c989c85626e3692f2dac9e81f085da4f8dad1a795a84af39c998cf26d02fd",
+      "originalSha256": "6c645b1d3c26843f79d2d230a9338b7214682d1c0d7bdca49714a6a9c0fb1472"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/frontend-design-local-diff.patch",
+      "sha256": "9e4ae8990ac93759fe53abad07c60cc5bcf5ff4591d147d95d14039b721c48c3",
+      "originalSha256": "a17cff6c643214fc8c0a969d5a9baf38d25bcd077f80bee5d421fbe91fdcd3c3"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/frontend-design-local-prompt.txt",
+      "sha256": "ccef54cd02f428f5be9e53df6f3d0afa63d73218b9847e44401535b6baaab1b5",
+      "originalSha256": "ccef54cd02f428f5be9e53df6f3d0afa63d73218b9847e44401535b6baaab1b5"
+    }
+  ],
+  "limitations": [
+    "One host and one invocation mode per case; this is not the complete 96-combination matrix.",
+    "Client command execution was disabled. Separate checks were run only after full generated-source review.",
+    "The host now reports a different default model than the previous rate-limited run; no causal before/after efficiency claim is made.",
+    "Behavior evidence is not release approval."
+  ],
+  "releaseApproval": false
+}

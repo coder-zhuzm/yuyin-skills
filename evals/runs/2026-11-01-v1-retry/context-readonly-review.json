@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "caseId": "context-readonly",
+  "host": "claude",
+  "mode": "explicit",
+  "skillGroup": "case",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "automaticStatus": "needs-trace-review",
+  "completed": true,
+  "behaviorOutcome": "passed",
+  "review": {
+    "reviewer": "Codex source and trace review",
+    "status": "reviewed",
+    "notes": [
+      "Reviewed full answer, source/configuration and trace. It read context.md, identified the actual ESM export, package test script and absence of declared dependencies, and separated missing runtime/production information from source facts.",
+      "The workspace remained unchanged; no test execution or project documentation creation was claimed."
+    ],
+    "workflowFindings": [],
+    "semanticReview": {
+      "status": "passed",
+      "findings": []
+    }
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 8,
+    "toolCallsByName": {
+      "Read": 4,
+      "Glob": 4
+    },
+    "fileReads": 4,
+    "uniqueReadFiles": [
+      ".claude/skills/yuyin-dev/references/context.md",
+      "package.json",
+      "orders.test.mjs",
+      "src/orders.mjs"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 48829,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 2636,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.310045,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "reviewedWithHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "64eb388d8ea10be10186e62e86343f6f10af790320168252a7f1fd8b527f330a",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/context-readonly-result.json",
+      "sha256": "96db5a23a9c69aa243a514bc499ddbe17a0c3dd61605894ac4b598d35a8704b0",
+      "originalSha256": "96db5a23a9c69aa243a514bc499ddbe17a0c3dd61605894ac4b598d35a8704b0"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/context-readonly-trace.jsonl",
+      "sha256": "fcfa20629640d51840895a15614a14315a417c5a9acf839ab7691f3e042cdd55",
+      "originalSha256": "a1c330e3d6e05c5f2f061c9e8797ff6c6685cf777ad77bc96a461e922d7ae666"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/context-readonly-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/context-readonly-prompt.txt",
+      "sha256": "979ff83528a4ce99f3b4931aa8ef23d55751af41e52aec936650f7afe24d9045",
+      "originalSha256": "979ff83528a4ce99f3b4931aa8ef23d55751af41e52aec936650f7afe24d9045"
+    }
+  ],
+  "limitations": [
+    "One host and one invocation mode per case; this is not the complete 96-combination matrix.",
+    "Client command execution was disabled. Separate checks were run only after full generated-source review.",
+    "The host now reports a different default model than the previous rate-limited run; no causal before/after efficiency claim is made.",
+    "Behavior evidence is not release approval."
+  ],
+  "releaseApproval": false
+}

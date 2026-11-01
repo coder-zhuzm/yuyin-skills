@@ -179,3 +179,19 @@ test('an unknown API-supplied check fails instead of silently passing', t => {
   assert.equal(result[0].status, 'failed');
   assert.match(result[0].detail, /Unknown mechanical check/);
 });
+
+for (const extension of ['js', 'mjs', 'cjs']) test(`test-only accepts standard Node test directories and ${extension} files without allowing production edits`, t => {
+  const workspace = project(t, 'refactor-local'), baseline = snapshot(workspace);
+  const c = loadCases(root).find(c => c.id === 'tests-only');
+  mkdirSync(join(workspace, 'test'));
+  const code = extension === 'cjs'
+    ? 'const test=require("node:test"); const a=require("node:assert/strict"); test("contract",async()=>{const {total}=await import("../src/discount.mjs");const rows=[{active:true,priceCents:100,quantity:2}];a.equal(total(rows),200);a.equal(total(rows,"vip"),180);});'
+    : 'import test from "node:test"; import a from "node:assert/strict"; import {total} from "../src/discount.mjs"; test("contract",()=>{const rows=[{active:true,priceCents:100,quantity:2}];a.equal(total(rows),200);a.equal(total(rows,"vip"),180);});';
+  writeFileSync(join(workspace, `test/discount.test.${extension}`), code);
+  const run = reviewed => checkCase({ root, workspace, baseline, caseInfo: c, allowReviewedExecution: reviewed });
+  assert.equal(run(false).find(c => c.id === 'scope-preserved').status, 'passed');
+  assert.equal(run(false).find(c => c.id === 'test-suite').status, 'blocked');
+  assert.ok(run(true).every(c => c.status === 'passed'));
+  writeFileSync(join(workspace, 'src/discount.mjs'), 'export const total=()=>0;');
+  assert.equal(run(true).find(c => c.id === 'scope-preserved').status, 'failed');
+});

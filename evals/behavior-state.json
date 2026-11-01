@@ -3,86 +3,86 @@
   "cases": [
     {
       "id": "node-readonly",
-      "sha256": "158bd19b9eea01b5fce61d4e5a18c995f884c857e5c0cc46ab4941ebdc6190f5",
+      "sha256": "8db169fe5bdafc45ed9b72aef9daee65df8d5a6a6159ea6ca9e6a2d7262ff7f4",
       "status": "pending"
     },
     {
       "id": "react-local",
-      "sha256": "2cf01a7a264009ac66a0fa6e6fecb25ea4d17153bae45aed902053108598b3e0",
+      "sha256": "63822ac80c4ac2a3372806ab0223e581c8657a27de0254488d2b6a9f054b7d14",
       "status": "pending"
     },
     {
       "id": "spring-mybatis",
-      "sha256": "eb08ae3161e046f985d0b9ff644b404dd8495fc2d715e2dd8b7955a915a76a88",
+      "sha256": "5c95d7083db8e660820ed652396071a2f9273b16bc2562dfac167464609b3aea",
       "status": "pending"
     },
     {
       "id": "js-playwright",
-      "sha256": "562a0bc56772aae0b8bddfb0d894c93247f1a51df56dcafa01f378030aa934c5",
+      "sha256": "e5244a7c41bbdcc00ebc32a8e6a6e095e695bb2fd0e1bf84be66a4966e5d13d9",
       "status": "pending"
     },
     {
       "id": "small-copy",
-      "sha256": "e48e2b13f1454dd9cbdd63832a8fe4174dacb66c17a31541b12d840c1e6eda98",
+      "sha256": "4dcd55d54661c48acd0b6698ff1c9c0fd53fb43edf1cb2a19a005f2c4b3264b0",
       "status": "pending"
     },
     {
       "id": "missing-skill",
-      "sha256": "3284fae2c0ad5a249a5ee4b3f52fa3e85830450b630ed4dbcf792f51a701c817",
+      "sha256": "47aa087c3dde66517abff5b041ec78a240326270c90de6bce88ca714c62d1e01",
       "status": "pending"
     },
     {
       "id": "refactor-local",
-      "sha256": "3f806750ecb33600fa9ac0f2153e3994662360df2cd063a4a656b4fd9dc7f380",
+      "sha256": "f5823f28e80f97b39567042bfede67f0ad336ef0665b7ec15ce05c7c23de8f20",
       "status": "pending"
     },
     {
       "id": "tests-only",
-      "sha256": "8619b449afe87b403218cb464d52ff53e1d21965be5d5845a7ece6c1373107dd",
+      "sha256": "6a86ea640f3d79ecd4f37b47814fb805447f3cb23bf98ab65754398e612138c4",
       "status": "pending"
     },
     {
       "id": "upgrade-local",
-      "sha256": "c276cc2bb8d6716da24c2a2e3fc9e6108b49b5dd7e90fe4ecc871088df25fd87",
+      "sha256": "3660bb3a051369bf4f74a3dac57a6b8521790c16ed69ec23e676a6b2a80a31b7",
       "status": "pending"
     },
     {
       "id": "review-readonly",
-      "sha256": "2410b41603f70d82625b71182d8e9980640294799c586081ed8c69d631baa4f2",
+      "sha256": "b66596db544c4f888fc51df046e5e8607f4c4a9c825408989aba19e8fa59b197",
       "status": "pending"
     },
     {
       "id": "optimization-readonly",
-      "sha256": "6d13f9ecf0695a6c3e2c7433f3bcf5351f64310b31d40527a8401b8d20b8ca35",
+      "sha256": "e10e2c82c8c1d76e8197ab41b7b04335bfd2c24af24d899cb1dbd133179cdafc",
       "status": "pending"
     },
     {
       "id": "context-readonly",
-      "sha256": "97f7363030617afe79295cba94b98f799fb15bdd06984ff0b7fd7bf5d8e17cd5",
+      "sha256": "a6f2bbbf8b532c270e7da8a33ac577036af3cc7e084273889a4aec3638b5633e",
       "status": "pending"
     },
     {
       "id": "handoff-readonly",
-      "sha256": "fc072479d2ef4ac5317528eeb3f9498eb706c9dadb9ad32624c0b939729e5968",
+      "sha256": "02a126a458adf6cfa484785c6b832dcf80fc696adbe12c31bdf90d3bda42fde3",
       "status": "pending"
     },
     {
       "id": "frontend-design-local",
-      "sha256": "b0f321fbe55027224872dbfa051327655cfc7170d959c4394e30c1b4433fb3a3",
+      "sha256": "62dbeae887661d87ef515efcba8c9f7bdfc7daf4c7c90277a20adc46aa331498",
       "status": "pending"
     },
     {
       "id": "ui-review-local",
-      "sha256": "d90375b65cd9d2967ab461ae3157c5bc917bcda6de3c91a973a887fc510503f3",
+      "sha256": "d81ea1202552eb5cd3d9aa8e7c1dcee659165fdb1e5364f4dddeeeb5de6d4bfe",
       "status": "pending"
     },
     {
       "id": "react-performance-direct",
-      "sha256": "0f1b752c7d3b76de40d97d1cceb2fd2d226fd4b8fa733f2c094408cd71fe8fb1",
+      "sha256": "218f1d5e8249f31dec2cd7900230065da74f46dc5976701ca07e5cd40a364c56",
       "status": "pending"
     }
   ],
   "uncoveredSkills": [],
   "skillsSha256": "5318cfffa38f3dd3bb079c57770afbbabbc950b1cd197eb9198e4ef85496b206",
-  "identitySha256": "9efbafc1a1366684a7e577dc32236b2857873fd295d641a3eb4ab87e42495b06"
+  "identitySha256": "932569157e1138d340c2d0ed1f7a8414c12a0a1d782a5c4a06ddfded6c11377b"
 }

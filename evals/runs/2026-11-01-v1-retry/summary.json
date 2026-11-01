@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-01",
+  "host": "claude",
+  "sourceCommit": "10de985",
+  "releaseApproval": false,
+  "runs": [
+    {
+      "caseId": "refactor-local",
+      "mode": "explicit",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "automaticStatus": "blocked",
+      "behaviorOutcome": "passed",
+      "reviewStatus": "reviewed-with-limitations",
+      "workflowFindings": 1,
+      "reviewPath": "evals/runs/2026-11-01-v1-retry/refactor-local-review.json"
+    },
+    {
+      "caseId": "tests-only",
+      "mode": "explicit",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "automaticStatus": "failed",
+      "behaviorOutcome": "passed",
+      "reviewStatus": "reviewed",
+      "workflowFindings": 0,
+      "reviewPath": "evals/runs/2026-11-01-v1-retry/tests-only-review.json"
+    },
+    {
+      "caseId": "upgrade-local",
+      "mode": "explicit",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "automaticStatus": "blocked",
+      "behaviorOutcome": "passed",
+      "reviewStatus": "reviewed-with-limitations",
+      "workflowFindings": 1,
+      "reviewPath": "evals/runs/2026-11-01-v1-retry/upgrade-local-review.json"
+    },
+    {
+      "caseId": "review-readonly",
+      "mode": "explicit",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "automaticStatus": "needs-trace-review",
+      "behaviorOutcome": "failed",
+      "reviewStatus": "reviewed-with-findings",
+      "workflowFindings": 0,
+      "reviewPath": "evals/runs/2026-11-01-v1-retry/review-readonly-review.json"
+    },
+    {
+      "caseId": "optimization-readonly",
+      "mode": "explicit",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "automaticStatus": "needs-trace-review",
+      "behaviorOutcome": "failed",
+      "reviewStatus": "reviewed-with-findings",
+      "workflowFindings": 0,
+      "reviewPath": "evals/runs/2026-11-01-v1-retry/optimization-readonly-review.json"
+    },
+    {
+      "caseId": "context-readonly",
+      "mode": "explicit",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "automaticStatus": "needs-trace-review",
+      "behaviorOutcome": "passed",
+      "reviewStatus": "reviewed",
+      "workflowFindings": 0,
+      "reviewPath": "evals/runs/2026-11-01-v1-retry/context-readonly-review.json"
+    },
+    {
+      "caseId": "handoff-readonly",
+      "mode": "explicit",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "automaticStatus": "needs-trace-review",
+      "behaviorOutcome": "passed",
+      "reviewStatus": "reviewed",
+      "workflowFindings": 0,
+      "reviewPath": "evals/runs/2026-11-01-v1-retry/handoff-readonly-review.json"
+    },
+    {
+      "caseId": "frontend-design-local",
+      "mode": "direct",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "automaticStatus": "needs-trace-review",
+      "behaviorOutcome": "passed",
+      "reviewStatus": "reviewed-with-limitations",
+      "workflowFindings": 1,
+      "reviewPath": "evals/runs/2026-11-01-v1-retry/frontend-design-local-review.json"
+    },
+    {
+      "caseId": "ui-review-local",
+      "mode": "direct",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "automaticStatus": "needs-trace-review",
+      "behaviorOutcome": "failed",
+      "reviewStatus": "reviewed-with-findings",
+      "workflowFindings": 0,
+      "reviewPath": "evals/runs/2026-11-01-v1-retry/ui-review-local-review.json"
+    },
+    {
+      "caseId": "react-performance-direct",
+      "mode": "direct",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "automaticStatus": "blocked",
+      "behaviorOutcome": "passed",
+      "reviewStatus": "reviewed-with-limitations",
+      "workflowFindings": 2,
+      "reviewPath": "evals/runs/2026-11-01-v1-retry/react-performance-direct-review.json"
+    }
+  ],
+  "limits": [
+    "User-level settings/skills may remain visible; actual reads are preserved in trace.",
+    "No before/after model comparison: current host model differs from the earlier run."
+  ],
+  "counts": {
+    "completed": 10,
+    "behaviorPassed": 7,
+    "semanticReviewFailed": 3,
+    "passedWithLimitations": 4,
+    "apiRetries": 0
+  },
+  "harnessCorrection": {
+    "reason": "A legitimate test/discount.test.js output was falsely rejected by the original allowlist/discovery. Added js/mjs/cjs and standard test directory regression coverage; the original failed result is unchanged.",
+    "paths": [
+      "scripts/evals.mjs",
+      "evals/manifest.json",
+      "tests/evals.test.mjs",
+      "evals/README.md"
+    ],
+    "originalResultsUnchanged": true
+  },
+  "conclusions": [
+    "All ten fresh host sessions completed without HTTP 429 or API retries.",
+    "Seven tasks met their checked behavior; four of those retain explicit workflow or environment limitations.",
+    "Three conclusion-quality cases failed manual review: unsupported definite-bug classification, unmeasured performance precision, and unconditional menu-interaction requirements.",
+    "No complete-matrix, real-browser, real-vendor-compatibility or causal skill-improvement claim is made."
+  ]
+}

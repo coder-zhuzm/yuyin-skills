@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "caseId": "ui-review-local",
+  "host": "claude",
+  "mode": "direct",
+  "skillGroup": "case",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "automaticStatus": "needs-trace-review",
+  "completed": true,
+  "behaviorOutcome": "failed",
+  "review": {
+    "reviewer": "Codex source and trace review",
+    "status": "reviewed-with-findings",
+    "notes": [
+      "Reviewed the complete answer, original HTML, locally loaded guideline and trace. It correctly identified the non-focusable onclick div, read the local snapshot, kept files unchanged and disclosed absent browser/assistive-technology testing."
+    ],
+    "workflowFindings": [],
+    "semanticReview": {
+      "status": "failed",
+      "findings": [
+        "The second finding treats Escape-to-close and moving focus into this plain nav disclosure as required without any supplied menu/dialog contract, role or matching local rule. It should be conditional guidance, not an established accessibility defect.",
+        "The answer describes browser startup as forbidden by project instructions, although those instructions forbid installation and the bounded client simply lacks browser tools."
+      ]
+    }
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 4,
+    "toolCallsByName": {
+      "Glob": 1,
+      "Read": 3
+    },
+    "fileReads": 3,
+    "uniqueReadFiles": [
+      "src/index.html",
+      ".claude/skills/web-design-guidelines/references/web-interface-guidelines.md",
+      "package.json"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 32582,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 3337,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.246335,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "reviewedWithHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "6110959c1468693ee0b435c5437a0dffb289e0d081f7f79db78980977fd10f7c",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/ui-review-local-result.json",
+      "sha256": "98370498fa79c059dd692c327ce344483a82fe4ba1fc923a75388522ccb640be",
+      "originalSha256": "98370498fa79c059dd692c327ce344483a82fe4ba1fc923a75388522ccb640be"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/ui-review-local-trace.jsonl",
+      "sha256": "bb36c2335d11581b5d1c563044e920b9dba5ce06c9eb4fa24d5a5be80146fbff",
+      "originalSha256": "b215ce7a2d17f1e3a42581fff027904779ce862306cde73336f797e48647ee74"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/ui-review-local-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/ui-review-local-prompt.txt",
+      "sha256": "6db40c1a9ad13f1acca1c12bda1086430417463d77f29c756e8296510e0f32ed",
+      "originalSha256": "6db40c1a9ad13f1acca1c12bda1086430417463d77f29c756e8296510e0f32ed"
+    }
+  ],
+  "limitations": [
+    "One host and one invocation mode per case; this is not the complete 96-combination matrix.",
+    "Client command execution was disabled. Separate checks were run only after full generated-source review.",
+    "The host now reports a different default model than the previous rate-limited run; no causal before/after efficiency claim is made.",
+    "Behavior evidence is not release approval."
+  ],
+  "releaseApproval": false
+}

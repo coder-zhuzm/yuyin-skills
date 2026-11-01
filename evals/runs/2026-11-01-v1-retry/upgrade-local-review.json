@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "caseId": "upgrade-local",
+  "host": "claude",
+  "mode": "explicit",
+  "skillGroup": "case",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "automaticStatus": "blocked",
+  "completed": true,
+  "behaviorOutcome": "passed",
+  "review": {
+    "reviewer": "Codex source and trace review",
+    "status": "reviewed-with-limitations",
+    "notes": [
+      "Reviewed full two-line adapter, package diff and trace. Only the requested local dependency and adapter changed; no downloads or vendor modifications occurred.",
+      "Independent integer-cent formatting examples passed after source review. The final answer supplied the correct two-file rollback and disclosed that the host did not execute tests."
+    ],
+    "workflowFindings": [
+      "The final answer did not explicitly distinguish this synthetic adapter check from real npm resolution or external vendor compatibility, although it described a local upgrade."
+    ]
+  },
+  "reviewedChecks": [
+    {
+      "id": "scope-preserved",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "upgrade-target",
+      "kind": "static",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "upgrade-contract",
+      "kind": "behavior",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 17,
+    "toolCallsByName": {
+      "Glob": 4,
+      "Read": 8,
+      "Edit": 2,
+      "Grep": 3
+    },
+    "fileReads": 8,
+    "uniqueReadFiles": [
+      "package.json",
+      "vendor/MIGRATION.md",
+      "src/price.mjs",
+      "vendor/v1/index.mjs",
+      "vendor/v2/index.mjs",
+      ".claude/skills/yuyin-dev/references/dependencies.md",
+      "vendor/v1/package.json",
+      "vendor/v2/package.json"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 134120,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 4491,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.7828750000000001,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "reviewedWithHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "c1b1cfbaab30beb7dbcb3c64ce7fd22a4bdcf5f531b24f8bcfb09853752b1c5a",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/upgrade-local-result.json",
+      "sha256": "b166834e520bca444c2fc54ade8909595555551d755024eb203398440b4ff11f",
+      "originalSha256": "b166834e520bca444c2fc54ade8909595555551d755024eb203398440b4ff11f"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/upgrade-local-trace.jsonl",
+      "sha256": "dcbdce146cad07e1e470fa2caa0ec05c727104c4ec056fe50cc64f0bd620a7b5",
+      "originalSha256": "b381cd7dae91bb62c1ec2a2e9b0325739843449c5d4e8c029a6b2d71d4409229"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/upgrade-local-diff.patch",
+      "sha256": "22f1789acd4929e4eba85eaf3e7e032490f3d35c5d080cc1171ba0dfdceae5c0",
+      "originalSha256": "1a0971e32260438119c7b0b29e81f0baec0ede4d133e751095c4404e96741d2f"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/upgrade-local-prompt.txt",
+      "sha256": "73c8b5746ef0cdf4207c71f9e103a69857f55fa6079b7b21a5419631e9efa33f",
+      "originalSha256": "73c8b5746ef0cdf4207c71f9e103a69857f55fa6079b7b21a5419631e9efa33f"
+    }
+  ],
+  "limitations": [
+    "One host and one invocation mode per case; this is not the complete 96-combination matrix.",
+    "Client command execution was disabled. Separate checks were run only after full generated-source review.",
+    "The host now reports a different default model than the previous rate-limited run; no causal before/after efficiency claim is made.",
+    "Behavior evidence is not release approval."
+  ],
+  "releaseApproval": false
+}

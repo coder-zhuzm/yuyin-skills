@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "caseId": "refactor-local",
+  "host": "claude",
+  "mode": "explicit",
+  "skillGroup": "case",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "automaticStatus": "blocked",
+  "completed": true,
+  "behaviorOutcome": "passed",
+  "review": {
+    "reviewer": "Codex source and trace review",
+    "status": "reviewed-with-limitations",
+    "notes": [
+      "Reviewed complete seven-line refactor and full trace; duplicate summation was removed, public behavior and input objects were preserved. Independent contract assertions passed after source review. No reauthorization request occurred."
+    ],
+    "workflowFindings": [
+      "No characterization test was added before the refactor although the selected reference recommends one. The host accurately disclosed that it did not execute tests."
+    ]
+  },
+  "reviewedChecks": [
+    {
+      "id": "scope-preserved",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "refactor-contract",
+      "kind": "behavior",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 6,
+    "toolCallsByName": {
+      "Glob": 2,
+      "Read": 3,
+      "Edit": 1
+    },
+    "fileReads": 3,
+    "uniqueReadFiles": [
+      "package.json",
+      "src/discount.mjs",
+      ".claude/skills/yuyin-dev/references/refactor.md"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 44165,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 5265,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.35245,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "01c77fa7bdf82d28fe56e5e906b0fdb0f5b360c5a2563a6300c498e3a2cddfd5",
+  "reviewedWithHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "2d1e28a9156588842daea7417843381256410eb10230a042282d906f9a3ef89b",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/refactor-local-result.json",
+      "sha256": "802f0ab80af76115668ffc4e2c754689ffb40c7e71bb318a7e18a2cc48d86dbd",
+      "originalSha256": "802f0ab80af76115668ffc4e2c754689ffb40c7e71bb318a7e18a2cc48d86dbd"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/refactor-local-trace.jsonl",
+      "sha256": "308723c898a86a5c8b6a3c387c26941d3c4a520b6f54dbb3e70ce7d8d5bccca7",
+      "originalSha256": "43fc525d333c0ecfd7b53bba2feea3b7a962f6a2d9d16b555e6a5a9486b29434"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/refactor-local-diff.patch",
+      "sha256": "edd48ca2f865ae0b676c2be819d123f3ea62fb973b7dfed215080dee59f81944",
+      "originalSha256": "8915644bfcf740ae230f265edf7138306d32e5522b513984b0c19c480c05013b"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/refactor-local-prompt.txt",
+      "sha256": "e925e607e8423f1224143cd97846e1d4a72f6913b8bf73fa3f99e280190e3a6d",
+      "originalSha256": "e925e607e8423f1224143cd97846e1d4a72f6913b8bf73fa3f99e280190e3a6d"
+    }
+  ],
+  "limitations": [
+    "One host and one invocation mode per case; this is not the complete 96-combination matrix.",
+    "Client command execution was disabled. Separate checks were run only after full generated-source review.",
+    "The host now reports a different default model than the previous rate-limited run; no causal before/after efficiency claim is made.",
+    "Behavior evidence is not release approval."
+  ],
+  "releaseApproval": false
+}

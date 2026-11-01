@@ -1,0 +1,129 @@
+diff --git a<RUN_DIR>/project/test/discount.test.js b<RUN_DIR>/project/test/discount.test.js
+new file mode 100644
+index 0000000..9d27419
+--- /dev/null
++++ b<RUN_DIR>/project/test/discount.test.js
+@@ -0,0 +1,123 @@
++import { describe, it } from 'node:test';
++import assert from 'node:assert/strict';
++import { total } from '../src/discount.mjs';
++
++describe('total', () => {
++  describe('普通商品计算 (regular)', () => {
++    it('默认 kind 为 regular，正确计算单件商品总价', () => {
++      const items = [{ active: true, priceCents: 100, quantity: 2 }];
++      assert.strictEqual(total(items), 200);
++    });
++
++    it('显式传 kind="regular"，正确计算多件商品总价', () => {
++      const items = [
++        { active: true, priceCents: 100, quantity: 2 },
++        { active: true, priceCents: 250, quantity: 3 }
++      ];
++      assert.strictEqual(total(items, 'regular'), 950);
++    });
++  });
++
++  describe('VIP 折扣计算 (vip)', () => {
++    it('VIP 用户享受 9 折优惠', () => {
++      const items = [
++        { active: true, priceCents: 500, quantity: 1 },
++        { active: true, priceCents: 500, quantity: 1 }
++      ];
++      // 1000 * 0.9 = 900
++      assert.strictEqual(total(items, 'vip'), 900);
++    });
++  });
++
++  describe('无效商品过滤', () => {
++    it('普通模式下忽略 active 为 false 的商品', () => {
++      const items = [
++        { active: true, priceCents: 120, quantity: 2 },
++        { active: false, priceCents: 9999, quantity: 10 }
++      ];
++      assert.strictEqual(total(items), 240);
++    });
++
++    it('VIP 模式下忽略 active 为 false 的商品', () => {
++      const items = [
++        { active: true, priceCents: 100, quantity: 1 },
++        { active: false, priceCents: 500, quantity: 10 }
++      ];
++      // 100 * 0.9 = 90
++      assert.strictEqual(total(items, 'vip'), 90);
++    });
++
++    it('当所有商品均为无效商品时，返回 0', () => {
++      const items = [
++        { active: false, priceCents: 100, quantity: 2 },
++        { active: false, priceCents: 200, quantity: 1 }
++      ];
++      assert.strictEqual(total(items), 0);
++      assert.strictEqual(total(items, 'vip'), 0);
++    });
++  });
++
++  describe('空列表处理', () => {
++    it('空列表在普通模式下返回 0', () => {
++      assert.strictEqual(total([]), 0);
++      assert.strictEqual(total([], 'regular'), 0);
++    });
++
++    it('空列表在 VIP 模式下返回 0', () => {
++      assert.strictEqual(total([], 'vip'), 0);
++    });
++  });
++
++  describe('VIP 舍入逻辑 (Math.round)', () => {
++    it('小数部分达到 0.5 时向上舍入', () => {
++      // 5 * 0.9 = 4.5 -> 5
++      const items1 = [{ active: true, priceCents: 5, quantity: 1 }];
++      assert.strictEqual(total(items1, 'vip'), 5);
++
++      // 105 * 0.9 = 94.5 -> 95
++      const items2 = [{ active: true, priceCents: 105, quantity: 1 }];
++      assert.strictEqual(total(items2, 'vip'), 95);
++    });
++
++    it('小数部分小于 0.5 时向下舍入', () => {
++      // 6 * 0.9 = 5.4 -> 5
++      const items1 = [{ active: true, priceCents: 6, quantity: 1 }];
++      assert.strictEqual(total(items1, 'vip'), 5);
++
++      // 107 * 0.9 = 96.3 -> 96
++      const items2 = [{ active: true, priceCents: 107, quantity: 1 }];
++      assert.strictEqual(total(items2, 'vip'), 96);
++    });
++  });
++
++  describe('输入不变性 (Immutability)', () => {
++    it('调用 total 不应修改输入数组及其商品对象属性', () => {
++      const items = [
++        { active: true, priceCents: 150, quantity: 2 },
++        { active: false, priceCents: 300, quantity: 1 }
++      ];
++      const snapshot = JSON.parse(JSON.stringify(items));
++
++      total(items, 'regular');
++      assert.deepStrictEqual(items, snapshot);
++
++      total(items, 'vip');
++      assert.deepStrictEqual(items, snapshot);
++    });
++
++    it('传入被 Object.freeze 冻结的数组和对象时应正常执行且不抛错', () => {
++      const frozenItems = Object.freeze([
++        Object.freeze({ active: true, priceCents: 200, quantity: 1 }),
++        Object.freeze({ active: false, priceCents: 50, quantity: 4 })
++      ]);
++
++      assert.doesNotThrow(() => {
++        const regularTotal = total(frozenItems, 'regular');
++        assert.strictEqual(regularTotal, 200);
++
++        const vipTotal = total(frozenItems, 'vip');
++        assert.strictEqual(vipTotal, 180);
++      });
++    });
++  });
++});

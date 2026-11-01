@@ -286,7 +286,12 @@
       ],
       "allowedChanges": [
         "*.test.mjs",
+        "*.test.js",
+        "*.test.cjs",
         "src/*.test.mjs",
+        "src/*.test.js",
+        "src/*.test.cjs",
+        "test/**",
         "tests/**"
       ]
     },

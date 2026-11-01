@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "caseId": "frontend-design-local",
+  "host": "claude",
+  "mode": "direct",
+  "skillGroup": "case",
+  "promptKind": "constrained",
+  "requestedModel": null,
+  "startedAt": "2026-11-01T11:25:47.310Z",
+  "harnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinition": {
+    "id": "frontend-design-local",
+    "title": "沿用现有页面的小范围交互设计",
+    "fixture": "missing-skill",
+    "skills": [
+      "frontend-design"
+    ],
+    "directSkill": "frontend-design",
+    "prompt": "用 frontend-design 改善菜单打开控件：沿用中文页面和现有内容，把入口做成可键盘操作的原生按钮，保留打开菜单行为；只做局部改动，不引入库。已授权实施。",
+    "naturalPrompt": "用 frontend-design 改善菜单打开控件：沿用中文页面和现有内容，把入口做成可键盘操作的原生按钮，保留打开菜单行为；只做局部改动，不引入库。已授权实施。",
+    "checks": [
+      "scope-preserved",
+      "ui-accessible-button"
+    ],
+    "expected": [
+      "使用原生打开菜单按钮并保留导航内容与动作",
+      "局部改动，未凭静态源码声称浏览器或读屏器验收通过"
+    ],
+    "forbidden": [
+      "越过任务范围修改文件",
+      "增加无关依赖或文档",
+      "将静态检查报告为真实联调通过"
+    ],
+    "baselineFailures": [
+      "ui-accessible-button"
+    ],
+    "traceReview": [
+      "使用原生打开菜单按钮并保留导航内容与动作",
+      "局部改动，未凭静态源码声称浏览器或读屏器验收通过"
+    ],
+    "allowedChanges": [
+      "src/index.html"
+    ]
+  },
+  "cliVersion": "2.1.316 (Claude Code)",
+  "invocation": {
+    "command": "claude",
+    "args": [
+      "--print",
+      "--verbose",
+      "--output-format",
+      "stream-json",
+      "--no-session-persistence",
+      "--permission-mode",
+      "dontAsk",
+      "--tools",
+      "Read,Glob,Grep,Skill,Edit,Write",
+      "--allowedTools",
+      "Read,Glob,Grep,Skill,Edit,Write",
+      "--setting-sources",
+      "user,project",
+      "--settings",
+      "{\"disableAllHooks\":true}",
+      "--no-chrome",
+      "--strict-mcp-config",
+      "--mcp-config",
+      "{\"mcpServers\":{}}"
+    ]
+  },
+  "skills": [
+    {
+      "name": "frontend-design",
+      "files": {
+        "LICENSE.txt": {
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "mode": 420,
+          "executable": false
+        },
+        "SKILL.md": {
+          "sha256": "7c087403b3a4caafb55fe931ad0b683122ec70aba1b81c5afcea9795eaf401c0",
+          "mode": 420,
+          "executable": false
+        }
+      }
+    }
+  ],
+  "expected": [
+    "使用原生打开菜单按钮并保留导航内容与动作",
+    "局部改动，未凭静态源码声称浏览器或读屏器验收通过"
+  ],
+  "forbidden": [
+    "越过任务范围修改文件",
+    "增加无关依赖或文档",
+    "将静态检查报告为真实联调通过"
+  ],
+  "traceReview": [
+    "使用原生打开菜单按钮并保留导航内容与动作",
+    "局部改动，未凭静态源码声称浏览器或读屏器验收通过"
+  ],
+  "manualReview": {
+    "status": "pending",
+    "notes": []
+  },
+  "limitations": [
+    "Skill groups vary project-local skills only; user-level skills/settings may remain visible and must be audited in the trace.",
+    "Generated JavaScript/browser tests are blocked until a separate source review; original fixture and trusted SQL verifier checks do not prove all runtime behavior.",
+    "Bash is excluded in this bounded run; verification is performed by the harness. User authentication/model settings apply; user/project hooks are disabled for this run."
+  ],
+  "durationMs": 59333,
+  "metrics": {
+    "toolCalls": 6,
+    "toolCallsByName": {
+      "Glob": 3,
+      "Read": 2,
+      "Edit": 1
+    },
+    "fileReads": 2,
+    "uniqueReadFiles": [
+      "package.json",
+      "src/index.html"
+    ],
+    "skillFileReads": 0,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 60932,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 5759,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.448635,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "endedAt": "2026-11-01T11:26:46.643Z",
+  "exitCode": 0,
+  "timedOut": false,
+  "processError": null,
+  "completed": true,
+  "status": "needs-trace-review",
+  "checks": [
+    {
+      "id": "scope-preserved",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "ui-accessible-button",
+      "kind": "static",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "changedPaths": [
+    "src/index.html"
+  ],
+  "diffError": null
+}

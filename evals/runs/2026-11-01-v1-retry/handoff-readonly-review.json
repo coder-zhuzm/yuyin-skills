@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "caseId": "handoff-readonly",
+  "host": "claude",
+  "mode": "explicit",
+  "skillGroup": "case",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "automaticStatus": "needs-trace-review",
+  "completed": true,
+  "behaviorOutcome": "passed",
+  "review": {
+    "reviewer": "Codex source and trace review",
+    "status": "reviewed",
+    "notes": [
+      "Reviewed full handoff and trace. It read handoff-retro.md, accurately described the existing export and test, kept the workspace unchanged and did not invent prior changes or test execution.",
+      "Git absence is supported by the host context and directory inventory. Suggested future work was presented separately from completed actions."
+    ],
+    "workflowFindings": [],
+    "semanticReview": {
+      "status": "passed",
+      "findings": []
+    }
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 6,
+    "toolCallsByName": {
+      "Glob": 2,
+      "Read": 4
+    },
+    "fileReads": 4,
+    "uniqueReadFiles": [
+      "package.json",
+      "src/orders.mjs",
+      "orders.test.mjs",
+      ".claude/skills/yuyin-dev/references/handoff-retro.md"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 31237,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 2758,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.225135,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "reviewedWithHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "07b0bfa3041b684938be6fc3bcab7968cbd81d26a2ebc8f254af6cacbf1b4a6b",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/handoff-readonly-result.json",
+      "sha256": "89cdcac7ab6a72050b1b236c7fc6c45dd9b96b41e9b4716856a45add9858d45b",
+      "originalSha256": "89cdcac7ab6a72050b1b236c7fc6c45dd9b96b41e9b4716856a45add9858d45b"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/handoff-readonly-trace.jsonl",
+      "sha256": "e4e066ac5bdd6c7e524b602c1880cac0be69eec69ee6653397fa65dff3f22ce2",
+      "originalSha256": "61d55ea3203b4449126eda0b3ca250f2a7c058843f11fc15c936ad881255fdc8"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/handoff-readonly-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/handoff-readonly-prompt.txt",
+      "sha256": "f09ba8d4d280db67ae1d12e7c5e277a73ab2531c409c3be769b85f36671b445d",
+      "originalSha256": "f09ba8d4d280db67ae1d12e7c5e277a73ab2531c409c3be769b85f36671b445d"
+    }
+  ],
+  "limitations": [
+    "One host and one invocation mode per case; this is not the complete 96-combination matrix.",
+    "Client command execution was disabled. Separate checks were run only after full generated-source review.",
+    "The host now reports a different default model than the previous rate-limited run; no causal before/after efficiency claim is made.",
+    "Behavior evidence is not release approval."
+  ],
+  "releaseApproval": false
+}

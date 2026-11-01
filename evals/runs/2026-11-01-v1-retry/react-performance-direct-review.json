@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "caseId": "react-performance-direct",
+  "host": "claude",
+  "mode": "direct",
+  "skillGroup": "case",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "automaticStatus": "blocked",
+  "completed": true,
+  "behaviorOutcome": "passed",
+  "review": {
+    "reviewer": "Codex source and trace review",
+    "status": "reviewed-with-limitations",
+    "notes": [
+      "Reviewed both complete generated modules and the full trace. The helper is a pure local filter; React 18, MUI and the existing component structure remain in place. No framework/dependency migration occurred.",
+      "Independent stock/query examples and static React surface checks passed after source review. The model disclosed that its own checks were source reasoning only."
+    ],
+    "workflowFindings": [
+      "The direct slash invocation is recorded, but a separate read of the professional skill entry/rule is not independently visible in the trace. Task completion alone does not prove skill loading.",
+      "No real React page or browser interaction was exercised."
+    ],
+    "semanticReview": {
+      "status": "passed",
+      "findings": []
+    }
+  },
+  "reviewedChecks": [
+    {
+      "id": "scope-preserved",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "react-filter",
+      "kind": "behavior",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "react-surface",
+      "kind": "static",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 15,
+    "toolCallsByName": {
+      "Glob": 7,
+      "Read": 4,
+      "Grep": 2,
+      "Edit": 2
+    },
+    "fileReads": 4,
+    "uniqueReadFiles": [
+      "package.json",
+      "src/ProductList.jsx",
+      "src/filter-products.mjs",
+      ".claude/skills/yuyin-dev/SKILL.md"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 126337,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 122380,
+      "output_tokens": 8052,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.8941749999999999,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "reviewedWithHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "8dfcfce80c8185f5a8cacb6e1d684689432b44eff43cb046af40754710863908",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/react-performance-direct-result.json",
+      "sha256": "fb188ba2713e5cc2eaab23f295c7d03bfedb95be26a91575d7168befabdda8e2",
+      "originalSha256": "fb188ba2713e5cc2eaab23f295c7d03bfedb95be26a91575d7168befabdda8e2"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/react-performance-direct-trace.jsonl",
+      "sha256": "e34ff716163526c6e9818d11324a2c280b82ea0791143ee2ef108ab105c798c5",
+      "originalSha256": "ad244fe697533699b26c4df8876b7880a3657b90bb830fba9c8cc2cf03760713"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/react-performance-direct-diff.patch",
+      "sha256": "c19e3b6e8028c1234e3537dac3149e6d35187809c47641d52df46930c5034ef9",
+      "originalSha256": "48e63e91d4ef2fcff7d57a736963b704178d62cff125bec6df5ce63104516bcc"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-retry/react-performance-direct-prompt.txt",
+      "sha256": "8a08c5a8ab8265351e12a8010f26dda64f9f6f825e7e1a02d2184323045ea1b2",
+      "originalSha256": "8a08c5a8ab8265351e12a8010f26dda64f9f6f825e7e1a02d2184323045ea1b2"
+    }
+  ],
+  "limitations": [
+    "One host and one invocation mode per case; this is not the complete 96-combination matrix.",
+    "Client command execution was disabled. Separate checks were run only after full generated-source review.",
+    "The host now reports a different default model than the previous rate-limited run; no causal before/after efficiency claim is made.",
+    "Behavior evidence is not release approval."
+  ],
+  "releaseApproval": false
+}
