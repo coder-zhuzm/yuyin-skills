@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "caseId": "ui-review-local",
+  "caseSha256": "2648c964d88734504a8487565b2340da1ed95566de698bc22ea04c9d3c217e21",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "review": {
+    "status": "reviewed",
+    "reviewer": "Codex pre-release evidence audit",
+    "date": "2026-11-01",
+    "notes": [
+      "The local rule snapshot was read, the definite finding is tied to the non-native onclick div and keyboard access, and collapse/state enhancements are explicitly marked conditional suggestions.",
+      "No files changed; browser, keyboard-event, visual-focus and assistive-technology testing remain unperformed."
+    ]
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "provenance": [
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/ui-r2-review.json",
+      "sha256": "97af4971683594cb93664de93b38968edbafdd07aeb9e9811fe75d125d666008"
+    },
+    {
+      "path": "evals/runs/2026-11-01-pre-release/ui-review-local-input-proof.json",
+      "sha256": "138aff74aabbb253e3b0a1bae393196737f9f62f393ded9791380b8293d4ae97"
+    }
+  ],
+  "limitations": [
+    "One host/model; original cases use unchanged user prompts and fixture bytes.",
+    "Each iteration has its actual skill-file hashes in the original result.",
+    "A passing workspace check is not a passing semantic judgment.",
+    "The separate measured control has different supplied data and is not an unchanged-case before/after comparison."
+  ],
+  "releaseApproval": false
+}

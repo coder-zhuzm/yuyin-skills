@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "caseId": "optimization-readonly",
+  "caseSha256": "621e90670c0dbe48fea82b684eaa9aa635cae4d564e78ba5a74cee3904e22369",
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "review": {
+    "status": "reviewed",
+    "reviewer": "Codex pre-release evidence audit",
+    "date": "2026-11-01",
+    "notes": [
+      "The final optimization reference was read and the workspace stayed unchanged. The answer labels test source as a definition rather than an executed measurement, leaves latency/bottleneck/benefit unknown, and proposes a minimal empirical baseline.",
+      "No unmeasured timing magnitude, guaranteed benefit or assertion that optimization is useless is made."
+    ]
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "provenance": [
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-r3-review.json",
+      "sha256": "17433b52e2722245f21c27b942eae59fc1d46d92d536fc0d71fbcd5d7b1ac87a"
+    },
+    {
+      "path": "evals/runs/2026-11-01-pre-release/optimization-readonly-input-proof.json",
+      "sha256": "f475b6b02b7325bf5ddb7cb72894fda7d77945d0bf8fb57f6a6186b4b4d59cd4"
+    }
+  ],
+  "limitations": [
+    "One host/model; original cases use unchanged user prompts and fixture bytes.",
+    "Each iteration has its actual skill-file hashes in the original result.",
+    "A passing workspace check is not a passing semantic judgment.",
+    "The separate measured control has different supplied data and is not an unchanged-case before/after comparison."
+  ],
+  "releaseApproval": false
+}

@@ -1,0 +1,360 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "Codex pre-release evidence audit",
+  "sourceBaseline": "d8b14da4ffc42e470cd8abf8517534db30636cef",
+  "branch": "codex/review-fixes",
+  "identitySha256": "d89f84afb52c550844a48384125fc44837b98dd4f4c1ab03bd44ccddb5c2c532",
+  "scope": "Complete pre-release checks and evidence accounting; no new model run, real-project trial or publication",
+  "outcome": "blocked-pending-behavior-release-decisions",
+  "releaseApproval": false,
+  "waiversGranted": [],
+  "checks": [
+    {
+      "name": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "log": {
+        "path": "evals/runs/2026-11-01-pre-release/tests.log",
+        "sha256": "8f032e2dd780e627555d1b8863b1b626d7a59af92432367350dbb8d0adac27c6"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "verify",
+      "command": [
+        "npm",
+        "run",
+        "verify"
+      ],
+      "exitCode": 0,
+      "log": {
+        "path": "evals/runs/2026-11-01-pre-release/verify.log",
+        "sha256": "99326553eec8188c4df5b74565fd7e25e1e181384ac4e433723518807e82b727"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "upstream",
+      "command": [
+        "npm",
+        "run",
+        "upstream:check"
+      ],
+      "exitCode": 0,
+      "log": {
+        "path": "evals/runs/2026-11-01-pre-release/upstream.log",
+        "sha256": "813de44d411f65b2b1098822a66fedd3ca2fa4c53d5694981da0fe736d0e87ec"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "fixtures",
+      "command": [
+        "npm",
+        "run",
+        "evals:check"
+      ],
+      "exitCode": 0,
+      "log": {
+        "path": "evals/runs/2026-11-01-pre-release/fixtures.log",
+        "sha256": "5a511082e5053ddd997ba2e33f546fec18ea24af09968a7516da6e101207a800"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "release-gate",
+      "command": [
+        "node",
+        "scripts/evidence.mjs",
+        "check-release"
+      ],
+      "exitCode": 1,
+      "log": {
+        "path": "evals/runs/2026-11-01-pre-release/release-gate.log",
+        "sha256": "9c3cab7b5a074444595aba734ea11827fbef723231b759f2f7f0e9391be170c8"
+      },
+      "expectedExitCode": 1
+    }
+  ],
+  "evidenceIntegrity": {
+    "followupFilesRehashed": 46,
+    "currentOriginalCasesRebound": [
+      "optimization-readonly",
+      "ui-review-local"
+    ]
+  },
+  "caseDecisions": [
+    {
+      "caseId": "node-readonly",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-10-15-smoke.json",
+          "sha256": "72e1c6929602cdba9be30843c73dd2cac1e5d6933df3a8e3b52e61556e6e9dd6"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "react-local",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-10-15-smoke.json",
+          "sha256": "72e1c6929602cdba9be30843c73dd2cac1e5d6933df3a8e3b52e61556e6e9dd6"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "spring-mybatis",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-10-15-smoke.json",
+          "sha256": "72e1c6929602cdba9be30843c73dd2cac1e5d6933df3a8e3b52e61556e6e9dd6"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "js-playwright",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-10-15-smoke.json",
+          "sha256": "72e1c6929602cdba9be30843c73dd2cac1e5d6933df3a8e3b52e61556e6e9dd6"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "small-copy",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-claude-pilot/summary.json",
+          "sha256": "e2c3172f01ba92361eda94d8b87216fef60468fc0cf17ab7cb8880bcc8573c64"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "missing-skill",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-10-15-smoke.json",
+          "sha256": "72e1c6929602cdba9be30843c73dd2cac1e5d6933df3a8e3b52e61556e6e9dd6"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "refactor-local",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/refactor-local-review.json",
+          "sha256": "17778bc7d8c89b0185268d368645c06c531ac2f415a835a53a3e60490bcf1996"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "tests-only",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/tests-only-review.json",
+          "sha256": "a49923c8d6814f93dd0ed9d75dfc95a39a75fa4d6fee774bb04138769c47ff15"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "upgrade-local",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/upgrade-local-review.json",
+          "sha256": "019911e39c61cf48955a248a5125b28d6dd2b209238df584841055b78cae4172"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "review-readonly",
+      "status": "failed",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-judgment-followup/review-r3-review.json",
+          "sha256": "d1782e52f7500c821090437906170546a37354583e02459b23982992573fc4cd"
+        },
+        {
+          "path": "evals/runs/2026-11-01-judgment-followup/runtime-probe.json",
+          "sha256": "eb37b8fa34b66691c9503f7d7edb020cc37d0467a0e314f61009625f2d4ca978"
+        }
+      ],
+      "rationale": "Three failed iterations; false late-reject crash claim contradicted by independent local probe. No waiver granted."
+    },
+    {
+      "caseId": "optimization-readonly",
+      "currentCaseSha256": "621e90670c0dbe48fea82b684eaa9aa635cae4d564e78ba5a74cee3904e22369",
+      "status": "verified-sample",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-pre-release/optimization-readonly-reviewed.json",
+          "sha256": "f9ad09acec5ba81b3d4104d0ad6777de9572cb8ea86c5a1d21f5fd68916907de"
+        }
+      ],
+      "rationale": "Current input identity rechecked; original sample passed manual semantic review. Limits remain in the evidence."
+    },
+    {
+      "caseId": "context-readonly",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/context-readonly-review.json",
+          "sha256": "5e9fff5f498a79f51668e556301e2d70cdec1a32ca588f0f09e533d259e2e03c"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "handoff-readonly",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/handoff-readonly-review.json",
+          "sha256": "ede515ddfaff9a3e0c5d086f998e005eb869fddc2984b4c95520ba8032eded98"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "frontend-design-local",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/frontend-design-local-review.json",
+          "sha256": "c6cbb7bda200bab50212d32270e7fa0ee7ffa26a5f092d7448aee635603abbf7"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    },
+    {
+      "caseId": "ui-review-local",
+      "currentCaseSha256": "2648c964d88734504a8487565b2340da1ed95566de698bc22ea04c9d3c217e21",
+      "status": "verified-sample",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-pre-release/ui-review-local-reviewed.json",
+          "sha256": "d637ad7e03ae0181d6b11b2d67777a94b06a3fafdfaefb32c6f90a2f45be5122"
+        }
+      ],
+      "rationale": "Current input identity rechecked; original sample passed manual semantic review. Limits remain in the evidence."
+    },
+    {
+      "caseId": "react-performance-direct",
+      "status": "current-evidence-incomplete",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/react-performance-direct-review.json",
+          "sha256": "2ab069e40293d021fbcff21369dc1043e1867e4cc3e637037695849587ccebb7"
+        }
+      ],
+      "rationale": "Historical evidence retained with its original limits. Not promoted to current complete behavior verification; needs an evidence decision or an explicit risk waiver before release."
+    }
+  ],
+  "uncoveredSkills": [],
+  "additionalFindings": [
+    {
+      "status": "partial",
+      "caseId": "optimization-readonly",
+      "scope": "Separate measured control; does not replace original case",
+      "evidence": {
+        "path": "evals/runs/2026-11-01-judgment-followup/optimization-measured-control-r2-review.json",
+        "sha256": "094501fa61d5e6dc3dbab7af9f55e7d59f6876038578293a8fb9d27dd7875e9a"
+      },
+      "detail": "Unmeasured production extrapolation remains despite correct paired arithmetic."
+    }
+  ],
+  "deferrals": [
+    {
+      "task": "Alternative-model evaluation",
+      "status": "stopped-per-user-request"
+    },
+    {
+      "task": "Real React or Spring project trial",
+      "status": "todo",
+      "path": "docs/TODO.md"
+    }
+  ],
+  "version": {
+    "workingTree": "0.3.5",
+    "registryLatest": "0.3.5",
+    "prospective": "0.3.6",
+    "changed": false
+  },
+  "package": {
+    "path": "evals/runs/2026-11-01-pre-release/package-manifest.json",
+    "sha256": "2217275ad13b5548afc1de8b8154fb5cf5220b1dd5f6b4b813c17740540cb26a"
+  },
+  "publicationActionsPerformed": [],
+  "blockers": [
+    "No complete current behavior release review exists. Release gate correctly rejects the working tree.",
+    "Known review-readonly semantic failure has not been waived.",
+    "13 cases retain historical or incomplete current evidence; no blanket waiver was created."
+  ],
+  "limits": [
+    "Only two unchanged-case samples are rebound here; no full host/model/mode matrix claim.",
+    "No real browser, assistive technology, Java/MyBatis/target database or real business integration was run.",
+    "A successful package check does not approve model behavior or production use."
+  ],
+  "changeScope": {
+    "comparisonBase": "d16542079784b41fad9b8b059e02f7f18f3abe10",
+    "comparisonHead": "d8b14da4ffc42e470cd8abf8517534db30636cef",
+    "commits": [
+      "d8b14da4ffc42e470cd8abf8517534db30636cef fix: clarify judgment evidence and record bounded model checks",
+      "a11394a74631be6d9215c66da13c16c9f58d4db9 test: retry model evaluations and accept standard Node test layouts",
+      "10de9858b03765aed540cfc33de6c9a7bf53ce10 feat: add focused development workflows and intent evaluations",
+      "7deb653f673c973f54bfa221d53c7177f324d764 fix: correct skill examples and gate reviewed releases"
+    ],
+    "filesChanged": 223,
+    "categories": {
+      "evaluationEvidence": 165,
+      "other": 58
+    },
+    "content": [
+      "Correct SQL, cache, React async and browser-helper examples through declared locked-source patches",
+      "Protect existing installs before symlink replacement; cover CLI entry changes in publish paths",
+      "Require current reviewed behavior decisions during release preparation; retain locked upstream content",
+      "Add focused development workflows and 16 intent/source cases; preserve model failures and limits"
+    ],
+    "preflightOnlyChanges": [
+      "docs/TODO.md",
+      "VERIFICATION.md",
+      "evals/runs/2026-11-01-pre-release/"
+    ],
+    "riskDecisions": [
+      "Keep the known model review failure visible; no semantic-pass claim or release waiver",
+      "Defer real-project expansion trial as TODO; stop alternative-model evaluation",
+      "Keep root version and release state unchanged; prospective 0.3.6 archive is inspection-only"
+    ]
+  },
+  "archiveInspection": {
+    "extractedFiles": 147,
+    "sourceFilesComparedByteForByte": 144,
+    "intentionalVersionReferenceChanges": [
+      "package.json",
+      "README.md",
+      "docs/installation.md"
+    ],
+    "archiveSha256": "5e3e79e7560d97dd7aab60a2590ecbd8e797cd1fd67831f022bd9d9f240f25e9"
+  }
+}

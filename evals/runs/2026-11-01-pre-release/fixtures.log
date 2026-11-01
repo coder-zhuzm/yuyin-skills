@@ -1,0 +1,10 @@
+
+> @zhuzm/yuyin-skills@0.3.5 evals:check
+> node scripts/evals.mjs check
+
+{
+  "cases": 16,
+  "status": "fixture-checks-passed",
+  "modelBehavior": "not-run"
+}
+npm warn Unknown user config "home". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.

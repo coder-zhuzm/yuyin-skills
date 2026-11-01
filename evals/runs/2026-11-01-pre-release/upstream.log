@@ -1,0 +1,6 @@
+
+> @zhuzm/yuyin-skills@0.3.5 upstream:check
+> node scripts/upstream.mjs check
+
+Upstream check: 8 skills, 113 files, 5 sources.
+npm warn Unknown user config "home". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.

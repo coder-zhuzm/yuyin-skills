@@ -1,0 +1,6 @@
+
+> @zhuzm/yuyin-skills@0.3.5 verify
+> node scripts/verify.mjs
+
+Verified 41 Markdown files, 16 fixture checks, pending behavior report, workflow permissions and 147 distribution files for @zhuzm/yuyin-skills@0.3.5. Model behavior requires separate run artifacts and trace review.
+npm warn Unknown user config "home". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.

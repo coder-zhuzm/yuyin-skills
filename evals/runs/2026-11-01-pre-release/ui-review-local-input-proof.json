@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "caseId": "ui-review-local",
+  "fixture": {
+    "package.json": {
+      "sha256": "4ab567222c2a1d657cb1c3150e644b6821e2c7555a8039f04cf134f6984a8100",
+      "mode": 420,
+      "executable": false
+    },
+    "src/": {
+      "directory": true,
+      "mode": 493
+    },
+    "src/index.html": {
+      "sha256": "1e23d759caee4cff402b9e2a187c9539bf12174120cc574be1c6d80103693edf",
+      "mode": 420,
+      "executable": false
+    }
+  },
+  "selectedSkills": [
+    {
+      "name": "web-design-guidelines",
+      "files": {
+        "LICENSE-UPSTREAM.md": {
+          "sha256": "7c02f64b08fc6c4eef03c01d64f3e2ed478193ccfcbd14edba379abe23304651",
+          "mode": 420,
+          "executable": false
+        },
+        "SKILL.md": {
+          "sha256": "19d83e12c865e02f7abae25995561dd12c738939496c2c9d0b437dabd124827b",
+          "mode": 420,
+          "executable": false
+        },
+        "references/": {
+          "directory": true,
+          "mode": 493
+        },
+        "references/WEB-INTERFACE-LICENSE.txt": {
+          "sha256": "6cd1609c9c12233507cdd2ce0d32e9a721e3c27494951be06b90090deeeb7af2",
+          "mode": 420,
+          "executable": false
+        },
+        "references/web-interface-guidelines.md": {
+          "sha256": "d246b026f4f29b5823a9cc857f9edf3d2507002e055e32040cadeaf3b38e0234",
+          "mode": 420,
+          "executable": false
+        }
+      }
+    }
+  ],
+  "harness": {
+    "scripts/evals.mjs": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+    "scripts/evidence.mjs": "aa8621296ebbc113491e96b70e1ea71e984754bf71c2c0c77fac38ca0cc99ca1",
+    "scripts/behavior.mjs": "1370e81ded9e318ac374b43c30f31919d5870d62e8c2831224934061a65cdcd9"
+  },
+  "assertions": [
+    "case definition equals current manifest",
+    "fixture snapshot equals original pre-run baseline",
+    "no extra business inputs beyond CLAUDE.md and .claude skills",
+    "selected skill files equal current source",
+    "run harness equals current eval harness",
+    "evidence and behavior scripts unchanged since run base"
+  ],
+  "originalBaselineSha256": "9efd9f07dc4391cff5587f7e5b334d212b70808d45fef675bd1c4060a5b28fc1"
+}

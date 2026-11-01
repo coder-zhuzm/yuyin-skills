@@ -1,0 +1,16 @@
+{
+  "retrievedAt": "2026-11-01T12:34:36.836Z",
+  "source": "https://registry.npmjs.org/@zhuzm%2fyuyin-skills",
+  "latest": "0.3.5",
+  "persistedState": {
+    "version": "0.3.5",
+    "source": "41c55329aa7fd230e9eea005dcebd98cb668a314",
+    "shasum": "036d2bdc35c8dade40ab715a5223bce0895efed6"
+  },
+  "persistedStateMatchesRegistry": true,
+  "prospectivePlan": {
+    "version": "0.3.6",
+    "resume": false
+  },
+  "rootVersionChanged": false
+}
