@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { cpSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
@@ -8,7 +9,7 @@ import { pathToFileURL } from 'node:url';
 const json = path => JSON.parse(readFileSync(path, 'utf8'));
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const read = (root, path) => readFileSync(join(root, path), 'utf8');
-const checkIds = ['workspace-unchanged', 'scope-preserved', 'node-reproduction', 'react-filter', 'react-surface', 'spring-architecture', 'spring-query', 'playwright-surface', 'button-copy', 'playwright-browser', 'small-copy-behavior'];
+const checkIds = ['workspace-unchanged', 'scope-preserved', 'node-reproduction', 'react-filter', 'react-surface', 'spring-architecture', 'spring-query', 'playwright-surface', 'button-copy', 'playwright-browser', 'small-copy-behavior', 'refactor-contract', 'test-suite', 'upgrade-target', 'upgrade-contract', 'ui-accessible-button'];
 
 export function loadCases(root = process.cwd()) {
   const manifest = json(join(root, 'evals/manifest.json'));
@@ -48,15 +49,40 @@ function execute(workspace, source, { reviewed = false } = {}) {
   const r = spawnSync(process.execPath, ['--input-type=module', '-e', source], { cwd: workspace, env: verificationEnv(), encoding: 'utf8', timeout: 10_000, maxBuffer: 1024 * 1024 });
   assert.ok(!r.error && r.status === 0, (r.error?.message ?? r.stderr ?? r.stdout).slice(0, 4000));
 }
-function sameDependencies(workspace, fixture) {
+function sameDependencies(workspace, fixture, allowed = {}) {
   for (const file of ['package.json', 'pom.xml']) {
     if (!existsSync(join(fixture, file))) continue;
     if (file === 'pom.xml') assert.equal(read(workspace, file), read(fixture, file), 'Build/dependency configuration changed');
     else {
       const a = json(join(workspace, file)), b = json(join(fixture, file));
-      for (const key of ['dependencies', 'devDependencies', 'peerDependencies', 'type']) assert.deepEqual(a[key], b[key], `Changed ${key}`);
+      const expected = structuredClone(b);
+      for (const [name, target] of Object.entries(allowed)) {
+        assert.ok(Object.hasOwn(b.dependencies ?? {}, name), `Upgrade target is not an existing dependency: ${name}`);
+        if (a.dependencies?.[name] !== b.dependencies[name]) expected.dependencies[name] = target;
+      }
+      for (const key of ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies', 'overrides', 'resolutions', 'engines', 'packageManager', 'type']) assert.deepEqual(a[key], expected[key], `Changed ${key}`);
+      if (Object.keys(allowed).length) assert.deepEqual(a, expected, 'Changes beyond the authorized dependency');
     }
   }
+}
+function checkGeneratedTests(workspace, reviewed) {
+  const files = Object.keys(snapshot(workspace)).filter(p => !p.startsWith('.') && !p.startsWith('node_modules/') && /\.test\.mjs$/.test(p));
+  assert.ok(files.length, 'No behavior test was added');
+  if (!reviewed) throw new BlockedCheck('Generated tests require source review before execution or mutation checks.');
+  const scratch = mkdtempSync(join(tmpdir(), 'yuyin-test-mutations-'));
+  try {
+    for (const path of Object.keys(snapshot(workspace)).filter(p => !p.endsWith('/') && !p.startsWith('.') && !p.startsWith('node_modules/'))) {
+      mkdirSync(dirname(join(scratch, path)), { recursive: true }); cpSync(join(workspace, path), join(scratch, path));
+    }
+    const run = () => spawnSync(process.execPath, ['--test', ...files], { cwd: scratch, env: verificationEnv(), encoding: 'utf8', timeout: 10_000, maxBuffer: 1024 * 1024 });
+    const baseline = run();
+    assert.ok(!baseline.error && baseline.status === 0, baseline.error?.message ?? baseline.stdout + baseline.stderr);
+    for (const mutant of ['export const total = () => 0;', 'export function total(items) { return items.filter(x => x.active).reduce((s,x) => s + x.priceCents*x.quantity, 0); }']) {
+      writeFileSync(join(scratch, 'src/discount.mjs'), mutant);
+      const result = run();
+      assert.ok(!result.error && result.status !== null && result.status !== 0, 'Tests missed an incorrect total or a removed VIP discount');
+    }
+  } finally { rmSync(scratch, { recursive: true, force: true }); }
 }
 export function checkCase({ root = process.cwd(), caseId, workspace, baseline, browser = true, allowReviewedExecution = false, caseInfo }) {
   const c = caseInfo ?? loadCases(root).find(c => c.id === caseId);
@@ -67,6 +93,7 @@ export function checkCase({ root = process.cwd(), caseId, workspace, baseline, b
   return c.checks.map(id => {
     let kind = 'static';
     try {
+      assert.ok(checkIds.includes(id), `Unknown mechanical check: ${id}`);
       if (id === 'workspace-unchanged' || id === 'scope-preserved') {
         kind = 'integrity';
         if (!baseline) return { id, kind, status: 'blocked', detail: 'No pre-run snapshot; workspace integrity is unverified.' };
@@ -74,7 +101,7 @@ export function checkCase({ root = process.cwd(), caseId, workspace, baseline, b
         if (id === 'workspace-unchanged') assert.deepEqual(changed, [], 'Readonly workspace changed');
         else {
           assert.deepEqual(changed.filter(p => !c.allowedChanges.some(pattern => matches(p, pattern))), [], 'Changes outside the case scope');
-          sameDependencies(workspace, fixture);
+          sameDependencies(workspace, fixture, c.allowedDependencyChanges);
         }
       } else if (id === 'node-reproduction') {
         kind = 'behavior';
@@ -113,6 +140,20 @@ export function checkCase({ root = process.cwd(), caseId, workspace, baseline, b
         if (!allowReviewedExecution) throw new BlockedCheck('Generated browser tests require source review and a separately controlled execution environment.');
         const r = spawnSync(process.execPath, [cli, 'test', '--workers=1', '--reporter=line'], { cwd: workspace, env: verificationEnv(), encoding: 'utf8', timeout: 60_000, maxBuffer: 1024 * 1024 });
         assert.ok(!r.error && r.status === 0, r.error?.message ?? r.stderr + r.stdout);
+      } else if (id === 'refactor-contract') {
+        kind = 'behavior';
+        execute(allowReviewedExecution ? workspace : fixture, 'import {total} from "./src/discount.mjs"; import a from "node:assert/strict"; const rows=[{active:true,priceCents:101,quantity:2},{active:false,priceCents:999,quantity:5},{active:true,priceCents:50,quantity:1}]; const before=structuredClone(rows); a.equal(total(rows),252); a.equal(total(rows,"vip"),227); a.equal(total(rows,"other"),252); a.equal(total([],"vip"),0); a.deepEqual(rows,before);', { reviewed: allowReviewedExecution || originalSource('src/discount.mjs') });
+      } else if (id === 'test-suite') {
+        kind = 'behavior'; checkGeneratedTests(workspace, allowReviewedExecution);
+      } else if (id === 'upgrade-target') {
+        assert.equal(json(join(workspace, 'package.json')).dependencies['money-helper'], 'file:vendor/v2');
+        assert.match(read(workspace, 'src/price.mjs'), /from\s+['"]\.\.\/vendor\/v2\/index\.mjs['"]/);
+      } else if (id === 'upgrade-contract') {
+        kind = 'behavior';
+        execute(allowReviewedExecution ? workspace : fixture, 'import {displayPrice} from "./src/price.mjs"; import a from "node:assert/strict"; a.equal(displayPrice(0),"¥0.00"); a.equal(displayPrice(1050),"¥10.50"); a.equal(displayPrice(-125),"¥-1.25"); a.equal(displayPrice(1),"¥0.01");', { reviewed: allowReviewedExecution || originalSource('src/price.mjs') });
+      } else if (id === 'ui-accessible-button') {
+        assert.match(read(workspace, 'src/index.html'), /<button\b[^>]*>\s*打开菜单\s*<\/button>/);
+        assert.match(read(workspace, 'src/index.html'), /<nav\b/);
       } else if (id === 'small-copy-behavior') {
         kind = 'behavior';
         execute(allowReviewedExecution ? workspace : fixture, 'import { formatPrice as f, buttonLabel } from "./src/checkout.mjs"; import a from "node:assert/strict"; a.equal(f(10),"¥10.00"); a.equal(f(1.5),"¥1.50"); a.equal(f(0),"¥0.00"); a.equal(f(12.345),"¥12.35"); a.equal(buttonLabel,"确认支付");', { reviewed: allowReviewedExecution || originalSource('src/checkout.mjs') });

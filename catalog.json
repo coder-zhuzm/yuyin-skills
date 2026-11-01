@@ -6,63 +6,63 @@
       "path": "skills/development/shared/yuyin-dev",
       "category": "development/shared",
       "status": "ready-for-project-trial",
-      "scope": "Task workflow; project constraints and evidence first."
+      "scope": "Development workflow and intent routing."
     },
     {
       "name": "vercel-react-best-practices",
       "path": "skills/upstream/vercel/react-best-practices",
       "category": "development/frontend",
       "status": "ready-for-project-trial",
-      "scope": "React/Next.js performance; apply only rules supported by the actual framework."
+      "scope": "React/Next.js performance."
     },
     {
       "name": "vercel-composition-patterns",
       "path": "skills/upstream/vercel/composition-patterns",
       "category": "development/frontend",
       "status": "ready-for-project-trial",
-      "scope": "React components; React 19-specific rules require React 19."
+      "scope": "React component composition."
     },
     {
       "name": "frontend-design",
       "path": "skills/upstream/anthropic/frontend-design",
       "category": "development/frontend",
       "status": "ready-for-project-trial",
-      "scope": "New UI or explicit design work; existing design systems take precedence."
+      "scope": "UI design."
     },
     {
       "name": "web-design-guidelines",
       "path": "skills/upstream/vercel/web-design-guidelines",
       "category": "development/frontend",
       "status": "ready-for-project-trial",
-      "scope": "UI review using locked local Web Interface Guidelines."
+      "scope": "UI and accessibility review."
     },
     {
       "name": "java-springboot",
       "path": "skills/upstream/github/java-springboot",
       "category": "development/backend",
       "status": "ready-for-project-trial",
-      "scope": "Spring practices; preserve existing Java/Spring, MyBatis/JPA and package structure."
+      "scope": "Java/Spring development."
     },
     {
       "name": "nodejs-backend-patterns",
       "path": "skills/upstream/wshobson/nodejs-backend-patterns",
       "category": "development/backend",
       "status": "ready-for-project-trial",
-      "scope": "Optional Node patterns; examples do not prescribe a new framework or architecture."
+      "scope": "Node.js backend patterns."
     },
     {
       "name": "javascript-testing-patterns",
       "path": "skills/upstream/wshobson/javascript-testing-patterns",
       "category": "development/shared",
       "status": "ready-for-project-trial",
-      "scope": "Optional JS/TS testing; use existing test framework."
+      "scope": "JavaScript/TypeScript testing."
     },
     {
       "name": "webapp-testing",
       "path": "skills/upstream/anthropic/webapp-testing",
       "category": "development/shared",
       "status": "ready-for-project-trial",
-      "scope": "Optional Python Playwright; runtime tools must already be available or explicitly provisioned."
+      "scope": "Browser interaction testing."
     }
   ],
   "profiles": {
@@ -94,5 +94,6 @@
     "life",
     "content"
   ],
-  "note": "Profiles select installed content; yuyin-dev reads only applicable skills. Upstream updates are reviewed separately; releases use the locked snapshot."
+  "note": "Profiles select installed content; yuyin-dev reads only applicable skills. Upstream updates are reviewed separately; releases use the locked snapshot.",
+  "routing": "skills/development/shared/yuyin-dev/references/stack-skills.md"
 }

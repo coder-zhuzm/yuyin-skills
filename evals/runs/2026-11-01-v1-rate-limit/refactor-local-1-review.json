@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "caseId": "refactor-local",
+  "attempt": 1,
+  "status": "incomplete",
+  "completed": false,
+  "taskOutcome": "not-evaluated",
+  "review": {
+    "reviewer": "Codex trace review",
+    "status": "blocked-by-rate-limit",
+    "reason": "HTTP 429 remained after parallel batch and one serial retry; stopped model calls without changing model/provider/authentication."
+  },
+  "errors": [
+    {
+      "attempt": 1,
+      "error_status": 429,
+      "error": "rate_limit",
+      "retry_delay_ms": 60000
+    },
+    {
+      "attempt": 2,
+      "error_status": 429,
+      "error": "rate_limit",
+      "retry_delay_ms": 60000
+    }
+  ],
+  "referenceRead": true,
+  "reference": "refactor.md",
+  "sourceHarnessSha256": "dfa851bd65a1a36c081b8b82588432603a09efbde9d8fcc246f115161b249ac2",
+  "unchangedWorkspace": true,
+  "limitations": [
+    "Passing checks against unchanged fixtures are baseline checks, not task completion.",
+    "Only reference selection before interruption is observable; no completed implementation or efficiency benefit is established."
+  ],
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/refactor-local-1-result.json",
+      "sha256": "f7808adc7e9e8adcce816df26ef447aa729c17c05d1a2e365a199655be4caa3e",
+      "originalSha256": "f7808adc7e9e8adcce816df26ef447aa729c17c05d1a2e365a199655be4caa3e"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/refactor-local-1-trace.jsonl",
+      "sha256": "7dd36dddf2f1ad891bf516588a3fda6624b15e6d0f2a4c5639fa34bb77553c8d",
+      "originalSha256": "ce28447f45ec4e956896a4f90a2bc5c7b206cf4e84f6a25e38f8ec8137421089"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/refactor-local-1-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/refactor-local-1-prompt.txt",
+      "sha256": "e925e607e8423f1224143cd97846e1d4a72f6913b8bf73fa3f99e280190e3a6d",
+      "originalSha256": "e925e607e8423f1224143cd97846e1d4a72f6913b8bf73fa3f99e280190e3a6d"
+    }
+  ]
+}

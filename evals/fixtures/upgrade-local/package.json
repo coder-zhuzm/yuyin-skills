@@ -1,0 +1,1 @@
+{"name":"eval-upgrade-local","private":true,"type":"module","dependencies":{"money-helper":"file:vendor/v1"}}

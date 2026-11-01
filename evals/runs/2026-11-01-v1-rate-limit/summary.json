@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-01",
+  "host": "claude",
+  "releaseApproval": false,
+  "runs": [
+    {
+      "caseId": "refactor-local",
+      "attempt": 1,
+      "status": "incomplete",
+      "timedOut": true,
+      "referenceRead": true,
+      "errorStatus": 429,
+      "reviewPath": "evals/runs/2026-11-01-v1-rate-limit/refactor-local-1-review.json"
+    },
+    {
+      "caseId": "tests-only",
+      "attempt": 1,
+      "status": "incomplete",
+      "timedOut": true,
+      "referenceRead": true,
+      "errorStatus": 429,
+      "reviewPath": "evals/runs/2026-11-01-v1-rate-limit/tests-only-1-review.json"
+    },
+    {
+      "caseId": "upgrade-local",
+      "attempt": 1,
+      "status": "incomplete",
+      "timedOut": true,
+      "referenceRead": true,
+      "errorStatus": 429,
+      "reviewPath": "evals/runs/2026-11-01-v1-rate-limit/upgrade-local-1-review.json"
+    },
+    {
+      "caseId": "refactor-local",
+      "attempt": 2,
+      "status": "incomplete",
+      "timedOut": true,
+      "referenceRead": false,
+      "errorStatus": 429,
+      "reviewPath": "evals/runs/2026-11-01-v1-rate-limit/refactor-local-2-review.json"
+    }
+  ],
+  "notRunCases": [
+    "review-readonly",
+    "optimization-readonly",
+    "context-readonly",
+    "handoff-readonly",
+    "frontend-design-local",
+    "ui-review-local",
+    "react-performance-direct"
+  ],
+  "conclusion": "Behavior completion is unverified due to provider rate limiting. Local regression/fixture checks are reported separately. No further model calls were started after the serial retry returned 429.",
+  "readingPath": {
+    "scenario": "generic local bug without specialist guidance",
+    "baselineCommit": "7deb653",
+    "beforeBytes": 8618,
+    "afterBytes": 5291,
+    "reductionPercent": 38.6,
+    "limitation": "Document bytes, not measured model efficiency."
+  }
+}

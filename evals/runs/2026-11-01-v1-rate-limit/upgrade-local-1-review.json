@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "caseId": "upgrade-local",
+  "attempt": 1,
+  "status": "incomplete",
+  "completed": false,
+  "taskOutcome": "not-evaluated",
+  "review": {
+    "reviewer": "Codex trace review",
+    "status": "blocked-by-rate-limit",
+    "reason": "HTTP 429 remained after parallel batch and one serial retry; stopped model calls without changing model/provider/authentication."
+  },
+  "errors": [
+    {
+      "attempt": 1,
+      "error_status": 429,
+      "error": "rate_limit",
+      "retry_delay_ms": 60000
+    },
+    {
+      "attempt": 2,
+      "error_status": 429,
+      "error": "rate_limit",
+      "retry_delay_ms": 60000
+    }
+  ],
+  "referenceRead": true,
+  "reference": "dependencies.md",
+  "sourceHarnessSha256": "dfa851bd65a1a36c081b8b82588432603a09efbde9d8fcc246f115161b249ac2",
+  "unchangedWorkspace": true,
+  "limitations": [
+    "Passing checks against unchanged fixtures are baseline checks, not task completion.",
+    "Only reference selection before interruption is observable; no completed implementation or efficiency benefit is established."
+  ],
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/upgrade-local-1-result.json",
+      "sha256": "5c261596d533e5f63e7c74b89a25a9810aca5fcd7fb70b812a2457076fccc230",
+      "originalSha256": "5c261596d533e5f63e7c74b89a25a9810aca5fcd7fb70b812a2457076fccc230"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/upgrade-local-1-trace.jsonl",
+      "sha256": "44d969a17e9788769ec10da5edd6ef5b9d50bfba632c80a3a8db69d5d699ed2e",
+      "originalSha256": "1e3a7af81c57e95018ddd5f9cfacb7159ebaf63e90120886ea8fb50a27207a96"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/upgrade-local-1-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/upgrade-local-1-prompt.txt",
+      "sha256": "73c8b5746ef0cdf4207c71f9e103a69857f55fa6079b7b21a5419631e9efa33f",
+      "originalSha256": "73c8b5746ef0cdf4207c71f9e103a69857f55fa6079b7b21a5419631e9efa33f"
+    }
+  ]
+}

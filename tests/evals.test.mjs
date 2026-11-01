@@ -13,9 +13,9 @@ function project(t, id) {
   cpSync(join(root, 'evals/fixtures', id), dir, { recursive: true });
   return dir;
 }
-test('all six fixtures expose their intended defects without counting them as model failures', () => {
-  assert.equal(loadCases(root).length, 6);
-  assert.equal(verifyEvals(root).cases, 6);
+test('all cases expose their declared baseline without counting fixture defects as model failures', () => {
+  assert.equal(loadCases(root).length, 16);
+  assert.equal(verifyEvals(root).cases, 16);
 });
 test('React checker distinguishes stock, query normalization and unchanged architecture', t => {
   const workspace = project(t, 'react-local'), baseline = snapshot(workspace);
@@ -136,4 +136,46 @@ test('comparison groups vary installed skills while natural/negative prompts pre
   assert.deepEqual(metrics.uniqueReadFiles, ['src/a.js']);
   assert.equal(metrics.usage.input_tokens, 100);
   assert.equal(metrics.clarificationCount, null);
+});
+
+test('refactor contract catches changed discounts and preserves source inputs', t => {
+  const workspace = project(t, 'refactor-local'), baseline = snapshot(workspace);
+  const c = { fixture: 'refactor-local', checks: ['refactor-contract'] };
+  const run = () => checkCase({ root, workspace, baseline, caseInfo: c, allowReviewedExecution: true });
+  assert.equal(run()[0].status, 'passed');
+  writeFileSync(join(workspace, 'src/discount.mjs'), 'export const total = () => 0;');
+  assert.equal(run()[0].status, 'failed');
+});
+test('test-only checker rejects smoke tests and requires detection of behavior regressions', t => {
+  const workspace = project(t, 'refactor-local'), baseline = snapshot(workspace);
+  const c = { fixture: 'refactor-local', checks: ['test-suite'] };
+  const run = reviewed => checkCase({ root, workspace, baseline, caseInfo: c, allowReviewedExecution: reviewed })[0];
+  assert.equal(run(true).status, 'failed');
+  writeFileSync(join(workspace, 'discount.test.mjs'), 'import "node:test";');
+  assert.equal(run(false).status, 'blocked');
+  assert.equal(run(true).status, 'failed');
+  writeFileSync(join(workspace, 'discount.test.mjs'), 'import test from "node:test"; import a from "node:assert/strict"; import {total} from "./src/discount.mjs"; test("contract",()=>{const rows=[{active:true,priceCents:100,quantity:2}];a.equal(total(rows),200);a.equal(total(rows,"vip"),180);});');
+  assert.equal(run(true).status, 'passed');
+});
+test('migration allows only the requested dependency and checks compatible adapter behavior', t => {
+  const workspace = project(t, 'upgrade-local'), baseline = snapshot(workspace);
+  const c = { fixture: 'upgrade-local', checks: ['scope-preserved', 'upgrade-target', 'upgrade-contract'], allowedChanges: ['package.json', 'src/price.mjs'], allowedDependencyChanges: { 'money-helper': 'file:vendor/v2' } };
+  const run = () => checkCase({ root, workspace, baseline, caseInfo: c, allowReviewedExecution: true });
+  assert.equal(run().find(c => c.id === 'upgrade-target').status, 'failed');
+  const pkg = JSON.parse(readFileSync(join(workspace, 'package.json'))); pkg.dependencies['money-helper'] = 'file:vendor/v2';
+  writeFileSync(join(workspace, 'package.json'), JSON.stringify(pkg));
+  writeFileSync(join(workspace, 'src/price.mjs'), 'import { formatMoney } from "../vendor/v2/index.mjs"; export function displayPrice(cents) { return formatMoney({ cents }); }');
+  assert.ok(run().every(c => c.status === 'passed'));
+  pkg.dependencies.unrequested = '1.0.0'; writeFileSync(join(workspace, 'package.json'), JSON.stringify(pkg));
+  assert.equal(run()[0].status, 'failed');
+  delete pkg.dependencies.unrequested; pkg.scripts = { install: 'unrequested side effect' };
+  writeFileSync(join(workspace, 'package.json'), JSON.stringify(pkg));
+  assert.equal(run()[0].status, 'failed');
+});
+
+test('an unknown API-supplied check fails instead of silently passing', t => {
+  const workspace = project(t, 'refactor-local');
+  const result = checkCase({ root, workspace, caseInfo: { fixture: 'refactor-local', checks: ['typo-check'] } });
+  assert.equal(result[0].status, 'failed');
+  assert.match(result[0].detail, /Unknown mechanical check/);
 });

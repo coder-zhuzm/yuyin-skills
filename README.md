@@ -36,11 +36,11 @@ $yuyin-dev 分析 Node 服务的超时原因，先不修改。
 | --- | --- | --- |
 | `core` | 分析、功能、修复、审查、交接 | `yuyin-dev` |
 | `react` | React 开发、组件设计与 UI | core、Vercel React / composition、Anthropic frontend-design、Web Interface Guidelines 本地快照 |
-| `spring` | Java/Spring | core、java-springboot；按现有版本、MyBatis/JPA 与目录结构使用 |
+| `spring` | Java/Spring | core、java-springboot |
 | `node` | Node 后端与 JS/TS 测试 | core、nodejs-backend-patterns、javascript-testing-patterns |
-| `web-test` | 浏览器交互验收 | core、webapp-testing；需要 Python Playwright，已有测试工具优先 |
+| `web-test` | 浏览器交互验收 | core、webapp-testing |
 
-精确技能名和路径见 [catalog.json](catalog.json)。这些组合用于[本地源码辅助安装](docs/installation.md#从源码选择组合)，可以叠加；普通 CLI 按技能名称选择。调用时仅读取当前任务需要的技能。
+精确技能名和路径见 [catalog.json](catalog.json)。这些组合用于[本地源码辅助安装](docs/installation.md#从源码选择组合)，可以叠加；普通 CLI 按技能名称选择。调用条件与兼容边界统一见 [专业技能路由](skills/development/shared/yuyin-dev/references/stack-skills.md)，安装组合不等于运行时全部加载。
 
 ## 内容与版本
 

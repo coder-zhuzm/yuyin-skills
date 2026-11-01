@@ -21,6 +21,4 @@ Review UI code using the rules bundled in [references/web-interface-guidelines.m
 
 If no files are specified, resolve the relevant scope from the current task; ask only when it cannot be determined.
 
-## Source and Adaptation
-
-This file is adapted by yuyin-skills to use a release-locked local resource. The upstream skill normally fetches rules from [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md) at runtime. Source commits and this patch are recorded in the distribution's upstream lock. The local rule resource retains its [MIT license](references/WEB-INTERFACE-LICENSE.txt).
+Adapted by yuyin-skills to use a locked local snapshot. The bundled rule resource retains its [MIT license](references/WEB-INTERFACE-LICENSE.txt); provenance and adaptation records are in the distribution's SOURCES.md and upstream lock.

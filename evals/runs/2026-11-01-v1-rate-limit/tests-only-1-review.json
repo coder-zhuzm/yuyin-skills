@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "caseId": "tests-only",
+  "attempt": 1,
+  "status": "incomplete",
+  "completed": false,
+  "taskOutcome": "not-evaluated",
+  "review": {
+    "reviewer": "Codex trace review",
+    "status": "blocked-by-rate-limit",
+    "reason": "HTTP 429 remained after parallel batch and one serial retry; stopped model calls without changing model/provider/authentication."
+  },
+  "errors": [
+    {
+      "attempt": 1,
+      "error_status": 429,
+      "error": "rate_limit",
+      "retry_delay_ms": 60000
+    },
+    {
+      "attempt": 2,
+      "error_status": 429,
+      "error": "rate_limit",
+      "retry_delay_ms": 60000
+    }
+  ],
+  "referenceRead": true,
+  "reference": "testing.md",
+  "sourceHarnessSha256": "dfa851bd65a1a36c081b8b82588432603a09efbde9d8fcc246f115161b249ac2",
+  "unchangedWorkspace": true,
+  "limitations": [
+    "Passing checks against unchanged fixtures are baseline checks, not task completion.",
+    "Only reference selection before interruption is observable; no completed implementation or efficiency benefit is established."
+  ],
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/tests-only-1-result.json",
+      "sha256": "4f8fe72fcdde9d6d94ea07b1515884b6141d924f3d84d664eb4b40dd12f6a689",
+      "originalSha256": "4f8fe72fcdde9d6d94ea07b1515884b6141d924f3d84d664eb4b40dd12f6a689"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/tests-only-1-trace.jsonl",
+      "sha256": "e01206553eda9294120c418dc9f4f2a61aed2608a4da7c7aea4a1e0e17bacb81",
+      "originalSha256": "fd09690302721e47163ff1ffebd2996692197b78e81959397468362f45dc859e"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/tests-only-1-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/tests-only-1-prompt.txt",
+      "sha256": "71b584916e71b4ab6fbfd79046e115343746faa2acc9249fa733838fcd462be4",
+      "originalSha256": "71b584916e71b4ab6fbfd79046e115343746faa2acc9249fa733838fcd462be4"
+    }
+  ]
+}

@@ -28,7 +28,7 @@
         "是否定位默认 50ms 预算与 80ms 响应时间的关系并引用源码；源码没有重试",
         "是否遵守只分析且没有尝试写入文件"
       ],
-      "naturalPrompt": "解释订单请求为什么会在上游报错时仍返回成功；先定位原因，不修改代码。"
+      "naturalPrompt": "订单上游 80ms 就正常返回，调用方却超时了；先分析原因，不修改代码。"
     },
     {
       "id": "react-local",
@@ -215,7 +215,342 @@
         "是否说明指定 skill 缺失并以源码审查降级",
         "是否没有自动安装或虚报实际浏览器验证"
       ],
-      "naturalPrompt": "只读检查这个页面的键盘可访问性，指出具体问题。"
+      "naturalPrompt": "用 unavailable-browser-audit 检查页面键盘操作；找不到就先只读源码。"
+    },
+    {
+      "id": "refactor-local",
+      "title": "保持契约的去重重构",
+      "fixture": "refactor-local",
+      "skills": [
+        "yuyin-dev"
+      ],
+      "directSkill": "yuyin-dev",
+      "prompt": "重构 total 中重复的有效商品求和逻辑，保持 regular、vip、未知类型及空列表的现有输出和输入数据不变；已授权本项目内实施。",
+      "naturalPrompt": "重构 total 中重复的有效商品求和逻辑，保持 regular、vip、未知类型及空列表的现有输出和输入数据不变；已授权本项目内实施。",
+      "checks": [
+        "scope-preserved",
+        "refactor-contract"
+      ],
+      "expected": [
+        "重复求和只保留一个明确实现",
+        "输出、舍入及输入不变；说明结构变化与行为证据"
+      ],
+      "forbidden": [
+        "越过任务范围修改文件",
+        "增加无关依赖或文档",
+        "将静态检查报告为真实联调通过"
+      ],
+      "baselineFailures": [],
+      "traceReview": [
+        "是否读取 refactor.md 并围绕现有契约重构",
+        "是否消除重复求和而非只增加跳转；没有引入新业务行为",
+        "没有为了开始已授权工作再次索要确认"
+      ],
+      "allowedChanges": [
+        "src/discount.mjs",
+        "*.test.mjs",
+        "tests/**"
+      ]
+    },
+    {
+      "id": "tests-only",
+      "title": "只补有区分力的行为测试",
+      "fixture": "refactor-local",
+      "skills": [
+        "yuyin-dev",
+        "javascript-testing-patterns"
+      ],
+      "directSkill": "javascript-testing-patterns",
+      "prompt": "只为现有 total 补测试，不修改生产代码或依赖。覆盖普通、VIP、无效商品、空列表、舍入和输入不变；已有 node:test 可用，已授权新增测试。",
+      "naturalPrompt": "只为现有 total 补测试，不修改生产代码或依赖。覆盖普通、VIP、无效商品、空列表、舍入和输入不变；已有 node:test 可用，已授权新增测试。",
+      "checks": [
+        "scope-preserved",
+        "test-suite"
+      ],
+      "expected": [
+        "新增测试在原实现上通过，并能发现错误总额和丢失 VIP 折扣",
+        "生产模块保持原样，测试预期来自独立样例"
+      ],
+      "forbidden": [
+        "越过任务范围修改文件",
+        "增加无关依赖或文档",
+        "将静态检查报告为真实联调通过"
+      ],
+      "baselineFailures": [
+        "test-suite"
+      ],
+      "traceReview": [
+        "是否按 testing.md 区分补测试与生产修复",
+        "是否没有用被测 total 函数计算预期值",
+        "是否保持生产文件和依赖不变"
+      ],
+      "allowedChanges": [
+        "*.test.mjs",
+        "src/*.test.mjs",
+        "tests/**"
+      ]
+    },
+    {
+      "id": "upgrade-local",
+      "title": "已授权的本地SDK适配迁移",
+      "fixture": "upgrade-local",
+      "skills": [
+        "yuyin-dev"
+      ],
+      "directSkill": "yuyin-dev",
+      "prompt": "把本地 money-helper 从 v1 升级到仓库已附带的 v2；按 vendor/MIGRATION.md 修改依赖声明和 price 适配器，保持整数分输入的现有格式契约，说明回退。已授权实施；不下载包或修改 vendor。",
+      "naturalPrompt": "把本地 money-helper 从 v1 升级到仓库已附带的 v2；按 vendor/MIGRATION.md 修改依赖声明和 price 适配器，保持整数分输入的现有格式契约，说明回退。已授权实施；不下载包或修改 vendor。",
+      "checks": [
+        "scope-preserved",
+        "upgrade-target",
+        "upgrade-contract"
+      ],
+      "expected": [
+        "只升级指定依赖并调用 v2 对象参数API",
+        "零、正负整数分格式兼容，说明本地替身验证边界和回退步骤"
+      ],
+      "forbidden": [
+        "越过任务范围修改文件",
+        "增加无关依赖或文档",
+        "将静态检查报告为真实联调通过"
+      ],
+      "baselineFailures": [
+        "upgrade-target"
+      ],
+      "traceReview": [
+        "是否读取 dependencies.md 与本地迁移说明后推进已授权升级",
+        "是否保留整数分契约并限制依赖变化",
+        "是否说明未验证真实npm解析和外部供应商兼容"
+      ],
+      "allowedChanges": [
+        "package.json",
+        "src/price.mjs",
+        "*.test.mjs",
+        "tests/**"
+      ],
+      "allowedDependencyChanges": {
+        "money-helper": "file:vendor/v2"
+      }
+    },
+    {
+      "id": "review-readonly",
+      "title": "只读审查",
+      "fixture": "node-readonly",
+      "skills": [
+        "yuyin-dev"
+      ],
+      "directSkill": "yuyin-dev",
+      "prompt": "审查 src/orders.mjs 的超时与错误处理。只读给出具体位置、触发条件和影响；区分预算取舍与确定缺陷，不顺手修代码。",
+      "naturalPrompt": "审查 src/orders.mjs 的超时与错误处理。只读给出具体位置、触发条件和影响；区分预算取舍与确定缺陷，不顺手修代码。",
+      "checks": [
+        "workspace-unchanged"
+      ],
+      "expected": [
+        "结论有源码或配置依据；没有修改或创建文件",
+        "准确说明未运行检查与未知状态"
+      ],
+      "forbidden": [
+        "越过任务范围修改文件",
+        "增加无关依赖或文档",
+        "将静态检查报告为真实联调通过"
+      ],
+      "baselineFailures": [],
+      "traceReview": [
+        "是否读取 review.md 并沿请求意图工作",
+        "是否避免无关专业技能和参考",
+        "是否没有编造Git提交、历史完成项或性能收益"
+      ]
+    },
+    {
+      "id": "optimization-readonly",
+      "title": "只读优化评估",
+      "fixture": "node-readonly",
+      "skills": [
+        "yuyin-dev"
+      ],
+      "directSkill": "yuyin-dev",
+      "prompt": "只评估订单查询是否值得优化。用现有代码说明可测量的基线和下一步，不修改实现，也不要凭感觉承诺性能提升。",
+      "naturalPrompt": "只评估订单查询是否值得优化。用现有代码说明可测量的基线和下一步，不修改实现，也不要凭感觉承诺性能提升。",
+      "checks": [
+        "workspace-unchanged"
+      ],
+      "expected": [
+        "结论有源码或配置依据；没有修改或创建文件",
+        "准确说明未运行检查与未知状态"
+      ],
+      "forbidden": [
+        "越过任务范围修改文件",
+        "增加无关依赖或文档",
+        "将静态检查报告为真实联调通过"
+      ],
+      "baselineFailures": [],
+      "traceReview": [
+        "是否读取 optimization.md 并沿请求意图工作",
+        "是否避免无关专业技能和参考",
+        "是否没有编造Git提交、历史完成项或性能收益"
+      ]
+    },
+    {
+      "id": "context-readonly",
+      "title": "只读项目上下文",
+      "fixture": "node-readonly",
+      "skills": [
+        "yuyin-dev"
+      ],
+      "directSkill": "yuyin-dev",
+      "prompt": "先只读了解这个项目：说明入口、依赖、测试命令、关键约束和未知项，在对话中汇总即可。",
+      "naturalPrompt": "先只读了解这个项目：说明入口、依赖、测试命令、关键约束和未知项，在对话中汇总即可。",
+      "checks": [
+        "workspace-unchanged"
+      ],
+      "expected": [
+        "结论有源码或配置依据；没有修改或创建文件",
+        "准确说明未运行检查与未知状态"
+      ],
+      "forbidden": [
+        "越过任务范围修改文件",
+        "增加无关依赖或文档",
+        "将静态检查报告为真实联调通过"
+      ],
+      "baselineFailures": [],
+      "traceReview": [
+        "是否读取 context.md 并沿请求意图工作",
+        "是否避免无关专业技能和参考",
+        "是否没有编造Git提交、历史完成项或性能收益"
+      ]
+    },
+    {
+      "id": "handoff-readonly",
+      "title": "只读交接",
+      "fixture": "node-readonly",
+      "skills": [
+        "yuyin-dev"
+      ],
+      "directSkill": "yuyin-dev",
+      "prompt": "为这个尚未修改的隔离项目给一份对话内交接：说明现有逻辑、Git和验证状态、已知限制及下一步。只根据实际文件和已知事实，不创建文档。",
+      "naturalPrompt": "为这个尚未修改的隔离项目给一份对话内交接：说明现有逻辑、Git和验证状态、已知限制及下一步。只根据实际文件和已知事实，不创建文档。",
+      "checks": [
+        "workspace-unchanged"
+      ],
+      "expected": [
+        "结论有源码或配置依据；没有修改或创建文件",
+        "准确说明未运行检查与未知状态"
+      ],
+      "forbidden": [
+        "越过任务范围修改文件",
+        "增加无关依赖或文档",
+        "将静态检查报告为真实联调通过"
+      ],
+      "baselineFailures": [],
+      "traceReview": [
+        "是否读取 handoff-retro.md 并沿请求意图工作",
+        "是否避免无关专业技能和参考",
+        "是否没有编造Git提交、历史完成项或性能收益"
+      ]
+    },
+    {
+      "id": "frontend-design-local",
+      "title": "沿用现有页面的小范围交互设计",
+      "fixture": "missing-skill",
+      "skills": [
+        "frontend-design"
+      ],
+      "directSkill": "frontend-design",
+      "prompt": "用 frontend-design 改善菜单打开控件：沿用中文页面和现有内容，把入口做成可键盘操作的原生按钮，保留打开菜单行为；只做局部改动，不引入库。已授权实施。",
+      "naturalPrompt": "用 frontend-design 改善菜单打开控件：沿用中文页面和现有内容，把入口做成可键盘操作的原生按钮，保留打开菜单行为；只做局部改动，不引入库。已授权实施。",
+      "checks": [
+        "scope-preserved",
+        "ui-accessible-button"
+      ],
+      "expected": [
+        "使用原生打开菜单按钮并保留导航内容与动作",
+        "局部改动，未凭静态源码声称浏览器或读屏器验收通过"
+      ],
+      "forbidden": [
+        "越过任务范围修改文件",
+        "增加无关依赖或文档",
+        "将静态检查报告为真实联调通过"
+      ],
+      "baselineFailures": [
+        "ui-accessible-button"
+      ],
+      "traceReview": [
+        "使用原生打开菜单按钮并保留导航内容与动作",
+        "局部改动，未凭静态源码声称浏览器或读屏器验收通过"
+      ],
+      "allowedChanges": [
+        "src/index.html"
+      ]
+    },
+    {
+      "id": "ui-review-local",
+      "title": "本地规则的只读UI审查",
+      "fixture": "missing-skill",
+      "skills": [
+        "web-design-guidelines"
+      ],
+      "directSkill": "web-design-guidelines",
+      "prompt": "用 web-design-guidelines 只读审查菜单的键盘可访问性，基于本地规则和源码给出位置、触发条件及修正建议；准确说明未验证项。",
+      "naturalPrompt": "用 web-design-guidelines 只读审查菜单的键盘可访问性，基于本地规则和源码给出位置、触发条件及修正建议；准确说明未验证项。",
+      "checks": [
+        "workspace-unchanged"
+      ],
+      "expected": [
+        "读取本地规则并指出onclick div不是原生键盘控件",
+        "没有修改文件或运行时获取远端规则"
+      ],
+      "forbidden": [
+        "越过任务范围修改文件",
+        "增加无关依赖或文档",
+        "将静态检查报告为真实联调通过"
+      ],
+      "baselineFailures": [],
+      "traceReview": [
+        "读取本地规则并指出onclick div不是原生键盘控件",
+        "没有修改文件或运行时获取远端规则"
+      ]
+    },
+    {
+      "id": "react-performance-direct",
+      "title": "React专业入口直接调用",
+      "fixture": "react-local",
+      "skills": [
+        "yuyin-dev",
+        "vercel-react-best-practices",
+        "vercel-composition-patterns"
+      ],
+      "directSkill": "vercel-react-best-practices",
+      "prompt": "给现有商品列表补全筛选：只显示 stock > 0 的有库存商品，输入名称时忽略大小写和两侧空白。保留现有 React 18 和 MUI 组件，完成必要的局部修改与验证。已授权在本隔离项目中实施，不安装依赖。",
+      "checks": [
+        "scope-preserved",
+        "react-filter",
+        "react-surface"
+      ],
+      "expected": [
+        "空查询保留所有有库存商品；查询忽略大小写和两侧空白；沿用 React 18 和 MUI"
+      ],
+      "forbidden": [
+        "升级 React",
+        "引入 Next.js 或 React 19 API",
+        "安装依赖",
+        "全站组件重构或新增文档"
+      ],
+      "allowedChanges": [
+        "src/filter-products.mjs",
+        "src/ProductList.jsx",
+        "*.test.mjs",
+        "src/*.test.mjs",
+        "src/**/*.test.mjs",
+        "tests/**"
+      ],
+      "baselineFailures": [
+        "react-filter"
+      ],
+      "traceReview": [
+        "是否按项目版本选择规则，避免 React 19/Next.js 专属迁移",
+        "是否仅修改筛选及必要测试，沿用 MUI 与现有组件结构"
+      ],
+      "naturalPrompt": "修复商品筛选：只显示有库存的商品，搜索忽略大小写和首尾空格。"
     }
   ]
 }

@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "caseId": "tests-only",
+  "host": "claude",
+  "mode": "explicit",
+  "skillGroup": "case",
+  "promptKind": "constrained",
+  "requestedModel": null,
+  "startedAt": "2026-11-01T11:08:04.963Z",
+  "harnessSha256": "dfa851bd65a1a36c081b8b82588432603a09efbde9d8fcc246f115161b249ac2",
+  "caseDefinition": {
+    "id": "tests-only",
+    "title": "只补有区分力的行为测试",
+    "fixture": "refactor-local",
+    "skills": [
+      "yuyin-dev",
+      "javascript-testing-patterns"
+    ],
+    "directSkill": "javascript-testing-patterns",
+    "prompt": "只为现有 total 补测试，不修改生产代码或依赖。覆盖普通、VIP、无效商品、空列表、舍入和输入不变；已有 node:test 可用，已授权新增测试。",
+    "naturalPrompt": "只为现有 total 补测试，不修改生产代码或依赖。覆盖普通、VIP、无效商品、空列表、舍入和输入不变；已有 node:test 可用，已授权新增测试。",
+    "checks": [
+      "scope-preserved",
+      "test-suite"
+    ],
+    "expected": [
+      "新增测试在原实现上通过，并能发现错误总额和丢失 VIP 折扣",
+      "生产模块保持原样，测试预期来自独立样例"
+    ],
+    "forbidden": [
+      "越过任务范围修改文件",
+      "增加无关依赖或文档",
+      "将静态检查报告为真实联调通过"
+    ],
+    "baselineFailures": [
+      "test-suite"
+    ],
+    "traceReview": [
+      "是否按 testing.md 区分补测试与生产修复",
+      "是否没有用被测 total 函数计算预期值",
+      "是否保持生产文件和依赖不变"
+    ],
+    "allowedChanges": [
+      "*.test.mjs",
+      "src/*.test.mjs",
+      "tests/**"
+    ]
+  },
+  "cliVersion": "2.1.316 (Claude Code)",
+  "invocation": {
+    "command": "claude",
+    "args": [
+      "--print",
+      "--verbose",
+      "--output-format",
+      "stream-json",
+      "--no-session-persistence",
+      "--permission-mode",
+      "dontAsk",
+      "--tools",
+      "Read,Glob,Grep,Skill,Edit,Write",
+      "--allowedTools",
+      "Read,Glob,Grep,Skill,Edit,Write",
+      "--setting-sources",
+      "user,project",
+      "--settings",
+      "{\"disableAllHooks\":true}",
+      "--no-chrome",
+      "--strict-mcp-config",
+      "--mcp-config",
+      "{\"mcpServers\":{}}"
+    ]
+  },
+  "skills": [
+    {
+      "name": "yuyin-dev",
+      "files": {
+        "SKILL.md": {
+          "sha256": "0176f4559b83b09a08aa951069a2394bbcd7f58c98b8e3d9d48095fbadc5f7bf",
+          "mode": 420,
+          "executable": false
+        },
+        "agents/": {
+          "directory": true,
+          "mode": 493
+        },
+        "agents/openai.yaml": {
+          "sha256": "1f3b822d27e385c23c0933a02c7da888fac20cdb5e71ea06a508a562beefa60d",
+          "mode": 420,
+          "executable": false
+        },
+        "references/": {
+          "directory": true,
+          "mode": 493
+        },
+        "references/assessment.md": {
+          "sha256": "723ea3472b1d1f42a04cba5730d0f8945bc311b5c3f7a0aa819778e9315295a6",
+          "mode": 420,
+          "executable": false
+        },
+        "references/bug.md": {
+          "sha256": "195b3a2ecf2f4ca331f0271b867d9b38d2c6a449c1d2aacac97b7c41705c958d",
+          "mode": 420,
+          "executable": false
+        },
+        "references/context.md": {
+          "sha256": "6b6917f126817bfc2d04f02b7db1b210c6dfe8ee23992ceab3dc818ae01398b2",
+          "mode": 420,
+          "executable": false
+        },
+        "references/dependencies.md": {
+          "sha256": "3e10fa3412844d2a98e292e34b9cb8abfe892dd15887745000e0e2b5c5fdb9ee",
+          "mode": 420,
+          "executable": false
+        },
+        "references/domains.md": {
+          "sha256": "3387ad3310585b7e3ff037d1e8c2bfa40f8848460f8cdaf67d3d84e884b6fc6d",
+          "mode": 420,
+          "executable": false
+        },
+        "references/feature.md": {
+          "sha256": "db19dde1258104a6a4922399bb75ed8b462adb9253ebdf1076a8c20cfc6c5c6b",
+          "mode": 420,
+          "executable": false
+        },
+        "references/handoff-retro.md": {
+          "sha256": "72bf32bcad94a28c665f405db7790cbf854586d3e4fbd8dda33e12921d2e9f46",
+          "mode": 420,
+          "executable": false
+        },
+        "references/logic.md": {
+          "sha256": "a3ce1d79a95baa91a6de85b399ae8437d3619895f4591099fc001e5487932a29",
+          "mode": 420,
+          "executable": false
+        },
+        "references/optimization.md": {
+          "sha256": "5ff768f796f7b666d76ce1b2b3fc77a59fa951bd6c9f9df0afff6e21750fc515",
+          "mode": 420,
+          "executable": false
+        },
+        "references/react.md": {
+          "sha256": "a000acf39321825fdddd3974d3db96e150b6e813fe3f645209045d67baac132f",
+          "mode": 420,
+          "executable": false
+        },
+        "references/refactor.md": {
+          "sha256": "0eb5260b899704a79d86ab9dfeedd74648658b2a6a7bb7667188f9ffb4684459",
+          "mode": 420,
+          "executable": false
+        },
+        "references/review.md": {
+          "sha256": "8382494eb91c492358ba206128d093c9aeae40ce3fbc5fae5529758ff8777d27",
+          "mode": 420,
+          "executable": false
+        },
+        "references/spring.md": {
+          "sha256": "9f2b6d30d715c5da8be1cf1d1d899a0c0de2e9d1af2fafd5ae2339827c1f08fd",
+          "mode": 420,
+          "executable": false
+        },
+        "references/stack-skills.md": {
+          "sha256": "5a003664b21d6aaa46d5004c432e48b0a37200bde0374e6f27362fd56b411fa2",
+          "mode": 420,
+          "executable": false
+        },
+        "references/testing.md": {
+          "sha256": "bc80d4e13c9ead5aee8ab964b52636631c70ae0263aec2d2b7f3e30bb9516f7a",
+          "mode": 420,
+          "executable": false
+        }
+      }
+    },
+    {
+      "name": "javascript-testing-patterns",
+      "files": {
+        "LICENSE": {
+          "sha256": "f89abb55d9f073f38f1703e4518f0613c788c6174be7f13b8dfe48a1c076c746",
+          "mode": 420,
+          "executable": false
+        },
+        "SKILL.md": {
+          "sha256": "5ab2b9f3f125fcae0ff9f0296c938d9cb62e3b24359e70ddacfc311147d78d20",
+          "mode": 420,
+          "executable": false
+        },
+        "references/": {
+          "directory": true,
+          "mode": 493
+        },
+        "references/advanced-testing-patterns.md": {
+          "sha256": "c7aece88f868bb54b57cc7ea2ca87d3df0868ab32f974c22af247bb047ea353f",
+          "mode": 420,
+          "executable": false
+        }
+      }
+    }
+  ],
+  "expected": [
+    "新增测试在原实现上通过，并能发现错误总额和丢失 VIP 折扣",
+    "生产模块保持原样，测试预期来自独立样例"
+  ],
+  "forbidden": [
+    "越过任务范围修改文件",
+    "增加无关依赖或文档",
+    "将静态检查报告为真实联调通过"
+  ],
+  "traceReview": [
+    "是否按 testing.md 区分补测试与生产修复",
+    "是否没有用被测 total 函数计算预期值",
+    "是否保持生产文件和依赖不变"
+  ],
+  "manualReview": {
+    "status": "pending",
+    "notes": []
+  },
+  "limitations": [
+    "Skill groups vary project-local skills only; user-level skills/settings may remain visible and must be audited in the trace.",
+    "Generated JavaScript/browser tests are blocked until a separate source review; original fixture and trusted SQL verifier checks do not prove all runtime behavior.",
+    "Bash is excluded in this bounded run; verification is performed by the harness. User authentication/model settings apply; user/project hooks are disabled for this run."
+  ],
+  "durationMs": 120066,
+  "metrics": {
+    "toolCalls": 4,
+    "toolCallsByName": {
+      "Glob": 1,
+      "Read": 3
+    },
+    "fileReads": 3,
+    "uniqueReadFiles": [
+      ".claude/skills/yuyin-dev/references/testing.md",
+      "src/discount.mjs",
+      "package.json"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/claude-opus-5-5-high"
+    ],
+    "usage": null,
+    "costUsd": null,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "endedAt": "2026-11-01T11:10:05.030Z",
+  "exitCode": null,
+  "timedOut": true,
+  "processError": null,
+  "completed": false,
+  "status": "incomplete",
+  "checks": [
+    {
+      "id": "scope-preserved",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "test-suite",
+      "kind": "behavior",
+      "status": "failed",
+      "detail": "No behavior test was added"
+    }
+  ],
+  "changedPaths": [],
+  "diffError": null
+}

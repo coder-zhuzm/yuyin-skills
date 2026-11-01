@@ -21,7 +21,10 @@ test('own entry changes invalidate related cases while README changes preserve e
   writeFileSync(entry, readFileSync(entry, 'utf8') + '\nChanged routing behavior\n');
   const after = currentEvidence(root);
   assert.notEqual(after.identitySha256, before.identitySha256);
-  assert.ok(after.cases.every((c, i) => c.sha256 !== before.cases[i].sha256));
+  const definitions = JSON.parse(readFileSync(join(root, 'evals/manifest.json'))).cases;
+  for (const [i, c] of after.cases.entries()) {
+    assert.equal(c.sha256 !== before.cases[i].sha256, definitions[i].skills.includes('yuyin-dev'));
+  }
   const state = refreshEvidence(root);
   assert.ok(state.cases.every(c => c.status === 'pending'));
 });

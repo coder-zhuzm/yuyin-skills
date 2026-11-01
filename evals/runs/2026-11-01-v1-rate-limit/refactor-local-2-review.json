@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "caseId": "refactor-local",
+  "attempt": 2,
+  "status": "incomplete",
+  "completed": false,
+  "taskOutcome": "not-evaluated",
+  "review": {
+    "reviewer": "Codex trace review",
+    "status": "blocked-by-rate-limit",
+    "reason": "HTTP 429 remained after parallel batch and one serial retry; stopped model calls without changing model/provider/authentication."
+  },
+  "errors": [
+    {
+      "attempt": 1,
+      "error_status": 429,
+      "error": "rate_limit",
+      "retry_delay_ms": 60000
+    },
+    {
+      "attempt": 2,
+      "error_status": 429,
+      "error": "rate_limit",
+      "retry_delay_ms": 60000
+    }
+  ],
+  "referenceRead": false,
+  "reference": "refactor.md",
+  "sourceHarnessSha256": "01c77fa7bdf82d28fe56e5e906b0fdb0f5b360c5a2563a6300c498e3a2cddfd5",
+  "unchangedWorkspace": true,
+  "limitations": [
+    "Passing checks against unchanged fixtures are baseline checks, not task completion.",
+    "Only reference selection before interruption is observable; no completed implementation or efficiency benefit is established."
+  ],
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/refactor-local-2-result.json",
+      "sha256": "f7d1324df79ec5f668bbc7f8168b7af5e932aee9040a39661e87c99726204466",
+      "originalSha256": "f7d1324df79ec5f668bbc7f8168b7af5e932aee9040a39661e87c99726204466"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/refactor-local-2-trace.jsonl",
+      "sha256": "e50f9b8d8439f681cdb1f57926bbf82b55538a275c01caa7406d5f1d28047b47",
+      "originalSha256": "e9481fd9fe08760028623a65906eb0284cece6aa314afec2a115bde4da6717c7"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/refactor-local-2-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-v1-rate-limit/refactor-local-2-prompt.txt",
+      "sha256": "e925e607e8423f1224143cd97846e1d4a72f6913b8bf73fa3f99e280190e3a6d",
+      "originalSha256": "e925e607e8423f1224143cd97846e1d4a72f6913b8bf73fa3f99e280190e3a6d"
+    }
+  ]
+}
