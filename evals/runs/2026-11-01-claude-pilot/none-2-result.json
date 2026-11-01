@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "caseId": "small-copy",
+  "host": "claude",
+  "mode": "implicit",
+  "skillGroup": "none",
+  "promptKind": "natural",
+  "requestedModel": null,
+  "startedAt": "2026-11-01T09:17:08.273Z",
+  "harnessSha256": "26463a72ec69de2454b18cfbc8f4aaf2f8fd387fedc8cebd93b24b98462a45a8",
+  "caseDefinition": {
+    "id": "small-copy",
+    "title": "小文案与价格格式 bug",
+    "fixture": "small-copy",
+    "skills": [
+      "yuyin-dev",
+      "javascript-testing-patterns"
+    ],
+    "directSkill": "javascript-testing-patterns",
+    "prompt": "修复结算摘要：金额始终显示两位小数，按钮改成“确认支付”。",
+    "checks": [
+      "scope-preserved",
+      "small-copy-behavior"
+    ],
+    "expected": [
+      "金额包含两位小数，覆盖整数、小数和零；按钮为确认支付"
+    ],
+    "forbidden": [
+      "无关重构",
+      "新增文档或依赖",
+      "长需求访谈"
+    ],
+    "allowedChanges": [
+      "src/checkout.mjs",
+      "*.test.mjs",
+      "src/*.test.mjs",
+      "src/**/*.test.mjs",
+      "tests/**"
+    ],
+    "baselineFailures": [
+      "small-copy-behavior"
+    ],
+    "traceReview": [
+      "是否完成局部修复且避免长访谈、文档或无关重构",
+      "测试是否独立验证整数、小数与零金额的可观察输出"
+    ],
+    "naturalPrompt": "修复结算摘要：金额始终显示两位小数，按钮改成“确认支付”。",
+    "negativePrompt": "只读告诉我 checkout.mjs 当前导出了哪些函数和常量，说明按钮文案和金额格式；不要修改文件。"
+  },
+  "cliVersion": "2.1.316 (Claude Code)",
+  "invocation": {
+    "command": "claude",
+    "args": [
+      "--print",
+      "--verbose",
+      "--output-format",
+      "stream-json",
+      "--no-session-persistence",
+      "--permission-mode",
+      "dontAsk",
+      "--tools",
+      "Read,Glob,Grep,Skill,Edit,Write",
+      "--allowedTools",
+      "Read,Glob,Grep,Skill,Edit,Write",
+      "--setting-sources",
+      "user,project",
+      "--settings",
+      "{\"disableAllHooks\":true}",
+      "--no-chrome",
+      "--strict-mcp-config",
+      "--mcp-config",
+      "{\"mcpServers\":{}}"
+    ]
+  },
+  "skills": [],
+  "expected": [
+    "金额包含两位小数，覆盖整数、小数和零；按钮为确认支付"
+  ],
+  "forbidden": [
+    "无关重构",
+    "新增文档或依赖",
+    "长需求访谈"
+  ],
+  "traceReview": [
+    "是否完成局部修复且避免长访谈、文档或无关重构",
+    "测试是否独立验证整数、小数与零金额的可观察输出"
+  ],
+  "manualReview": {
+    "status": "pending",
+    "notes": []
+  },
+  "limitations": [
+    "Skill groups vary project-local skills only; user-level skills/settings may remain visible and must be audited in the trace.",
+    "Generated JavaScript/browser tests are blocked until a separate source review; original fixture and trusted SQL verifier checks do not prove all runtime behavior.",
+    "Bash is excluded in this bounded run; verification is performed by the harness. User authentication/model settings apply; user/project hooks are disabled for this run."
+  ],
+  "durationMs": 25887,
+  "metrics": {
+    "toolCalls": 5,
+    "toolCallsByName": {
+      "Grep": 1,
+      "Read": 2,
+      "Glob": 1,
+      "Write": 1
+    },
+    "fileReads": 2,
+    "uniqueReadFiles": [
+      "src/checkout.mjs",
+      "package.json"
+    ],
+    "skillFileReads": 0,
+    "skillInvocations": [],
+    "models": [
+      "newapi/claude-opus-5-5-high"
+    ],
+    "usage": {
+      "input_tokens": 10422,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 51459,
+      "output_tokens": 991,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.0717998,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "endedAt": "2026-11-01T09:17:34.161Z",
+  "exitCode": 0,
+  "timedOut": false,
+  "processError": null,
+  "completed": true,
+  "status": "blocked",
+  "checks": [
+    {
+      "id": "scope-preserved",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "small-copy-behavior",
+      "kind": "behavior",
+      "status": "blocked",
+      "detail": "Generated JavaScript is not automatically executed outside the host sandbox. Review the source and run explicit reviewed checks in an appropriate environment."
+    }
+  ],
+  "changedPaths": [
+    "src/checkout.mjs"
+  ],
+  "diffError": null
+}

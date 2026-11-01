@@ -19,9 +19,11 @@
 优先保留上游原文、引用资源与技能名。所有适配在来源清单和锁记录中显式列出：
 
 - `web-design-guidelines` 原版运行时抓取 `main/command.md`；本包改为读取随包的本地规则，固定发行内容并支持离线审查。
-- Vercel 汇编 `AGENTS.md` 中指向根目录的单条规则链接，必要时修正到实际 `rules/` 目录；不改变规则正文。
+- Vercel 汇编 `AGENTS.md` 中指向根目录的单条规则链接，必要时修正到实际 `rules/` 目录。
 - 仓库根许可或声明复制到每个选定 skill，确保单独安装时保留来源声明。
 - 必要的专业技能入口增加最短项目适用条件，覆盖版本、持久层、已有设计/测试工具、只读范围与验证限制；经 `replace-exact` 声明补丁重建，来源提交与补丁前后摘要均可追溯。
+- Node 更新示例限制可写字段并传递解析后的请求数据，缓存示例要求显式服务命名空间和隔离键；React 异步搜索示例在单条规则和汇编版中同时处理乱序与失败，并注明 React 19 适用范围。
+- 浏览器服务辅助器检查端口冲突、进程退出和日志，支持本地应用身份探针并清理进程组。可执行文件适配通过反向重建核对原始已审阅字节，不能仅修改锁摘要绕过代码白名单。
 
 React/Next.js、React 18/19、Spring 版本、MyBatis/JPA 及测试框架以目标项目实际依赖为准。中文入口与必要的专业入口均补充适用条件，不把上游示例变成升级或迁移指令。`webapp-testing` 中示例地址和输出路径属于上游样例，实际运行须按目标环境选择；其服务辅助脚本只在用途、命令和运行依赖已核实后使用。
 
@@ -37,4 +39,4 @@ Vercel CLI 安装会排除技能里的 `metadata.json` 和缓存目录，这是�
 
 [Vercel skills CLI](https://github.com/vercel-labs/skills) 固定为 1.7.2，负责技能发现与 CC/Codex 安装；其原许可保存在 `THIRD_PARTY_LICENSES/VercelSkills-LICENSE.txt`。维护依赖的精确版本与 integrity 见 `package-lock.json`。
 
-[skills-npm](https://github.com/antfu/skills-npm) 和 [antfu/skills-pack](https://github.com/antfu/skills-pack) 用于对照组合分发机制，本包当前不依赖它们。为保留完整内容包与离线安装，采用发版同步、固定快照的方式。
+[skills-npm](https://github.com/antfu/skills-npm) 和 [antfu/skills-pack](https://github.com/antfu/skills-pack) 用于对照组合分发机制，本包当前不依赖它们。为保留完整内容包与离线安装，采用独立同步审阅、发布固定快照的方式。

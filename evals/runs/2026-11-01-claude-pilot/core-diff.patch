@@ -1,0 +1,9 @@
+diff --git a<RUN_DIR>/before/src/checkout.mjs b<RUN_DIR>/project/src/checkout.mjs
+index 97655a8..d25db96 100644
+--- a<RUN_DIR>/before/src/checkout.mjs
++++ b<RUN_DIR>/project/src/checkout.mjs
+@@ -1,2 +1,2 @@
+-export const buttonLabel = '立即支付';
+-export function formatPrice(amount) { return `¥${amount}`; }
++export const buttonLabel = '确认支付';
++export function formatPrice(amount) { return `¥${Number(amount).toFixed(2)}`; }

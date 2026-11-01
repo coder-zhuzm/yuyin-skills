@@ -4,10 +4,18 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
-import { validateCiWorkflow } from '../scripts/verify.mjs';
+import { validateCiWorkflow, validatePublishPaths } from '../scripts/verify.mjs';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const workflow = () => YAML.parse(readFileSync(join(root, '.github/workflows/ci.yml'), 'utf8'));
+
+test('every distributed path triggers publication, including npm-entry-only fixes', () => {
+  const publish = YAML.parse(readFileSync(join(root, '.github/workflows/publish.yml'), 'utf8'));
+  const pkg = JSON.parse(readFileSync(join(root, 'package.json')));
+  validatePublishPaths(publish, pkg);
+  publish.on.push.paths = publish.on.push.paths.filter(p => p !== 'bin/**');
+  assert.throws(() => validatePublishPaths(publish, pkg), /bin\/yuyin-skills/);
+});
 
 test('PR and manual validation run tests and package checks without publishing', () => {
   validateCiWorkflow(workflow());

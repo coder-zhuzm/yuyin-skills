@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "manifestSha256": "fd1e7ccd2e2fbfe45aebcbc76de49e963b21b8fb7d309141832db0167420362b",
+  "manifestSha256": "9d5c5ce302a184b0be94d7e643583bd4bd5da66f62f5a6825cc3d4e2f415db9c",
   "sources": [
     {
       "id": "vercel",
@@ -203,6 +203,90 @@
       "beforeSha256": "d99e1d7344ca7b87395c7e49f6c635ea67fe16d57f4698d72c78d405020f5782",
       "afterSha256": "5ab2b9f3f125fcae0ff9f0296c938d9cb62e3b24359e70ddacfc311147d78d20",
       "reason": "Preserve project versions, tools and task scope when invoked directly; examples do not grant migration or installation permission."
+    },
+    {
+      "id": "node-update-fixed-columns",
+      "path": "skills/upstream/wshobson/nodejs-backend-patterns/references/details.md",
+      "beforeSha256": "d3cf1ec64b36bd3cbaa130430870fe3dcf1b346f5016242719f2f29bb44452b8",
+      "afterSha256": "d4a13869305fdd4adcad81b020424ef854f4ba6012d24d5b04c2c2ecba4ea0ce",
+      "reason": "Reject empty, unknown and sensitive fields before SQL; only fixed identifiers enter the query."
+    },
+    {
+      "id": "node-validation-parsed-data",
+      "path": "skills/upstream/wshobson/nodejs-backend-patterns/references/details.md",
+      "beforeSha256": "d4a13869305fdd4adcad81b020424ef854f4ba6012d24d5b04c2c2ecba4ea0ce",
+      "afterSha256": "1c818af8d7dc30d426e2127ef561d83905f46c025f3f22510ca4e0a2a23436a5",
+      "reason": "Use schema output in business handlers; preserve read-only Express query properties."
+    },
+    {
+      "id": "node-update-route-validation",
+      "path": "skills/upstream/wshobson/nodejs-backend-patterns/references/details.md",
+      "beforeSha256": "1c818af8d7dc30d426e2127ef561d83905f46c025f3f22510ca4e0a2a23436a5",
+      "afterSha256": "249d850ba78ae28191c4a00960e8a9d911860acb0e85dcd28b010cb8ab516a24",
+      "reason": "Demonstrate strict update validation before controller dispatch and retain controller instance context."
+    },
+    {
+      "id": "cache-explicit-isolation-key",
+      "path": "skills/upstream/wshobson/nodejs-backend-patterns/references/advanced-patterns.md",
+      "beforeSha256": "f5f0036b4990badcd241263298b4f9ef3d358d94e3db5d08307d5b80369ed584",
+      "afterSha256": "b2c2760ba1c9c9822f839d1a006f9f07261579fad3652c1bef0f8d33472d22e6",
+      "reason": "Require stable service namespaces and explicit result-dependent isolation context; preserve falsy cached values."
+    },
+    {
+      "id": "cache-key-contract",
+      "path": "skills/upstream/wshobson/nodejs-backend-patterns/references/advanced-patterns.md",
+      "beforeSha256": "b2c2760ba1c9c9822f839d1a006f9f07261579fad3652c1bef0f8d33472d22e6",
+      "afterSha256": "3adf3103433d3717c760faff36548caa9d4fe981e55d6274c4698036dc42f5ce",
+      "reason": "Document serialization and instance-state assumptions alongside the example."
+    },
+    {
+      "id": "react-ordered-search-rule",
+      "path": "skills/upstream/vercel/react-best-practices/rules/rendering-usetransition-loading.md",
+      "beforeSha256": "3a1249c3f13026b6f54ab5712c388df219d6af01b12aa542749acd99a46f4bc1",
+      "afterSha256": "8c4efd812c238c00630f0293dbdabfe89a6e429738c0e97c3474170a146fb8d7",
+      "reason": "Handle stale responses and errors explicitly; mark post-await updates as transitions."
+    },
+    {
+      "id": "react-transition-scope-rule",
+      "path": "skills/upstream/vercel/react-best-practices/rules/rendering-usetransition-loading.md",
+      "beforeSha256": "8c4efd812c238c00630f0293dbdabfe89a6e429738c0e97c3474170a146fb8d7",
+      "afterSha256": "d05b13d7094cb29494684edc784e1038e4e72138c1884cf4520c372ff3b5599f",
+      "reason": "Scope async Actions to supported React versions without prescribing loading-state replacement."
+    },
+    {
+      "id": "react-no-request-cancellation-rule",
+      "path": "skills/upstream/vercel/react-best-practices/rules/rendering-usetransition-loading.md",
+      "beforeSha256": "d05b13d7094cb29494684edc784e1038e4e72138c1884cf4520c372ff3b5599f",
+      "afterSha256": "7af3867b19bab118b0d4e7a628b46590bbd15ffca8ead10ad1ff317eef1316ed",
+      "reason": "Remove false cancellation guarantee; distinguish rendering interruption from network effects."
+    },
+    {
+      "id": "react-ordered-search-compiled",
+      "path": "skills/upstream/vercel/react-best-practices/AGENTS.md",
+      "beforeSha256": "ce68d80fe31809dcca2a3ce4bb0c8fea9cd391a2af5789d06878509629d62938",
+      "afterSha256": "c1873b971a3e2a2ad4fbe9637d6ca223cf2d85e728e4bd1a78a6c9c03025f9f1",
+      "reason": "Handle stale responses and errors explicitly; mark post-await updates as transitions."
+    },
+    {
+      "id": "react-transition-scope-compiled",
+      "path": "skills/upstream/vercel/react-best-practices/AGENTS.md",
+      "beforeSha256": "c1873b971a3e2a2ad4fbe9637d6ca223cf2d85e728e4bd1a78a6c9c03025f9f1",
+      "afterSha256": "80cc7a6ddbbfc36d643a23d3e4c213b815ca8aea39890539a0ac187667a87bbc",
+      "reason": "Scope async Actions to supported React versions without prescribing loading-state replacement."
+    },
+    {
+      "id": "react-no-request-cancellation-compiled",
+      "path": "skills/upstream/vercel/react-best-practices/AGENTS.md",
+      "beforeSha256": "80cc7a6ddbbfc36d643a23d3e4c213b815ca8aea39890539a0ac187667a87bbc",
+      "afterSha256": "21e85fdf2907d31b887e2a33ff6c24d02a4b9a68bdf80d238379a4447a2f5ce1",
+      "reason": "Remove false cancellation guarantee; distinguish rendering interruption from network effects."
+    },
+    {
+      "id": "webapp-server-process-readiness",
+      "path": "skills/upstream/anthropic/webapp-testing/scripts/with_server.py",
+      "beforeSha256": "b0dcf4918935b795f4eda9821579b9902119235ff4447f687a30286e7d0925fd",
+      "afterSha256": "df9177313cbd0c09e15f2c395ce648bf1c2b42f16a6d3c9dc3c20c000c197c2c",
+      "reason": "Reject occupied ports, inspect process exit/logs, support application identity probes, drain logs and clean up owned process groups."
     }
   ],
   "files": [
@@ -238,7 +322,7 @@
     },
     {
       "path": "skills/upstream/anthropic/webapp-testing/scripts/with_server.py",
-      "sha256": "b0dcf4918935b795f4eda9821579b9902119235ff4447f687a30286e7d0925fd",
+      "sha256": "df9177313cbd0c09e15f2c395ce648bf1c2b42f16a6d3c9dc3c20c000c197c2c",
       "mode": "100755"
     },
     {
@@ -333,7 +417,7 @@
     },
     {
       "path": "skills/upstream/vercel/react-best-practices/AGENTS.md",
-      "sha256": "ce68d80fe31809dcca2a3ce4bb0c8fea9cd391a2af5789d06878509629d62938",
+      "sha256": "21e85fdf2907d31b887e2a33ff6c24d02a4b9a68bdf80d238379a4447a2f5ce1",
       "mode": "100644"
     },
     {
@@ -583,7 +667,7 @@
     },
     {
       "path": "skills/upstream/vercel/react-best-practices/rules/rendering-usetransition-loading.md",
-      "sha256": "3a1249c3f13026b6f54ab5712c388df219d6af01b12aa542749acd99a46f4bc1",
+      "sha256": "7af3867b19bab118b0d4e7a628b46590bbd15ffca8ead10ad1ff317eef1316ed",
       "mode": "100644"
     },
     {
@@ -758,12 +842,12 @@
     },
     {
       "path": "skills/upstream/wshobson/nodejs-backend-patterns/references/advanced-patterns.md",
-      "sha256": "f5f0036b4990badcd241263298b4f9ef3d358d94e3db5d08307d5b80369ed584",
+      "sha256": "3adf3103433d3717c760faff36548caa9d4fe981e55d6274c4698036dc42f5ce",
       "mode": "100644"
     },
     {
       "path": "skills/upstream/wshobson/nodejs-backend-patterns/references/details.md",
-      "sha256": "d3cf1ec64b36bd3cbaa130430870fe3dcf1b346f5016242719f2f29bb44452b8",
+      "sha256": "249d850ba78ae28191c4a00960e8a9d911860acb0e85dcd28b010cb8ab516a24",
       "mode": "100644"
     },
     {

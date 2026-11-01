@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "caseId": "small-copy",
+  "run": "none",
+  "skillGroup": "none",
+  "promptKind": "natural",
+  "models": [
+    "newapi/claude-opus-5-5-high"
+  ],
+  "sourceHarnessSha256": "0469f7d99af13dd62dbe668fee14bd2578b961171d71c338ebf2fe1f949bd377",
+  "metricsDerivedWithHarnessSha256": "26463a72ec69de2454b18cfbc8f4aaf2f8fd387fedc8cebd93b24b98462a45a8",
+  "review": {
+    "status": "reviewed-with-limitations",
+    "reviewer": "Codex source and trace review",
+    "rationale": "Reviewed full generated two-line module, diff and tool/assistant trace before separate execution. This is a pilot task, not release approval or evidence for other cases."
+  },
+  "reviewedChecks": [
+    {
+      "id": "scope-preserved",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "small-copy-behavior",
+      "kind": "behavior",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 4,
+    "toolCallsByName": {
+      "Glob": 1,
+      "Read": 2,
+      "Write": 1
+    },
+    "fileReads": 2,
+    "uniqueReadFiles": [
+      "src/checkout.mjs",
+      "package.json"
+    ],
+    "skillFileReads": 0,
+    "skillInvocations": [],
+    "models": [
+      "newapi/claude-opus-5-5-high"
+    ],
+    "usage": {
+      "input_tokens": 13773,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 27165,
+      "output_tokens": 889,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.07830499999999999,
+    "clarificationCount": 2,
+    "reworkCount": 0,
+    "manualMetricsStatus": "reviewed",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ],
+    "clarificationDefinition": "Distinct product-boundary questions in final response; requests to run verification are tracked separately. No implementation paused waiting for these answers."
+  },
+  "observations": {
+    "sourceModificationPassesIndependentExamples": true,
+    "professionalSkillInvocations": [],
+    "routeReferenceRead": false,
+    "verificationHandoffRequests": 1
+  },
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-claude-pilot/none-result.json",
+      "sha256": "5352904573ceb1b600ea004fcf8892e3a537ee0f2c5176951105c7a01b7d892b",
+      "originalSha256": "5352904573ceb1b600ea004fcf8892e3a537ee0f2c5176951105c7a01b7d892b"
+    },
+    {
+      "path": "evals/runs/2026-11-01-claude-pilot/none-trace.jsonl",
+      "sha256": "67e66c8b6b473523822d2443b7691aa2b050b079f621b5a773b7f44d92e63dc5",
+      "originalSha256": "ef41ded15d8ca724383274beb15928882f1dee95425fd19a811b22106ccd88ac"
+    },
+    {
+      "path": "evals/runs/2026-11-01-claude-pilot/none-diff.patch",
+      "sha256": "1381fad1a351f46ea1d0ba61a442c80c551ad6883f176783295f7c8a7cb7b833",
+      "originalSha256": "b888c8ca2de783e57dfc4129156d9ca341eedee68d9d0bf4ec95bcc7130a32e9"
+    },
+    {
+      "path": "evals/runs/2026-11-01-claude-pilot/none-prompt.txt",
+      "sha256": "1ad22b5ac1eb654d7ebefdd4a7863fb0ba6f2d9615000f9688151c3ccf6f5742",
+      "originalSha256": "1ad22b5ac1eb654d7ebefdd4a7863fb0ba6f2d9615000f9688151c3ccf6f5742"
+    }
+  ],
+  "limitations": [
+    "Single tiny fixture, two repetitions per treatment and one negative case; cannot establish general effectiveness.",
+    "No browser/page exists in this fixture; no UI verification.",
+    "Bash was deliberately unavailable to the client; dynamic checks were performed separately after source review.",
+    "User settings and global skills were retained; no group used a global skill in the inspected tool trace.",
+    "The initial run preceded metric-path canonicalization; metrics here are re-derived without changing original result records.",
+    "Later helper-only changes were not read by these runs; exact source skill and harness identities remain in each original result."
+  ]
+}

@@ -9,6 +9,7 @@ import { verifyUpstreams } from './upstream.mjs';
 import { loadCatalog, resolveProfiles } from './profiles.mjs';
 import { verifyEvals, loadCases } from './evals.mjs';
 import { validateBehaviorReport } from './behavior.mjs';
+import { validateEvidenceState } from './evidence.mjs';
 
 function run(command, args, cwd) {
   const result = spawnSync(command, args, {
@@ -155,9 +156,25 @@ export function validateCiWorkflow(workflow) {
   }
   assert.ok(!JSON.stringify(workflow).includes('secrets.'), 'Pure validation needs no secrets.');
 }
+export function validatePublishPaths(workflow, pkg) {
+  const patterns = workflow.on.push.paths;
+  const matches = (path, pattern) => {
+    const expression = pattern.split('**').map(part => part.split('*').map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[^/]*')).join('.*');
+    return new RegExp(`^${expression}$`).test(path);
+  };
+  for (const entry of ['package.json', 'package-lock.json', 'README.md', ...pkg.files]) {
+    const path = entry.endsWith('/') ? `${entry}__publish_probe__` : entry;
+    let included = false;
+    for (const pattern of patterns) {
+      if (matches(path, pattern.replace(/^!/, ''))) included = !pattern.startsWith('!');
+    }
+    assert.ok(included, `Distribution path does not trigger publication: ${entry}`);
+  }
+}
 function validateWorkflow(root) {
   validateCiWorkflow(YAML.parse(readFileSync(join(root, '.github/workflows/ci.yml'), 'utf8')));
   const workflow = YAML.parse(readFileSync(join(root, '.github/workflows/publish.yml'), 'utf8'));
+  validatePublishPaths(workflow, JSON.parse(readFileSync(join(root, 'package.json'))));
   assert.deepEqual(workflow.on.push.branches, ['main']);
   assert.equal(workflow.concurrency['cancel-in-progress'], false);
   assert.equal(workflow.permissions.contents, 'read');
@@ -196,6 +213,7 @@ export function verify(root = process.cwd()) {
   for (const file of files) validateMarkdown(join(root, file), root);
   validateWorkflow(root);
   const evals = verifyEvals(root);
+  validateEvidenceState(root);
   const behaviorReport = JSON.parse(readFileSync(join(root, 'evals/upstream-changes.json'), 'utf8'));
   validateBehaviorReport(behaviorReport, JSON.parse(readFileSync(join(root, 'upstream/lock.json'), 'utf8')), loadCases(root));
   const scratch = mkdtempSync(join(tmpdir(), 'yuyin-pack-check-'));

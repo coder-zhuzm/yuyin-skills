@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "node-readonly",
+      "sha256": "c73751349aba421f3df8c6c76eb8c3f0ec1c183770fc998695bd9b9de9d0e7aa",
+      "status": "pending"
+    },
+    {
+      "id": "react-local",
+      "sha256": "12fd4a0be8ed37a3bfce2633bfe3ac90c139d74c2b3bafb23dcb89f994145383",
+      "status": "pending"
+    },
+    {
+      "id": "spring-mybatis",
+      "sha256": "706644942f836d5df53904781f28461e91fc85cfd57da7e8725f16533e11dda7",
+      "status": "pending"
+    },
+    {
+      "id": "js-playwright",
+      "sha256": "0ea4d3458e6f139f291be05df234f7095ce0b84d9bef953d1ad943640971bbce",
+      "status": "pending"
+    },
+    {
+      "id": "small-copy",
+      "sha256": "eb43739c7f6a5c7399a448bde256b31ec6034985ddc235bec6e8bb5e6618ba57",
+      "status": "pending"
+    },
+    {
+      "id": "missing-skill",
+      "sha256": "17bd69273808c9c07c0e1267eb83f2e0e6d535aa654e5919806921624465d31b",
+      "status": "pending"
+    }
+  ],
+  "uncoveredSkills": [
+    {
+      "name": "frontend-design",
+      "sha256": "eedf2828c569f6c3a1ac330aa88fbad968573109c44382d32e51c587e883c70a",
+      "status": "pending"
+    },
+    {
+      "name": "web-design-guidelines",
+      "sha256": "d1e14e392d99408243fec448ffbcdafcc05a26bbd79a2cd6c8f283a29586b252",
+      "status": "pending"
+    }
+  ],
+  "skillsSha256": "f9f1cb579ea1cfc3604bbc3615455ace790d77507ad997ada7218ed5864fcfab",
+  "identitySha256": "519862998f97d14e77ad937468a829d16423bd305a7f8400762b1afd5b1f11ad"
+}

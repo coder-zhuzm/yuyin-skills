@@ -131,15 +131,49 @@ export function verifyEvals(root = process.cwd()) {
   }
   return { cases: cases.length, status: 'fixture-checks-passed', modelBehavior: 'not-run' };
 }
-export function buildInvocation({ host, mode, caseInfo: c, workspace }) {
+export function selectCase(c, promptKind = 'constrained') {
+  assert.ok(['constrained', 'natural', 'negative'].includes(promptKind), 'Unknown prompt kind');
+  if (promptKind === 'constrained') return c;
+  const prompt = promptKind === 'natural' ? c.naturalPrompt : c.negativePrompt;
+  assert.ok(prompt?.trim(), `Case ${c.id} has no ${promptKind} prompt`);
+  return promptKind === 'natural' ? { ...c, prompt } : { ...c, prompt, checks: ['workspace-unchanged'], baselineFailures: [], expected: ['Explain current source accurately without modification'], forbidden: ['File changes', 'Unnecessary specialized skill loading'], traceReview: ['Source facts are accurate', 'No unrelated professional skill/reference reads', 'No unneeded clarification or implementation'] };
+}
+export function selectSkills(catalog, c, group = 'case') {
+  assert.ok(['case', 'none', 'core', 'all'].includes(group), 'Unknown skill group');
+  return group === 'none' ? [] : group === 'core' ? ['yuyin-dev'] : group === 'all' ? catalog.skills.map(s => s.name) : c.skills;
+}
+export function traceMetrics(host, trace, workspace = '') {
+  const base = existsSync(workspace) ? realpathSync(workspace) : resolve(workspace);
+  const events = trace.split('\n').filter(Boolean).flatMap(line => { try { return [JSON.parse(line)]; } catch { return []; } });
+  const tools = new Map(), models = new Set();
+  let usage = null, costUsd = null;
+  for (const event of events) {
+    if (event.message?.model) models.add(event.message.model);
+    for (const block of event.message?.content ?? []) if (block.type === 'tool_use') tools.set(block.id, { name: block.name, path: block.input?.file_path ?? block.input?.path, skill: block.input?.skill });
+    if (host === 'codex' && event.type === 'item.completed' && event.item?.type === 'command_execution') tools.set(event.item.id, { name: 'command_execution' });
+    if (event.type === 'result') { usage = event.usage ?? usage; costUsd = event.total_cost_usd ?? null; for (const model of Object.keys(event.modelUsage ?? {})) models.add(model); }
+    if (event.type === 'turn.completed') usage = event.usage ?? usage;
+  }
+  const calls = [...tools.values()], reads = calls.filter(t => ['Read', 'read_file'].includes(t.name));
+  const files = [...new Set(reads.filter(t => t.path).map(t => {
+    const candidate = resolve(base, t.path);
+    const path = existsSync(candidate) ? realpathSync(candidate) : candidate;
+    return path.startsWith(`${base}/`) ? path.slice(base.length + 1) : '<outside-workspace>';
+  }))];
+  return { toolCalls: calls.length, toolCallsByName: Object.fromEntries([...new Set(calls.map(t => t.name))].map(name => [name, calls.filter(t => t.name === name).length])), fileReads: reads.length, uniqueReadFiles: files, skillFileReads: files.filter(p => /(?:^|\/)skills\//.test(p)).length, skillInvocations: [...new Set(calls.filter(t => t.name === 'Skill').map(t => t.skill).filter(Boolean))], models: [...models], usage, costUsd, clarificationCount: null, reworkCount: null, manualMetricsStatus: 'pending-trace-review', limitations: ['Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.', 'Clarifications and rework require manual trace review; a missing value is not zero.'] };
+}
+export function buildInvocation({ host, mode, caseInfo: c, workspace, model, skillGroup = 'case' }) {
   assert.ok(['codex', 'claude'].includes(host), 'Host must be codex or claude');
   assert.ok(['explicit', 'implicit', 'direct'].includes(mode), 'Mode must be explicit, implicit or direct');
+  assert.ok(skillGroup !== 'none' || mode === 'implicit', 'No-skill comparisons require implicit mode');
+  assert.ok(skillGroup !== 'core' || mode !== 'direct' || c.directSkill === 'yuyin-dev', 'Direct professional invocation requires that skill to be installed');
   const name = mode === 'direct' ? c.directSkill : 'yuyin-dev';
   const prompt = mode === 'implicit' ? c.prompt : `${host === 'codex' ? '$' : '/'}${name}\n\n${c.prompt}`;
   const readonly = c.checks.includes('workspace-unchanged');
   const args = host === 'codex'
     ? ['exec', '--ephemeral', '--skip-git-repo-check', '--sandbox', readonly ? 'read-only' : 'workspace-write', '--json', '--cd', workspace, '-']
     : ['--print', '--verbose', '--output-format', 'stream-json', '--no-session-persistence', '--permission-mode', 'dontAsk', '--tools', readonly ? 'Read,Glob,Grep,Skill' : 'Read,Glob,Grep,Skill,Edit,Write', '--allowedTools', readonly ? 'Read,Glob,Grep,Skill' : 'Read,Glob,Grep,Skill,Edit,Write', '--setting-sources', 'user,project', '--settings', '{"disableAllHooks":true}', '--no-chrome', '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}'];
+  if (model) args.push('--model', model);
   return { command: host, args, prompt };
 }
 export function summarizeRun({ exitCode, completed, checks }) {
@@ -167,11 +201,12 @@ async function capture(command, args, { cwd, input, timeoutMs, traceFile, errorF
   writeFileSync(traceFile, output); writeFileSync(errorFile, errors);
   return { exitCode, timedOut, processError, output };
 }
-export async function runCase({ root = process.cwd(), caseId, host, mode, out, timeoutMs = 180_000, executable }) {
+export async function runCase({ root = process.cwd(), caseId, host, mode, out, timeoutMs = 180_000, executable, skillGroup = 'case', promptKind = 'constrained', model }) {
   root = realpathSync(root); out = resolve(out);
   assert.ok(out !== root && !out.startsWith(`${root}/`), 'Run artifacts must be outside the source repository');
-  const c = loadCases(root).find(c => c.id === caseId); assert.ok(c, `Unknown case: ${caseId}`);
-  const workspace = join(out, 'project'), invocation = buildInvocation({ host, mode, caseInfo: c, workspace });
+  const baseCase = loadCases(root).find(c => c.id === caseId); assert.ok(baseCase, `Unknown case: ${caseId}`);
+  const c = selectCase(baseCase, promptKind);
+  const workspace = join(out, 'project'), invocation = buildInvocation({ host, mode, caseInfo: c, workspace, model, skillGroup });
   // Require a fresh output directory so neither previous runs nor source fixtures can be overwritten.
   mkdirSync(dirname(out), { recursive: true });
   const parent = realpathSync(dirname(out));
@@ -179,7 +214,8 @@ export async function runCase({ root = process.cwd(), caseId, host, mode, out, t
   mkdirSync(out);
   cpSync(join(root, 'evals/fixtures', c.fixture), workspace, { recursive: true });
   const catalog = json(join(root, 'catalog.json'));
-  for (const name of c.skills) {
+  const installedNames = selectSkills(catalog, c, skillGroup);
+  for (const name of installedNames) {
     const skill = catalog.skills.find(s => s.name === name);
     cpSync(join(root, skill.path), join(workspace, host === 'codex' ? '.agents/skills' : '.claude/skills', name), { recursive: true });
   }
@@ -188,9 +224,9 @@ export async function runCase({ root = process.cwd(), caseId, host, mode, out, t
   cpSync(workspace, join(out, 'before'), { recursive: true });
   writeFileSync(join(out, 'baseline.json'), JSON.stringify(baseline, null, 2) + '\n');
   writeFileSync(join(out, 'prompt.txt'), invocation.prompt + '\n');
-  const skills = c.skills.map(name => { const s = catalog.skills.find(s => s.name === name); return { name, files: snapshot(join(root, s.path)) }; });
+  const skills = installedNames.map(name => { const s = catalog.skills.find(s => s.name === name); return { name, files: snapshot(join(root, s.path)) }; });
   const version = spawnSync(executable ?? invocation.command, ['--version'], { encoding: 'utf8', timeout: 10_000 });
-  const metadata = { schemaVersion: 1, caseId, host, mode, startedAt: new Date().toISOString(), harnessSha256: hash(readFileSync(new URL(import.meta.url))), caseDefinition: c, cliVersion: version.status === 0 ? version.stdout.trim() : 'unavailable', invocation: { command: executable ?? invocation.command, args: invocation.args }, skills, expected: c.expected, forbidden: c.forbidden, traceReview: c.traceReview, manualReview: { status: 'pending', notes: [] }, limitations: ['Generated JavaScript/browser tests are blocked until a separate source review; original fixture and trusted SQL verifier checks do not prove all runtime behavior.', ...(host === 'claude' ? ['Bash is excluded in this bounded run; verification is performed by the harness. User authentication/model settings apply; user/project hooks are disabled for this run.'] : ['User CLI configuration may apply; project files and installed skill bytes are recorded.'])] };
+  const metadata = { schemaVersion: 1, caseId, host, mode, skillGroup, promptKind, requestedModel: model ?? null, startedAt: new Date().toISOString(), harnessSha256: hash(readFileSync(new URL(import.meta.url))), caseDefinition: c, cliVersion: version.status === 0 ? version.stdout.trim() : 'unavailable', invocation: { command: executable ?? invocation.command, args: invocation.args }, skills, expected: c.expected, forbidden: c.forbidden, traceReview: c.traceReview, manualReview: { status: 'pending', notes: [] }, limitations: ['Skill groups vary project-local skills only; user-level skills/settings may remain visible and must be audited in the trace.', 'Generated JavaScript/browser tests are blocked until a separate source review; original fixture and trusted SQL verifier checks do not prove all runtime behavior.', ...(host === 'claude' ? ['Bash is excluded in this bounded run; verification is performed by the harness. User authentication/model settings apply; user/project hooks are disabled for this run.'] : ['User CLI configuration may apply; project files and installed skill bytes are recorded.'])] };
   // Persist the started state even if the parent runner is interrupted.
   writeFileSync(join(out, 'result.json'), JSON.stringify({ ...metadata, status: 'incomplete' }, null, 2) + '\n');
   const r = await capture(executable ?? invocation.command, invocation.args, { cwd: workspace, input: invocation.prompt, timeoutMs, traceFile: join(out, 'trace.jsonl'), errorFile: join(out, 'stderr.log') });
@@ -200,19 +236,19 @@ export async function runCase({ root = process.cwd(), caseId, host, mode, out, t
   const diff = spawnSync('git', ['diff', '--no-index', '--no-ext-diff', '--text', '--', join(out, 'before'), workspace], { encoding: 'utf8', maxBuffer: 4 * 1024 * 1024, timeout: 10_000 });
   writeFileSync(join(out, 'diff.patch'), diff.stdout ?? '');
   const complete = !r.timedOut && !r.processError && completion(host, r.output);
-  const result = { ...metadata, endedAt: new Date().toISOString(), exitCode: r.exitCode, timedOut: r.timedOut, processError: r.processError, completed: complete, status: summarizeRun({ exitCode: r.exitCode, completed: complete, checks }), checks, changedPaths: changes.map(c => c.path), diffError: [0, 1].includes(diff.status) ? null : diff.error?.message ?? diff.stderr };
+  const result = { ...metadata, durationMs: Date.now() - Date.parse(metadata.startedAt), metrics: traceMetrics(host, r.output, workspace), endedAt: new Date().toISOString(), exitCode: r.exitCode, timedOut: r.timedOut, processError: r.processError, completed: complete, status: summarizeRun({ exitCode: r.exitCode, completed: complete, checks }), checks, changedPaths: changes.map(c => c.path), diffError: [0, 1].includes(diff.status) ? null : diff.error?.message ?? diff.stderr };
   writeFileSync(join(out, 'result.json'), JSON.stringify(result, null, 2) + '\n');
   return result;
 }
 async function main() {
   const [command, ...args] = process.argv.slice(2), options = {};
   assert.equal(args.length % 2, 0, 'Options require values');
-  for (let i = 0; i < args.length; i += 2) { assert.ok(['--host', '--mode', '--case', '--out', '--timeout-ms', '--executable'].includes(args[i]), `Unknown option: ${args[i]}`); assert.ok(!Object.hasOwn(options, args[i]), 'Duplicate option'); options[args[i]] = args[i + 1]; }
+  for (let i = 0; i < args.length; i += 2) { assert.ok(['--host', '--mode', '--case', '--out', '--timeout-ms', '--executable', '--skill-group', '--prompt-kind', '--model'].includes(args[i]), `Unknown option: ${args[i]}`); assert.ok(!Object.hasOwn(options, args[i]), 'Duplicate option'); options[args[i]] = args[i + 1]; }
   if (command === 'check') { assert.equal(args.length, 0); console.log(JSON.stringify(verifyEvals(), null, 2)); return; }
-  assert.equal(command, 'run', 'Usage: node scripts/evals.mjs check | run --host codex|claude --mode explicit|implicit|direct --case ID --out NEW_DIRECTORY [--timeout-ms MS] [--executable PATH]');
+  assert.equal(command, 'run', 'Usage: node scripts/evals.mjs check | run --host codex|claude --mode explicit|implicit|direct --case ID --out NEW_DIRECTORY [--timeout-ms MS] [--executable PATH] [--skill-group case|none|core|all] [--prompt-kind constrained|natural|negative] [--model MODEL]');
   for (const flag of ['--host', '--mode', '--case', '--out']) assert.ok(options[flag], `Required: ${flag}`);
   const timeoutMs = Number(options['--timeout-ms'] ?? 180_000); assert.ok(Number.isInteger(timeoutMs) && timeoutMs >= 1000 && timeoutMs <= 600_000, 'Timeout must be 1000–600000 ms');
-  const result = await runCase({ host: options['--host'], mode: options['--mode'], caseId: options['--case'], out: options['--out'], timeoutMs, executable: options['--executable'] });
+  const result = await runCase({ host: options['--host'], mode: options['--mode'], caseId: options['--case'], out: options['--out'], timeoutMs, executable: options['--executable'], skillGroup: options['--skill-group'] ?? 'case', promptKind: options['--prompt-kind'] ?? 'constrained', model: options['--model'] });
   console.log(JSON.stringify({ caseId: result.caseId, host: result.host, mode: result.mode, status: result.status, checks: result.checks, artifacts: resolve(options['--out']) }, null, 2));
   if (['failed', 'incomplete'].includes(result.status)) process.exitCode = 1;
 }

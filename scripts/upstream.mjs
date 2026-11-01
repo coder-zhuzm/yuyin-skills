@@ -320,7 +320,19 @@ export function verifyUpstreams(root = process.cwd()) {
     assert.ok(skill, `Executable outside skill: ${f.path}`);
     const source = m.data.sources.find((s) => s.id === skill.sourceId),
       spec = source.skills.find((s) => s.id === skill.id);
-    reviewedCode(spec, f.path.slice(skill.path.length + 1), { content: bytes });
+    // Reconstruct reviewed upstream bytes through the exact declared patches.
+    // The manifest authorizes adaptations; a lock edit alone cannot authorize code.
+    let original = bytes.toString();
+    const adaptations = (m.data.patches ?? []).filter(p => p.path === f.path);
+    for (const patch of [...adaptations].reverse()) {
+      assert.equal(patch.type, 'replace-exact', 'Executable adaptations must be exact replacements');
+      assert.equal(original.split(patch.after).length - 1, 1, `Executable patch differs: ${patch.id}`);
+      const afterSha256 = digest(Buffer.from(original));
+      original = original.replace(patch.after, () => patch.before);
+      const recorded = lock.patches.find(p => p.id === patch.id);
+      assert.deepEqual(recorded, { id: patch.id, path: patch.path, beforeSha256: digest(Buffer.from(original)), afterSha256, reason: patch.reason }, `Executable patch record differs: ${patch.id}`);
+    }
+    reviewedCode(spec, f.path.slice(skill.path.length + 1), { content: adaptations.length ? Buffer.from(original) : bytes });
   }
   validateReferences(new Map(lock.files.map((f) => [f.path, { content: readFileSync(join(root, f.path)) }])));
   return result(lock);
@@ -438,7 +450,7 @@ export async function syncUpstreams({
     let changed;
     if (patch.type === 'replace-exact') {
       assert.equal(text.split(patch.before).length - 1, 1, `Patch no longer applies uniquely: ${patch.id}`);
-      changed = text.replace(patch.before, patch.after);
+      changed = text.replace(patch.before, () => patch.after);
     } else {
       assert.equal(patch.type, 'rewrite-rule-links', 'Unsupported patch type');
       changed = text.replace(/\]\(\.\/([a-z0-9_-]+\.md)(#[^)]*)?\)/g, (whole, name, anchor = '') => {

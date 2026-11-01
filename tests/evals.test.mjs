@@ -120,3 +120,20 @@ test('bundled Python references are distinct from introducing Python browser tes
   writeFileSync(join(workspace, 'tests/new-browser.py'), 'print("new test stack")');
   assert.equal(check().status, 'failed');
 });
+
+test('comparison groups vary installed skills while natural/negative prompts preserve independent checks', async () => {
+  const { selectSkills, selectCase, traceMetrics } = await import('../scripts/evals.mjs');
+  const catalog = JSON.parse(readFileSync(join(root, 'catalog.json'))), c = loadCases(root).find(c => c.id === 'small-copy');
+  assert.deepEqual(selectSkills(catalog, c, 'none'), []);
+  assert.deepEqual(selectSkills(catalog, c, 'core'), ['yuyin-dev']);
+  assert.equal(selectSkills(catalog, c, 'all').length, 9);
+  assert.equal(selectCase(c, 'natural').prompt, c.naturalPrompt);
+  assert.deepEqual(selectCase(c, 'negative').checks, ['workspace-unchanged']);
+  assert.throws(() => buildInvocation({ host: 'claude', mode: 'explicit', skillGroup: 'none', caseInfo: c, workspace: '/tmp/test' }), /implicit/);
+  const metrics = traceMetrics('claude', JSON.stringify({ type: 'assistant', message: { model: 'test-model', content: [{ type: 'tool_use', id: 'one', name: 'Read', input: { file_path: '/tmp/project/src/a.js' } }] } }) + '\n' + JSON.stringify({ type: 'result', usage: { input_tokens: 100 }, total_cost_usd: 0.01 }), '/tmp/project');
+  assert.equal(metrics.toolCalls, 1);
+  assert.equal(metrics.fileReads, 1);
+  assert.deepEqual(metrics.uniqueReadFiles, ['src/a.js']);
+  assert.equal(metrics.usage.input_tokens, 100);
+  assert.equal(metrics.clarificationCount, null);
+});

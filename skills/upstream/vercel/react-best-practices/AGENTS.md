@@ -2781,7 +2781,7 @@ Reference: [https://react.dev/reference/react-dom#resource-preloading-apis](http
 
 **Impact: LOW (reduces re-renders and improves code clarity)**
 
-Use `useTransition` instead of manual `useState` for loading states. This provides built-in `isPending` state and automatically manages transitions.
+For React 19 async Actions, `useTransition` can track pending work while keeping rendering responsive. React 18 does not track async Actions this way: use the project's request/loading mechanism there. Keep existing query-library ordering and cancellation where available; a manual loading state is also valid. The manual example below illustrates missing error/order handling, not a general ban on `useState`.
 
 **Incorrect: manual loading state**
 
@@ -2812,27 +2812,40 @@ function SearchResults() {
 **Correct: useTransition with built-in pending state**
 
 ```tsx
-import { useTransition, useState } from 'react'
+import { useTransition, useState, useRef } from 'react'
 
 function SearchResults() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
+  const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  const latestRequest = useRef(0)
 
   const handleSearch = (value: string) => {
-    setQuery(value) // Update input immediately
-    
-    startTransition(async () => {
-      // Fetch and update results
-      const data = await fetchResults(value)
-      setResults(data)
+    setQuery(value)
+    const requestId = ++latestRequest.current
+    setError(null)
+    return startTransition(async () => {
+      try {
+        const data = await fetchResults(value)
+        startTransition(() => {
+          if (requestId === latestRequest.current) setResults(data)
+        })
+      } catch (cause) {
+        startTransition(() => {
+          if (requestId === latestRequest.current) {
+            setError(cause instanceof Error ? cause.message : String(cause))
+          }
+        })
+      }
     })
   }
 
   return (
     <>
-      <input onChange={(e) => handleSearch(e.target.value)} />
+      <input value={query} onChange={(e) => handleSearch(e.target.value)} />
       {isPending && <Spinner />}
+      {error && <p role="alert">{error}</p>}
       <ResultsList results={results} />
     </>
   )
@@ -2847,7 +2860,7 @@ function SearchResults() {
 
 - **Better responsiveness**: Keeps the UI responsive during updates
 
-- **Interrupt handling**: New transitions automatically cancel pending ones
+- **Request ordering**: Transition rendering can be interrupted; network requests are not automatically cancelled or ordered. The request sequence above ignores stale results and stale errors. Pending remains true while any Action is outstanding.
 
 Reference: [https://react.dev/reference/react/useTransition](https://react.dev/reference/react/useTransition)
 

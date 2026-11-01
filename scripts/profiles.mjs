@@ -5,6 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import YAML from 'yaml';
 import { verifyUpstreams } from './upstream.mjs';
+import { checkInstallationLock } from '../bin/yuyin-skills.mjs';
 
 const repositoryRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 const supportedAgents = ['codex', 'claude-code'];
@@ -162,6 +163,8 @@ export function installProfiles(
     targetStat.isDirectory() && !targetStat.isSymbolicLink(),
     'Target must be an existing project directory, not a symbolic link',
   );
+  options = { ...options, target: realpathSync(options.target) };
+  checkInstallationLock({ global: false }, options.target);
   const selected = resolveProfiles(loadCatalog(root), options.profiles);
   for (const skill of selected) inspectDestination(options.target, skill.name);
   if (selected.some((skill) => skill.path.startsWith('skills/upstream/'))) verifyUpstreams(root);

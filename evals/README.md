@@ -25,6 +25,10 @@ node scripts/evals.mjs run --host claude --mode direct --case spring-mybatis --o
 
 宿主为 `codex` 或 `claude`；调用方式为 `explicit`（中文入口）、`implicit`（仅自然语言）或 `direct`（专业技能入口）。案例 ID 见 [manifest.json](manifest.json)。可选 `--executable PATH` 指定已安装客户端；`--timeout-ms` 为 1000–600000，默认 180000。没有安装或登录客户端时保留 incomplete 证据，不自动安装或切换账号。
 
+对照试验增加 `--skill-group none|core|all`，分别只改变项目内安装的技能集合；原有按案例安装使用默认值 `case`。`none` 组只允许 implicit，避免显式请求不存在的技能。用户级配置和技能仍可能可见，须核查 trace，不能将该组称为完全没有任何技能的环境。`--prompt-kind natural` 使用自然短请求；`small-copy` 还支持 `negative`，只解释源码并检查没有修改文件。各组保持相同宿主、模型、提示及验收条件并重复运行；可用 `--model MODEL` 固定模型，也保存 trace 中实际报告的模型身份。
+
+`result.json` 增加耗时、结构化工具调用、Read 文件、Skill 调用、宿主返回的用量与费用。shell 内部读取量不作推算；澄清和返工次数留待人工审阅，不将缺失记为零。比较应同时报告正确性、越界、无关加载、澄清、返工与成本，单个小任务的结果不代表整体增益。
+
 Codex 使用 read-only/workspace-write 沙箱和 ephemeral 会话。Claude 保留用户设置以沿用现有认证，使用 dontAsk 及 Read/Glob/Grep/Skill；修改案例额外允许 Edit/Write，禁用 MCP 配置、Chrome 集成与命令执行工具。按[官方 hooks 文档](https://code.claude.com/docs/en/hooks#disable-or-remove-hooks)，仅本次调用设置 `disableAllHooks`，不改用户配置；受管理的 hooks 仍遵循管理策略。本轮 Claude 检查由外部验收工具运行，不能据此断言模型自行运行了测试；需要验证其命令选择时，应另在具备适当权限的环境中验收。两端均保存实际复制的技能文件摘要，用户级客户端行为仍需结合 trace 核实。
 
 每次输出：
@@ -48,4 +52,8 @@ Codex 使用 read-only/workspace-write 沙箱和 ephemeral 会话。Claude 保�
 
 同步生成 [upstream-changes.json](upstream-changes.json)：记录文件与摘要变化、文本增删摘录、受影响案例、尚未覆盖的技能，以及需要人工核对的触发范围、工作流、工具依赖和外部操作。摘录不等于语义分析，完整差异仍需审阅。未完成的案例会带入后续更新；restore 不改写行为报告。
 
-生成报告中的宿主/调用矩阵始终为 pending，真实证据留在独立运行目录并在验证记录中引用。`npm run verify` 核对报告与目标锁一致、案例素材有效且维护文件没有进入包；它不把 pending 自动提升为通过。发布准备保留现有候选恢复逻辑，只执行机械检查并说明行为验收状态。
+生成报告中的宿主/调用矩阵始终为 pending。运行 `node scripts/evidence.mjs refresh` 同时刷新上游案例映射和 [behavior-state.json](behavior-state.json)：每例绑定自有及上游技能字节、fixture、案例定义和验收器。入口或相关参考变化使对应身份改变；普通 README 变化不会使行为身份过期。`npm run verify` 检查身份索引与实际内容一致，不把 pending 自动提升为通过。
+
+发布准备不再更新上游。新候选要求维护者提供 `evals/release-review.json`：`schemaVersion: 1`、`identitySha256`（取 `node scripts/evidence.mjs status`）、`reviewer`、`reviewedAt`（YYYY-MM-DD）、`rationale`，以及 `decisions` 数组。每个 `case:<案例ID>` 和 `skill:<未覆盖技能名>` 都需一项，包含 `status: verified|waived`、具体 `rationale` 和 `evidence: [{path, sha256}]`。脱敏证据必须可定位于仓库的 `evals/runs/`，不得只引用机器临时路径。
+
+`verified` 的 JSON 证据包还需含 `schemaVersion: 1`、`caseId`、当前 `caseSha256`、实际 `models`、`review: {status: reviewed, reviewer}` 和全为 passed 的 `reviewedChecks`。其他原始证据可作为附加文件一起绑定摘要。未覆盖技能须补映射案例或明确豁免；纯文档、环境限制等豁免应说明影响与依据。格式检查不能替代维护者审阅，不自动生成批准或豁免。`node scripts/evidence.mjs check-release` 可在发布前只读检查门禁；未公开候选仍恢复原字节。

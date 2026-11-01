@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "caseId": "small-copy",
+  "run": "negative",
+  "skillGroup": "all",
+  "promptKind": "negative",
+  "models": [
+    "newapi/claude-opus-5-5-high"
+  ],
+  "sourceHarnessSha256": "fcadae4dfa6bef113a17ccc8d436e66bed021caa3ecac6a137e25c458b379638",
+  "metricsDerivedWithHarnessSha256": "26463a72ec69de2454b18cfbc8f4aaf2f8fd387fedc8cebd93b24b98462a45a8",
+  "review": {
+    "status": "reviewed-with-limitations",
+    "reviewer": "Codex source and trace review",
+    "rationale": "Reviewed full generated two-line module, diff and tool/assistant trace before separate execution. This is a pilot task, not release approval or evidence for other cases."
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 2,
+    "toolCallsByName": {
+      "Glob": 1,
+      "Read": 1
+    },
+    "fileReads": 1,
+    "uniqueReadFiles": [
+      "src/checkout.mjs"
+    ],
+    "skillFileReads": 0,
+    "skillInvocations": [],
+    "models": [
+      "newapi/claude-opus-5-5-high"
+    ],
+    "usage": {
+      "input_tokens": 14374,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 16553,
+      "output_tokens": 589,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.0725866,
+    "clarificationCount": 0,
+    "reworkCount": 0,
+    "manualMetricsStatus": "reviewed",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ],
+    "clarificationDefinition": "Distinct product-boundary questions in final response; requests to run verification are tracked separately. No implementation paused waiting for these answers."
+  },
+  "observations": {
+    "sourceModificationPassesIndependentExamples": true,
+    "professionalSkillInvocations": [],
+    "routeReferenceRead": false,
+    "verificationHandoffRequests": 0
+  },
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-claude-pilot/negative-result.json",
+      "sha256": "7cfa021717f4ba501c19994e5d49b9e14bbc98c361a823785d043b1cc6dcb961",
+      "originalSha256": "7cfa021717f4ba501c19994e5d49b9e14bbc98c361a823785d043b1cc6dcb961"
+    },
+    {
+      "path": "evals/runs/2026-11-01-claude-pilot/negative-trace.jsonl",
+      "sha256": "bc18cc88b0db7ebc8ddcd439828e6f08f7e4e67161b097ca45d4cc7421992a36",
+      "originalSha256": "d2ff59eae324e40e018d2c1bfde0e771ce3d12bffe21cdf45654fe0ebb37e41d"
+    },
+    {
+      "path": "evals/runs/2026-11-01-claude-pilot/negative-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-claude-pilot/negative-prompt.txt",
+      "sha256": "7dc7f587b8b0df485548cf4e68adbc9617d9b92c147843fe00497cd4270ed813",
+      "originalSha256": "7dc7f587b8b0df485548cf4e68adbc9617d9b92c147843fe00497cd4270ed813"
+    }
+  ],
+  "limitations": [
+    "Single tiny fixture, two repetitions per treatment and one negative case; cannot establish general effectiveness.",
+    "No browser/page exists in this fixture; no UI verification.",
+    "Bash was deliberately unavailable to the client; dynamic checks were performed separately after source review.",
+    "User settings and global skills were retained; no group used a global skill in the inspected tool trace.",
+    "The initial run preceded metric-path canonicalization; metrics here are re-derived without changing original result records.",
+    "Later helper-only changes were not read by these runs; exact source skill and harness identities remain in each original result."
+  ]
+}

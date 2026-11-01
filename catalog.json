@@ -94,5 +94,5 @@
     "life",
     "content"
   ],
-  "note": "Profiles select installed content; yuyin-dev reads only applicable skills. Upstream snapshots are updated during new release preparation."
+  "note": "Profiles select installed content; yuyin-dev reads only applicable skills. Upstream updates are reviewed separately; releases use the locked snapshot."
 }

@@ -1,9 +1,29 @@
 {
   "schemaVersion": 1,
-  "baseLockSha256": "5265b4f311a91cc3ee844a4d1ed2cb5bd626a3e91870bb58e8fdb1564462b4d3",
-  "targetLockSha256": "424edb3f2b5b3217287942d11c05139ef15088496857ede0e5e0daa0f2a26f01",
-  "casesSha256": "129f4191aeb029db581ac3b7e48a88d393f5f59f57023719d14c79ae5b254e1f",
-  "changes": [],
+  "baseLockSha256": "a7211ce99d2be8ca59c9260cb1a63ad013e125e41cbcd8330319cf1c6602526b",
+  "targetLockSha256": "a5adb9c28895a47909d2e6734cedcab003bf76eeeceb23a24fd918551f948c14",
+  "casesSha256": "5e04c4c633f776906f258fdf9ce98b8b49db571bf532cb8f52a40d1cf0da0d19",
+  "changes": [
+    {
+      "path": "skills/upstream/anthropic/webapp-testing/scripts/with_server.py",
+      "beforeSha256": "6720add472e0f35ad96e8daa0bdd18d1850d9bd4e2191faac752422c16e69cb5",
+      "afterSha256": "df9177313cbd0c09e15f2c395ce648bf1c2b42f16a6d3c9dc3c20c000c197c2c",
+      "beforeMode": "100755",
+      "afterMode": "100755",
+      "skills": [
+        "webapp-testing"
+      ],
+      "cases": [
+        "js-playwright"
+      ],
+      "reviewAreas": [
+        "trigger-scope",
+        "workflow",
+        "tool-dependencies",
+        "external-actions"
+      ]
+    }
+  ],
   "inheritedPendingCases": [
     "js-playwright",
     "node-readonly",

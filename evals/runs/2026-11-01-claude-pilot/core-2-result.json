@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "caseId": "small-copy",
+  "host": "claude",
+  "mode": "implicit",
+  "skillGroup": "core",
+  "promptKind": "natural",
+  "requestedModel": null,
+  "startedAt": "2026-11-01T09:17:08.273Z",
+  "harnessSha256": "26463a72ec69de2454b18cfbc8f4aaf2f8fd387fedc8cebd93b24b98462a45a8",
+  "caseDefinition": {
+    "id": "small-copy",
+    "title": "小文案与价格格式 bug",
+    "fixture": "small-copy",
+    "skills": [
+      "yuyin-dev",
+      "javascript-testing-patterns"
+    ],
+    "directSkill": "javascript-testing-patterns",
+    "prompt": "修复结算摘要：金额始终显示两位小数，按钮改成“确认支付”。",
+    "checks": [
+      "scope-preserved",
+      "small-copy-behavior"
+    ],
+    "expected": [
+      "金额包含两位小数，覆盖整数、小数和零；按钮为确认支付"
+    ],
+    "forbidden": [
+      "无关重构",
+      "新增文档或依赖",
+      "长需求访谈"
+    ],
+    "allowedChanges": [
+      "src/checkout.mjs",
+      "*.test.mjs",
+      "src/*.test.mjs",
+      "src/**/*.test.mjs",
+      "tests/**"
+    ],
+    "baselineFailures": [
+      "small-copy-behavior"
+    ],
+    "traceReview": [
+      "是否完成局部修复且避免长访谈、文档或无关重构",
+      "测试是否独立验证整数、小数与零金额的可观察输出"
+    ],
+    "naturalPrompt": "修复结算摘要：金额始终显示两位小数，按钮改成“确认支付”。",
+    "negativePrompt": "只读告诉我 checkout.mjs 当前导出了哪些函数和常量，说明按钮文案和金额格式；不要修改文件。"
+  },
+  "cliVersion": "2.1.316 (Claude Code)",
+  "invocation": {
+    "command": "claude",
+    "args": [
+      "--print",
+      "--verbose",
+      "--output-format",
+      "stream-json",
+      "--no-session-persistence",
+      "--permission-mode",
+      "dontAsk",
+      "--tools",
+      "Read,Glob,Grep,Skill,Edit,Write",
+      "--allowedTools",
+      "Read,Glob,Grep,Skill,Edit,Write",
+      "--setting-sources",
+      "user,project",
+      "--settings",
+      "{\"disableAllHooks\":true}",
+      "--no-chrome",
+      "--strict-mcp-config",
+      "--mcp-config",
+      "{\"mcpServers\":{}}"
+    ]
+  },
+  "skills": [
+    {
+      "name": "yuyin-dev",
+      "files": {
+        "SKILL.md": {
+          "sha256": "5c7e5a8963cd5cde361b3d03563c6f3f36a5925249ccfa9dcb83735e1ef6a363",
+          "mode": 420,
+          "executable": false
+        },
+        "agents/": {
+          "directory": true,
+          "mode": 493
+        },
+        "agents/openai.yaml": {
+          "sha256": "26abd42225e8ddc143a8915b0c8fc632faa7e44bacef94a1c480d783cfc3bf8e",
+          "mode": 420,
+          "executable": false
+        },
+        "references/": {
+          "directory": true,
+          "mode": 493
+        },
+        "references/assessment.md": {
+          "sha256": "477465cce6074435da71858a0e85ff0f948fb93f72b0923efb0fd0e6bf31f460",
+          "mode": 420,
+          "executable": false
+        },
+        "references/bug.md": {
+          "sha256": "2eadd7a60833bfa54cf196805064d454a795a650151ff38515eae5249d09ac80",
+          "mode": 420,
+          "executable": false
+        },
+        "references/context.md": {
+          "sha256": "a6ae523cf3ae077805a3f45425673d80864f5568217bd74ad29379fbb4326b6a",
+          "mode": 420,
+          "executable": false
+        },
+        "references/domains.md": {
+          "sha256": "3387ad3310585b7e3ff037d1e8c2bfa40f8848460f8cdaf67d3d84e884b6fc6d",
+          "mode": 420,
+          "executable": false
+        },
+        "references/feature.md": {
+          "sha256": "42b9ae90dcb849370cfd274d4fcf359a01ad45b5ace536fb246d01b2e0f9613c",
+          "mode": 420,
+          "executable": false
+        },
+        "references/handoff-retro.md": {
+          "sha256": "72bf32bcad94a28c665f405db7790cbf854586d3e4fbd8dda33e12921d2e9f46",
+          "mode": 420,
+          "executable": false
+        },
+        "references/logic.md": {
+          "sha256": "a3ce1d79a95baa91a6de85b399ae8437d3619895f4591099fc001e5487932a29",
+          "mode": 420,
+          "executable": false
+        },
+        "references/optimization.md": {
+          "sha256": "5ff768f796f7b666d76ce1b2b3fc77a59fa951bd6c9f9df0afff6e21750fc515",
+          "mode": 420,
+          "executable": false
+        },
+        "references/review.md": {
+          "sha256": "01500e07404b59f9e4cf8c6fc12d3d563e81e498e1034da609ca4bc8f75a1bca",
+          "mode": 420,
+          "executable": false
+        },
+        "references/spring.md": {
+          "sha256": "9f2b6d30d715c5da8be1cf1d1d899a0c0de2e9d1af2fafd5ae2339827c1f08fd",
+          "mode": 420,
+          "executable": false
+        },
+        "references/stack-skills.md": {
+          "sha256": "9a7ab5cbb309a928c65d7baa914d4038c18779df7ed42a30db9b176075912526",
+          "mode": 420,
+          "executable": false
+        }
+      }
+    }
+  ],
+  "expected": [
+    "金额包含两位小数，覆盖整数、小数和零；按钮为确认支付"
+  ],
+  "forbidden": [
+    "无关重构",
+    "新增文档或依赖",
+    "长需求访谈"
+  ],
+  "traceReview": [
+    "是否完成局部修复且避免长访谈、文档或无关重构",
+    "测试是否独立验证整数、小数与零金额的可观察输出"
+  ],
+  "manualReview": {
+    "status": "pending",
+    "notes": []
+  },
+  "limitations": [
+    "Skill groups vary project-local skills only; user-level skills/settings may remain visible and must be audited in the trace.",
+    "Generated JavaScript/browser tests are blocked until a separate source review; original fixture and trusted SQL verifier checks do not prove all runtime behavior.",
+    "Bash is excluded in this bounded run; verification is performed by the harness. User authentication/model settings apply; user/project hooks are disabled for this run."
+  ],
+  "durationMs": 27653,
+  "metrics": {
+    "toolCalls": 6,
+    "toolCallsByName": {
+      "Skill": 1,
+      "Glob": 1,
+      "Read": 3,
+      "Write": 1
+    },
+    "fileReads": 3,
+    "uniqueReadFiles": [
+      "src/checkout.mjs",
+      "package.json",
+      ".claude/skills/yuyin-dev/references/bug.md"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [
+      "yuyin-dev"
+    ],
+    "models": [
+      "newapi/claude-opus-5-5-high"
+    ],
+    "usage": {
+      "input_tokens": 14503,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 45238,
+      "output_tokens": 1541,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.09787960000000001,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "endedAt": "2026-11-01T09:17:35.927Z",
+  "exitCode": 0,
+  "timedOut": false,
+  "processError": null,
+  "completed": true,
+  "status": "blocked",
+  "checks": [
+    {
+      "id": "scope-preserved",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    },
+    {
+      "id": "small-copy-behavior",
+      "kind": "behavior",
+      "status": "blocked",
+      "detail": "Generated JavaScript is not automatically executed outside the host sandbox. Review the source and run explicit reviewed checks in an appropriate environment."
+    }
+  ],
+  "changedPaths": [
+    "src/checkout.mjs"
+  ],
+  "diffError": null
+}

@@ -259,11 +259,15 @@ export class UserRepository {
   }
 
   async update(id: string, updates: UpdateUserDTO): Promise<UserEntity | null> {
+    // Runtime boundary: DTO types do not filter request data.
+    const columns: Record<string, string> = { name: "name", email: "email" };
     const fields = Object.keys(updates);
-    const values = Object.values(updates);
-
+    if (!fields.length || fields.some((field) => !Object.hasOwn(columns, field))) {
+      throw new Error("Update requires name/email fields only; sensitive fields use separate flows");
+    }
+    const values = fields.map((field) => updates[field as keyof UpdateUserDTO]);
     const setClause = fields
-      .map((field, idx) => `${field} = $${idx + 2}`)
+      .map((field, idx) => `${columns[field]} = $${idx + 2}`)
       .join(", ");
 
     const query = `
@@ -362,11 +366,14 @@ import { ValidationError } from "../utils/errors";
 export const validate = (schema: AnyZodObject) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await schema.parseAsync({
+      const parsed = await schema.parseAsync({
         body: req.body,
         query: req.query,
         params: req.params,
       });
+      req.body = parsed.body;
+      // Express 5 query may be read-only; downstream handlers use this parsed view.
+      res.locals.validated = parsed;
       next();
     } catch (error) {
       if (error instanceof ZodError) {
@@ -393,7 +400,17 @@ const createUserSchema = z.object({
   }),
 });
 
-router.post("/users", validate(createUserSchema), userController.createUser);
+const updateUserSchema = z.object({
+  body: z.object({
+    name: z.string().min(1).optional(),
+    email: z.string().email().optional(),
+  }).strict().refine((body) => Object.keys(body).length > 0, "Empty update"),
+  params: z.object({ id: z.string().min(1) }),
+});
+
+router.post("/users", validate(createUserSchema), userController.createUser.bind(userController));
+router.patch("/users/:id", validate(updateUserSchema), userController.updateUser.bind(userController));
+// For validated query/params, read res.locals.validated instead of raw req fields.
 ```
 
 ### Rate Limiting Middleware

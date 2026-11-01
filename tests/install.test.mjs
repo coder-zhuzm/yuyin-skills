@@ -266,3 +266,16 @@ test('the real npm archive fetches its tool from npm and its single npx entry in
     assert.match(result.stdout, /Installed 9 skills/);
     verifyInstallation(selected, { target, agents: ['codex', 'claude-code'] }, source);
   }));
+
+test('a symlinked project lock is rejected before CLI execution and preserves an external sentinel', () =>
+  temporary(target => temporary(outside => {
+    const sentinel = join(outside, 'sentinel.json');
+    writeFileSync(sentinel, 'preserve me');
+    symlinkSync(sentinel, join(target, 'skills-lock.json'));
+    let called = false;
+    assert.throws(() => installProfiles({ profiles: ['core'], target, agents: ['codex'] }, {
+      root, stdio: 'pipe', runCli: () => { called = true; return { status: 0 }; },
+    }), /lock.*symbolic link/i);
+    assert.equal(called, false);
+    assert.equal(readFileSync(sentinel, 'utf8'), 'preserve me');
+  })));

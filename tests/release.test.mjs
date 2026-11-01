@@ -1,21 +1,21 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { planRelease, planWorkflowRelease, preparationSummary, syncVersionReferences, assertPublishedCandidate, assertTagTarget, refreshReleaseSources } from '../scripts/release.mjs';
+import { planRelease, planWorkflowRelease, preparationSummary, syncVersionReferences, assertPublishedCandidate, assertTagTarget, verifyReleaseSources } from '../scripts/release.mjs';
 
 const baseline = { currentVersion: '0.3.0', publishedVersions: ['0.3.0'], changed: true };
 
 test('an interrupted candidate never refreshes upstream content', async () => {
   let calls = 0;
-  const result = await refreshReleaseSources({ pendingVersion: '0.3.1', publishedVersions: ['0.3.0'], refresh: async () => { calls++; } });
+  const result = await verifyReleaseSources({ pendingVersion: '0.3.1', publishedVersions: ['0.3.0'], verify: async () => { calls++; } });
   assert.equal(calls, 0);
   assert.equal(result, false);
 });
 
-test('new preparation refreshes upstreams even when local package files did not change', async () => {
+test('new preparation verifies locked content and rejects missing behavior review', async () => {
   let calls = 0;
-  await refreshReleaseSources({ pendingVersion: '0.3.1', publishedVersions: ['0.3.0', '0.3.1'], refresh: async () => { calls++; } });
+  await verifyReleaseSources({ pendingVersion: '0.3.1', publishedVersions: ['0.3.0', '0.3.1'], verify: async () => { calls++; } });
   assert.equal(calls, 1);
-  await assert.rejects(refreshReleaseSources({ publishedVersions: ['0.3.1'], refresh: async () => { throw new Error('Upstream unavailable'); } }), /Upstream unavailable/);
+  await assert.rejects(verifyReleaseSources({ publishedVersions: ['0.3.1'], verify: async () => { throw new Error('Behavior review missing'); } }), /Behavior review missing/);
 });
 
 test('a package change automatically creates the next patch version', () => {

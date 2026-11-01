@@ -351,30 +351,35 @@ export class CacheService {
   }
 }
 
-// Cache decorator
-export function Cacheable(ttl: number = 300) {
+// Cache decorator (legacy TypeScript decorator syntax).
+// Example: @Cacheable("users:v1", function (id) { return [this.tenantId, id]; })
+// Include every result-dependent tenant/user/permission scope and argument.
+// Keys must be JSON-safe canonical primitives/arrays; avoid undefined, BigInt,
+// cyclic objects and ambiguous object ordering. If state cannot be represented,
+// do not cache with this decorator. Null is the cache-miss sentinel.
+export function Cacheable(
+  namespace: string,
+  keyFor: (this: any, ...args: any[]) => unknown[],
+  ttl: number = 300,
+) {
+  if (!namespace || typeof keyFor !== "function") {
+    throw new Error("Cacheable requires a stable namespace and an explicit isolation key");
+  }
   return function (
     target: any,
     propertyKey: string,
     descriptor: PropertyDescriptor,
   ) {
     const originalMethod = descriptor.value;
-
     descriptor.value = async function (...args: any[]) {
       const cache = new CacheService();
-      const cacheKey = `${propertyKey}:${JSON.stringify(args)}`;
-
+      const cacheKey = JSON.stringify([namespace, propertyKey, keyFor.apply(this, args)]);
       const cached = await cache.get(cacheKey);
-      if (cached) {
-        return cached;
-      }
-
+      if (cached !== null) return cached;
       const result = await originalMethod.apply(this, args);
       await cache.set(cacheKey, result, ttl);
-
       return result;
     };
-
     return descriptor;
   };
 }

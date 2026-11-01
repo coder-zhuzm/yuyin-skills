@@ -138,6 +138,36 @@ test('a manually edited lock cannot change the manifest-selected skill set', asy
   writeFileSync(path, JSON.stringify(lock));
   assert.throws(() => verifyUpstreams(f.root), /Locked skill set/);
 });
+
+test('approved binary resources retain their reviewed bytes during offline verification', async t => {
+  const f = fixture(t), path = join(f.root, 'upstream/sources.json');
+  const manifest = JSON.parse(readFileSync(path)), content = Buffer.from([0, 97, 115, 109, 255, 128]);
+  manifest.sources[0].skills[0].reviewedScripts = ['helper.wasm'];
+  manifest.sources[0].skills[0].reviewedScriptHashes = { 'helper.wasm': createHash('sha256').update(content).digest('hex') };
+  writeFileSync(path, JSON.stringify(manifest));
+  f.files.push({ path: 'skills/demo/helper.wasm', content, mode: '100644' });
+  await syncUpstreams(f);
+  verifyUpstreams(f.root);
+});
+
+test('executable adaptations are reconstructible and lock edits alone cannot approve new code', async t => {
+  const f = fixture(t), path = join(f.root, 'upstream/sources.json');
+  const manifest = JSON.parse(readFileSync(path)), before = 'print("raw")\n', after = 'print("reviewed adaptation")\n';
+  manifest.sources[0].skills[0].reviewedScripts = ['helper.py'];
+  manifest.sources[0].skills[0].reviewedScriptHashes = { 'helper.py': createHash('sha256').update(before).digest('hex') };
+  manifest.patches = [{ id: 'reviewed-code', type: 'replace-exact', path: 'skills/upstream/example/demo/helper.py', before, after, reason: 'Test reviewed adaptation' }];
+  writeFileSync(path, JSON.stringify(manifest));
+  f.files.push({ path: 'skills/demo/helper.py', content: before, mode: '100644' });
+  await syncUpstreams(f); verifyUpstreams(f.root);
+  const code = join(f.root, 'skills/upstream/example/demo/helper.py');
+  writeFileSync(code, after + 'print("unreviewed")\n');
+  const lockPath = join(f.root, 'upstream/lock.json'), lock = JSON.parse(readFileSync(lockPath));
+  const hash = createHash('sha256').update(readFileSync(code)).digest('hex');
+  lock.files.find(f => f.path.endsWith('helper.py')).sha256 = hash;
+  lock.patches[0].afterSha256 = hash;
+  writeFileSync(lockPath, JSON.stringify(lock));
+  assert.throws(() => verifyUpstreams(f.root), /patch record differs|Executable content changed/);
+});
 test('unreviewed license changes stop updates and preserve the old snapshot', async (t) => {
   const f = fixture(t);
   await syncUpstreams(f);
@@ -192,6 +222,16 @@ test('locked update rejects a loader returning a different commit', async t => {
   const before = readFileSync(join(f.root, 'upstream/lock.json'), 'utf8');
   await assert.rejects(syncUpstreams({ ...f, locked: true, loadSource: async () => ({ commit: 'b'.repeat(40), files: f.files }) }), /commit differs/i);
   assert.equal(readFileSync(join(f.root, 'upstream/lock.json'), 'utf8'), before);
+});
+
+test('declared replacement bodies retain literal SQL placeholders and replacement metacharacters', async t => {
+  const f = fixture(t);
+  const path = join(f.root, 'upstream/sources.json'), manifest = JSON.parse(readFileSync(path));
+  const after = 'Use `${field} = $${index + 2}` and literal $&.';
+  manifest.patches = [{ id: 'literal', type: 'replace-exact', path: 'skills/upstream/example/demo/references/guide.md', before: 'Guide', after, reason: 'Preserve literal source text' }];
+  writeFileSync(path, JSON.stringify(manifest));
+  await syncUpstreams(f);
+  assert.equal(readFileSync(join(f.root, 'skills/upstream/example/demo/references/guide.md'), 'utf8'), after);
 });
 test('a failed behavior-report replacement rolls back the lock and snapshot together', async t => {
   const f = fixture(t);

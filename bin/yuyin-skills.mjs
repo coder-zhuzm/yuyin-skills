@@ -75,6 +75,11 @@ function checkParents(path) {
     assert.ok(stat.isDirectory(), `Installation parent is not a directory: ${path}`);
   }
 }
+export function checkInstallationLock(options, cwd) {
+  const lockPath = installationLockPath(options, cwd);
+  checkParents(dirname(lockPath));
+  assert.ok(!statIfPresent(lockPath)?.isSymbolicLink(), `Skill lock is a symbolic link: ${lockPath}`);
+}
 function resourceFiles(dir, prefix = '') {
   return readdirSync(dir).flatMap(name => {
     const path = join(dir, name), stat = lstatSync(path);
@@ -108,9 +113,7 @@ export function install(options, { root = packageRoot, cwd = process.cwd(), runC
     for (const skill of selected) assert.ok(!statIfPresent(join(directory, skill.name)),
       `Skill already exists: ${join(directory, skill.name)}. Inspect local edits; use -s to select other skills or explicitly update with the skills CLI.`);
   }
-  const lockPath = installationLockPath(options, cwd);
-  checkParents(dirname(lockPath));
-  assert.ok(!statIfPresent(lockPath)?.isSymbolicLink(), `Skill lock is a symbolic link: ${lockPath}`);
+  checkInstallationLock(options, cwd);
   const expected = new Map(selected.map(skill => [skill.name, resourceFiles(join(root, skill.path))]));
   const require = createRequire(join(root, 'package.json'));
   const cli = join(dirname(require.resolve('skills/package.json')), 'bin/cli.mjs');

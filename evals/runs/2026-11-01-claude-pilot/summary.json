@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-01",
+  "host": "claude",
+  "caseId": "small-copy",
+  "design": "Three project-local skill groups, natural implicit request, two repetitions each; one read-only negative with all skills.",
+  "releaseApproval": false,
+  "runs": [
+    {
+      "run": "none",
+      "group": "none",
+      "promptKind": "natural",
+      "completed": true,
+      "automaticStatus": "blocked",
+      "reviewedChecksStatus": "passed",
+      "durationMs": 25838,
+      "toolCalls": 4,
+      "fileReads": 2,
+      "skillInvocations": [],
+      "models": [
+        "newapi/claude-opus-5-5-high"
+      ],
+      "costUsd": 0.07830499999999999,
+      "productQuestions": 2,
+      "reviewPath": "evals/runs/2026-11-01-claude-pilot/none-review.json"
+    },
+    {
+      "run": "core",
+      "group": "core",
+      "promptKind": "natural",
+      "completed": true,
+      "automaticStatus": "blocked",
+      "reviewedChecksStatus": "passed",
+      "durationMs": 21962,
+      "toolCalls": 5,
+      "fileReads": 2,
+      "skillInvocations": [
+        "yuyin-dev"
+      ],
+      "models": [
+        "newapi/claude-opus-5-5-high"
+      ],
+      "costUsd": 0.0840548,
+      "productQuestions": 2,
+      "reviewPath": "evals/runs/2026-11-01-claude-pilot/core-review.json"
+    },
+    {
+      "run": "all",
+      "group": "all",
+      "promptKind": "natural",
+      "completed": true,
+      "automaticStatus": "blocked",
+      "reviewedChecksStatus": "passed",
+      "durationMs": 27710,
+      "toolCalls": 6,
+      "fileReads": 3,
+      "skillInvocations": [
+        "yuyin-dev"
+      ],
+      "models": [
+        "newapi/claude-opus-5-5-high"
+      ],
+      "costUsd": 0.11418239999999999,
+      "productQuestions": 2,
+      "reviewPath": "evals/runs/2026-11-01-claude-pilot/all-review.json"
+    },
+    {
+      "run": "negative",
+      "group": "all",
+      "promptKind": "negative",
+      "completed": true,
+      "automaticStatus": "needs-trace-review",
+      "reviewedChecksStatus": "passed",
+      "durationMs": 14760,
+      "toolCalls": 2,
+      "fileReads": 1,
+      "skillInvocations": [],
+      "models": [
+        "newapi/claude-opus-5-5-high"
+      ],
+      "costUsd": 0.0725866,
+      "productQuestions": 0,
+      "reviewPath": "evals/runs/2026-11-01-claude-pilot/negative-review.json"
+    },
+    {
+      "run": "none-2",
+      "group": "none",
+      "promptKind": "natural",
+      "completed": true,
+      "automaticStatus": "blocked",
+      "reviewedChecksStatus": "passed",
+      "durationMs": 25887,
+      "toolCalls": 5,
+      "fileReads": 2,
+      "skillInvocations": [],
+      "models": [
+        "newapi/claude-opus-5-5-high"
+      ],
+      "costUsd": 0.0717998,
+      "productQuestions": 1,
+      "reviewPath": "evals/runs/2026-11-01-claude-pilot/none-2-review.json"
+    },
+    {
+      "run": "core-2",
+      "group": "core",
+      "promptKind": "natural",
+      "completed": true,
+      "automaticStatus": "blocked",
+      "reviewedChecksStatus": "passed",
+      "durationMs": 27653,
+      "toolCalls": 6,
+      "fileReads": 3,
+      "skillInvocations": [
+        "yuyin-dev"
+      ],
+      "models": [
+        "newapi/claude-opus-5-5-high"
+      ],
+      "costUsd": 0.09787960000000001,
+      "productQuestions": 2,
+      "reviewPath": "evals/runs/2026-11-01-claude-pilot/core-2-review.json"
+    },
+    {
+      "run": "all-2",
+      "group": "all",
+      "promptKind": "natural",
+      "completed": true,
+      "automaticStatus": "blocked",
+      "reviewedChecksStatus": "passed",
+      "durationMs": 26193,
+      "toolCalls": 6,
+      "fileReads": 3,
+      "skillInvocations": [
+        "yuyin-dev"
+      ],
+      "models": [
+        "newapi/claude-opus-5-5-high"
+      ],
+      "costUsd": 0.12148080000000001,
+      "productQuestions": 2,
+      "reviewPath": "evals/runs/2026-11-01-claude-pilot/all-2-review.json"
+    }
+  ],
+  "findings": [
+    "All six implementations made the same requested two-line change and passed separately reviewed independent examples.",
+    "All four skill-equipped implementation runs invoked yuyin-dev; none read stack-skills.md, while three read bug.md.",
+    "The negative case made no file changes and invoked no skill.",
+    "Boundary questions occurred with and without skills; this sample does not attribute conservatism to skill instructions.",
+    "No accuracy gain or reliable efficiency advantage is established by this small sample."
+  ],
+  "limitations": [
+    "Only one fixture and one host, not the full matrix.",
+    "Host/tool restrictions limit interpretation of verification behavior.",
+    "Models were taken from the unchanged host defaults and checked from actual trace identities."
+  ]
+}
