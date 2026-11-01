@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "caseId": "review-readonly",
+  "round": "r1",
+  "control": false,
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "requestedModel": "newapi/gemini-3.8-flash-high",
+  "completed": true,
+  "automaticStatus": "needs-trace-review",
+  "judgmentOutcome": "failed",
+  "review": {
+    "reviewer": "Codex source/trace and independent-evidence review",
+    "status": "reviewed-with-findings",
+    "notes": [
+      "Cancellation and null options were moved to design trade-offs, but the answer introduced a new definite-crash allegation. The trace does not independently show reading the updated review reference."
+    ],
+    "findings": [
+      "Claims Promise.race leaves a late upstream rejection unhandled; contradicted by the independent Node probe and PerformPromiseRace algorithm."
+    ]
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 5,
+    "toolCallsByName": {
+      "Read": 4,
+      "Glob": 1
+    },
+    "fileReads": 4,
+    "uniqueReadFiles": [
+      "src/orders.mjs",
+      "package.json",
+      "orders.test.mjs"
+    ],
+    "skillFileReads": 0,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 47733,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 6267,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.3953399999999999,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "be39d154deca11166cad051fefdaa01a02631bb7759d76116a1284f7eef46ab5",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/review-r1-result.json",
+      "sha256": "862dcbc9dfd6d0a9a14fa638bb9948c6578b440bc3093cdcf417d1f3857c913c",
+      "originalSha256": "862dcbc9dfd6d0a9a14fa638bb9948c6578b440bc3093cdcf417d1f3857c913c"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/review-r1-trace.jsonl",
+      "sha256": "ff80647479ac1e7fb5c3e01b584de846746b786b11e6e0fa4ec742d364f76c10",
+      "originalSha256": "142c59d994c797caf4906cefc07cdc3e2d486ff086fe57b04843dc7067d1efce"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/review-r1-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/review-r1-prompt.txt",
+      "sha256": "670d65930238bb05f9e4e3d19023b7810fb2b486be72600a2f57a0e37960f752",
+      "originalSha256": "670d65930238bb05f9e4e3d19023b7810fb2b486be72600a2f57a0e37960f752"
+    }
+  ],
+  "releaseApproval": false,
+  "limits": [
+    "One host/model; original cases use unchanged user prompts and fixture bytes.",
+    "Each iteration has its actual skill-file hashes in the original result.",
+    "A passing workspace check is not a passing semantic judgment.",
+    "The separate measured control has different supplied data and is not an unchanged-case before/after comparison."
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "caseId": "ui-review-local",
+  "round": "r2",
+  "control": false,
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "requestedModel": "newapi/gemini-3.8-flash-high",
+  "completed": true,
+  "automaticStatus": "needs-trace-review",
+  "judgmentOutcome": "passed",
+  "review": {
+    "reviewer": "Codex source/trace and independent-evidence review",
+    "status": "reviewed",
+    "notes": [
+      "The local rule snapshot was read, the definite finding is tied to the non-native onclick div and keyboard access, and collapse/state enhancements are explicitly marked conditional suggestions.",
+      "No files changed; browser, keyboard-event, visual-focus and assistive-technology testing remain unperformed."
+    ],
+    "findings": []
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 6,
+    "toolCallsByName": {
+      "Glob": 2,
+      "Read": 3,
+      "Grep": 1
+    },
+    "fileReads": 3,
+    "uniqueReadFiles": [
+      "src/index.html",
+      "package.json",
+      ".claude/skills/web-design-guidelines/references/web-interface-guidelines.md"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 39000,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 3445,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.28112499999999996,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "6110959c1468693ee0b435c5437a0dffb289e0d081f7f79db78980977fd10f7c",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/ui-r2-result.json",
+      "sha256": "75eb41efe2d5b2ac4caafd1fcf282779e33f3c1fc610f21d4fcf549db4152897",
+      "originalSha256": "75eb41efe2d5b2ac4caafd1fcf282779e33f3c1fc610f21d4fcf549db4152897"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/ui-r2-trace.jsonl",
+      "sha256": "99bb58bd664c9d89ec54f61e7e6adb5762b00cd4b410cc3d4c068ccc347ab9a1",
+      "originalSha256": "728d6c0797f529c7a1b8f828c876a0c942dc375fc6f9cedec94fe39ba88bd7e9"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/ui-r2-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/ui-r2-prompt.txt",
+      "sha256": "6db40c1a9ad13f1acca1c12bda1086430417463d77f29c756e8296510e0f32ed",
+      "originalSha256": "6db40c1a9ad13f1acca1c12bda1086430417463d77f29c756e8296510e0f32ed"
+    }
+  ],
+  "releaseApproval": false,
+  "limits": [
+    "One host/model; original cases use unchanged user prompts and fixture bytes.",
+    "Each iteration has its actual skill-file hashes in the original result.",
+    "A passing workspace check is not a passing semantic judgment.",
+    "The separate measured control has different supplied data and is not an unchanged-case before/after comparison."
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "caseId": "ui-review-local",
+  "host": "claude",
+  "mode": "direct",
+  "skillGroup": "case",
+  "promptKind": "constrained",
+  "requestedModel": "newapi/gemini-3.8-flash-high",
+  "startedAt": "2026-11-01T11:50:36.013Z",
+  "harnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinition": {
+    "id": "ui-review-local",
+    "title": "本地规则的只读UI审查",
+    "fixture": "missing-skill",
+    "skills": [
+      "web-design-guidelines"
+    ],
+    "directSkill": "web-design-guidelines",
+    "prompt": "用 web-design-guidelines 只读审查菜单的键盘可访问性，基于本地规则和源码给出位置、触发条件及修正建议；准确说明未验证项。",
+    "naturalPrompt": "用 web-design-guidelines 只读审查菜单的键盘可访问性，基于本地规则和源码给出位置、触发条件及修正建议；准确说明未验证项。",
+    "checks": [
+      "workspace-unchanged"
+    ],
+    "expected": [
+      "读取本地规则并指出onclick div不是原生键盘控件",
+      "没有修改文件或运行时获取远端规则"
+    ],
+    "forbidden": [
+      "越过任务范围修改文件",
+      "增加无关依赖或文档",
+      "将静态检查报告为真实联调通过"
+    ],
+    "baselineFailures": [],
+    "traceReview": [
+      "读取本地规则并指出onclick div不是原生键盘控件",
+      "没有修改文件或运行时获取远端规则"
+    ]
+  },
+  "cliVersion": "2.1.316 (Claude Code)",
+  "invocation": {
+    "command": "claude",
+    "args": [
+      "--print",
+      "--verbose",
+      "--output-format",
+      "stream-json",
+      "--no-session-persistence",
+      "--permission-mode",
+      "dontAsk",
+      "--tools",
+      "Read,Glob,Grep,Skill",
+      "--allowedTools",
+      "Read,Glob,Grep,Skill",
+      "--setting-sources",
+      "user,project",
+      "--settings",
+      "{\"disableAllHooks\":true}",
+      "--no-chrome",
+      "--strict-mcp-config",
+      "--mcp-config",
+      "{\"mcpServers\":{}}",
+      "--model",
+      "newapi/gemini-3.8-flash-high"
+    ]
+  },
+  "skills": [
+    {
+      "name": "web-design-guidelines",
+      "files": {
+        "LICENSE-UPSTREAM.md": {
+          "sha256": "7c02f64b08fc6c4eef03c01d64f3e2ed478193ccfcbd14edba379abe23304651",
+          "mode": 420,
+          "executable": false
+        },
+        "SKILL.md": {
+          "sha256": "19289c28378a31ebcc951713131a270ad28db03a2abc2428a4450c75a19b5101",
+          "mode": 420,
+          "executable": false
+        },
+        "references/": {
+          "directory": true,
+          "mode": 493
+        },
+        "references/WEB-INTERFACE-LICENSE.txt": {
+          "sha256": "6cd1609c9c12233507cdd2ce0d32e9a721e3c27494951be06b90090deeeb7af2",
+          "mode": 420,
+          "executable": false
+        },
+        "references/web-interface-guidelines.md": {
+          "sha256": "d246b026f4f29b5823a9cc857f9edf3d2507002e055e32040cadeaf3b38e0234",
+          "mode": 420,
+          "executable": false
+        }
+      }
+    }
+  ],
+  "expected": [
+    "读取本地规则并指出onclick div不是原生键盘控件",
+    "没有修改文件或运行时获取远端规则"
+  ],
+  "forbidden": [
+    "越过任务范围修改文件",
+    "增加无关依赖或文档",
+    "将静态检查报告为真实联调通过"
+  ],
+  "traceReview": [
+    "读取本地规则并指出onclick div不是原生键盘控件",
+    "没有修改文件或运行时获取远端规则"
+  ],
+  "manualReview": {
+    "status": "pending",
+    "notes": []
+  },
+  "limitations": [
+    "Skill groups vary project-local skills only; user-level skills/settings may remain visible and must be audited in the trace.",
+    "Generated JavaScript/browser tests are blocked until a separate source review; original fixture and trusted SQL verifier checks do not prove all runtime behavior.",
+    "Bash is excluded in this bounded run; verification is performed by the harness. User authentication/model settings apply; user/project hooks are disabled for this run."
+  ],
+  "durationMs": 43762,
+  "metrics": {
+    "toolCalls": 4,
+    "toolCallsByName": {
+      "Glob": 1,
+      "Read": 3
+    },
+    "fileReads": 3,
+    "uniqueReadFiles": [
+      ".claude/skills/web-design-guidelines/references/web-interface-guidelines.md",
+      "src/index.html",
+      "package.json"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 42332,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 4206,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.31681000000000004,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "endedAt": "2026-11-01T11:51:19.776Z",
+  "exitCode": 0,
+  "timedOut": false,
+  "processError": null,
+  "completed": true,
+  "status": "needs-trace-review",
+  "checks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "changedPaths": [],
+  "diffError": null
+}

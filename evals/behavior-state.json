@@ -3,67 +3,67 @@
   "cases": [
     {
       "id": "node-readonly",
-      "sha256": "8db169fe5bdafc45ed9b72aef9daee65df8d5a6a6159ea6ca9e6a2d7262ff7f4",
+      "sha256": "5bb751ca90e17702c03c6e8af292317334ea121584d73108d5684a692bd75758",
       "status": "pending"
     },
     {
       "id": "react-local",
-      "sha256": "63822ac80c4ac2a3372806ab0223e581c8657a27de0254488d2b6a9f054b7d14",
+      "sha256": "cc288f906b9e3a40474c35530ddd0bdf160cc43b5209fd7087eebd11c33574a1",
       "status": "pending"
     },
     {
       "id": "spring-mybatis",
-      "sha256": "5c95d7083db8e660820ed652396071a2f9273b16bc2562dfac167464609b3aea",
+      "sha256": "3776db3542f6cba5d3a982417b3ca25a2462c1c88fe75343221e4b1747948790",
       "status": "pending"
     },
     {
       "id": "js-playwright",
-      "sha256": "e5244a7c41bbdcc00ebc32a8e6a6e095e695bb2fd0e1bf84be66a4966e5d13d9",
+      "sha256": "87c271418062530b4461af0e8a13b76bc2feff0a614a145ae8eb89798e3ecb4f",
       "status": "pending"
     },
     {
       "id": "small-copy",
-      "sha256": "4dcd55d54661c48acd0b6698ff1c9c0fd53fb43edf1cb2a19a005f2c4b3264b0",
+      "sha256": "19d070558626b7be6f26056973657735831d3280ade59648f812bc551b8c8c1c",
       "status": "pending"
     },
     {
       "id": "missing-skill",
-      "sha256": "47aa087c3dde66517abff5b041ec78a240326270c90de6bce88ca714c62d1e01",
+      "sha256": "57e2c4c455745cc60ccbd5f5cd449ad8e5ad54551beb1d35637748bcc2da0fae",
       "status": "pending"
     },
     {
       "id": "refactor-local",
-      "sha256": "f5823f28e80f97b39567042bfede67f0ad336ef0665b7ec15ce05c7c23de8f20",
+      "sha256": "9bb97f95169766bb904d1a0e4686c203a5daeacf47b05f770998146056b88f44",
       "status": "pending"
     },
     {
       "id": "tests-only",
-      "sha256": "6a86ea640f3d79ecd4f37b47814fb805447f3cb23bf98ab65754398e612138c4",
+      "sha256": "b116998425d73dde6cc0977db1fd2bbe15f528bbd60bf23c532468cade9ebfa0",
       "status": "pending"
     },
     {
       "id": "upgrade-local",
-      "sha256": "3660bb3a051369bf4f74a3dac57a6b8521790c16ed69ec23e676a6b2a80a31b7",
+      "sha256": "0dc45df7a25c5bb0156e9b7908a0f8a19e73f1766cc1e33719a41d55aa996308",
       "status": "pending"
     },
     {
       "id": "review-readonly",
-      "sha256": "b66596db544c4f888fc51df046e5e8607f4c4a9c825408989aba19e8fa59b197",
+      "sha256": "f1cfce63bf0af92cf5e2bb620462c9844a79f87c14edf630c5eb25e063c7d274",
       "status": "pending"
     },
     {
       "id": "optimization-readonly",
-      "sha256": "e10e2c82c8c1d76e8197ab41b7b04335bfd2c24af24d899cb1dbd133179cdafc",
+      "sha256": "621e90670c0dbe48fea82b684eaa9aa635cae4d564e78ba5a74cee3904e22369",
       "status": "pending"
     },
     {
       "id": "context-readonly",
-      "sha256": "a6f2bbbf8b532c270e7da8a33ac577036af3cc7e084273889a4aec3638b5633e",
+      "sha256": "630cf63ed45f51d0991f08b4eb31b3f487ef976f387809baaf28fb9772edb783",
       "status": "pending"
     },
     {
       "id": "handoff-readonly",
-      "sha256": "02a126a458adf6cfa484785c6b832dcf80fc696adbe12c31bdf90d3bda42fde3",
+      "sha256": "789c05b437265fc18f8eb2b9683e0059682d7e377bf8c35b7fd15ca3de20630f",
       "status": "pending"
     },
     {
@@ -73,16 +73,16 @@
     },
     {
       "id": "ui-review-local",
-      "sha256": "d81ea1202552eb5cd3d9aa8e7c1dcee659165fdb1e5364f4dddeeeb5de6d4bfe",
+      "sha256": "2648c964d88734504a8487565b2340da1ed95566de698bc22ea04c9d3c217e21",
       "status": "pending"
     },
     {
       "id": "react-performance-direct",
-      "sha256": "218f1d5e8249f31dec2cd7900230065da74f46dc5976701ca07e5cd40a364c56",
+      "sha256": "95173b49502cc3f00b6a409970a64041703b67b9d0e1692521aad86d60762a9b",
       "status": "pending"
     }
   ],
   "uncoveredSkills": [],
-  "skillsSha256": "5318cfffa38f3dd3bb079c57770afbbabbc950b1cd197eb9198e4ef85496b206",
-  "identitySha256": "932569157e1138d340c2d0ed1f7a8414c12a0a1d782a5c4a06ddfded6c11377b"
+  "skillsSha256": "6adad278bb5bce0e455af1a065cd30b81e0de1f90020a364efab60b4380d57ea",
+  "identitySha256": "d89f84afb52c550844a48384125fc44837b98dd4f4c1ab03bd44ccddb5c2c532"
 }

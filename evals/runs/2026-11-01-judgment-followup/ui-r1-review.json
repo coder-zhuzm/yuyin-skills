@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "caseId": "ui-review-local",
+  "round": "r1",
+  "control": false,
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "requestedModel": "newapi/gemini-3.8-flash-high",
+  "completed": true,
+  "automaticStatus": "needs-trace-review",
+  "judgmentOutcome": "failed",
+  "review": {
+    "reviewer": "Codex source/trace and independent-evidence review",
+    "status": "reviewed-with-findings",
+    "notes": [
+      "Escape/focus enhancements became conditional recommendations. The main non-keyboard div finding is supported."
+    ],
+    "findings": [
+      "The answer assigns a disclosure pattern as an established interaction contract and treats absent collapse behavior as a finding without supplied requirements."
+    ]
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 4,
+    "toolCallsByName": {
+      "Glob": 1,
+      "Read": 3
+    },
+    "fileReads": 3,
+    "uniqueReadFiles": [
+      ".claude/skills/web-design-guidelines/references/web-interface-guidelines.md",
+      "src/index.html",
+      "package.json"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 42332,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 4206,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.31681000000000004,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "6110959c1468693ee0b435c5437a0dffb289e0d081f7f79db78980977fd10f7c",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/ui-r1-result.json",
+      "sha256": "961515303bde4bd59637095a29fb37a9da06a2a06bc100d58498e585f887e86e",
+      "originalSha256": "961515303bde4bd59637095a29fb37a9da06a2a06bc100d58498e585f887e86e"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/ui-r1-trace.jsonl",
+      "sha256": "ab54c09e54524fdf3f55f7f6478d817bf1bb425d07842debcddf43e565243588",
+      "originalSha256": "d07fe10c8bb53a33e2e4a2c84175a8547e2e7823e82ab5f2beaf5b59ace9d008"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/ui-r1-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/ui-r1-prompt.txt",
+      "sha256": "6db40c1a9ad13f1acca1c12bda1086430417463d77f29c756e8296510e0f32ed",
+      "originalSha256": "6db40c1a9ad13f1acca1c12bda1086430417463d77f29c756e8296510e0f32ed"
+    }
+  ],
+  "releaseApproval": false,
+  "limits": [
+    "One host/model; original cases use unchanged user prompts and fixture bytes.",
+    "Each iteration has its actual skill-file hashes in the original result.",
+    "A passing workspace check is not a passing semantic judgment.",
+    "The separate measured control has different supplied data and is not an unchanged-case before/after comparison."
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "runs": [
+    {
+      "name": "review-r1",
+      "skillName": "yuyin-dev",
+      "resourceHashes": {
+        "SKILL.md": "fd4c0e0423ff9947d2cbe9213bd6e230af1630a3aa659385a01c0fb2d0476f2c",
+        "references/review.md": "9e18b92691962fbea2952bb6e64be25b5f905d61f6505f996a36d056d0d9bcd2"
+      }
+    },
+    {
+      "name": "review-r2",
+      "skillName": "yuyin-dev",
+      "resourceHashes": {
+        "SKILL.md": "08bbdf69a5f88e0d6105b8df2593a409a15106efe9bd76e2c0c6a4e724043e02",
+        "references/review.md": "b788d38af49497f7d2cf769e6cf49bb73684deea1353339e95507300c444ccc3"
+      }
+    },
+    {
+      "name": "review-r3",
+      "skillName": "yuyin-dev",
+      "resourceHashes": {
+        "SKILL.md": "08bbdf69a5f88e0d6105b8df2593a409a15106efe9bd76e2c0c6a4e724043e02",
+        "references/review.md": "fb6bd4a1dbca56d481d53c93e715f627a8dea0884320bb128b0ad447efd52115"
+      }
+    },
+    {
+      "name": "optimization-r1",
+      "skillName": "yuyin-dev",
+      "resourceHashes": {
+        "SKILL.md": "08bbdf69a5f88e0d6105b8df2593a409a15106efe9bd76e2c0c6a4e724043e02",
+        "references/optimization.md": "947ef1416e444ad9ef43789410632540d3a1c61107e5c7de9482134cbca70354"
+      }
+    },
+    {
+      "name": "optimization-r2",
+      "skillName": "yuyin-dev",
+      "resourceHashes": {
+        "SKILL.md": "08bbdf69a5f88e0d6105b8df2593a409a15106efe9bd76e2c0c6a4e724043e02",
+        "references/optimization.md": "88962f6f856ef28906811839bbb9cd12f14b46a571dbd24c7ea0a8439e841c44"
+      }
+    },
+    {
+      "name": "ui-r1",
+      "skillName": "web-design-guidelines",
+      "resourceHashes": {
+        "SKILL.md": "19289c28378a31ebcc951713131a270ad28db03a2abc2428a4450c75a19b5101"
+      }
+    },
+    {
+      "name": "ui-r2",
+      "skillName": "web-design-guidelines",
+      "resourceHashes": {
+        "SKILL.md": "19d83e12c865e02f7abae25995561dd12c738939496c2c9d0b437dabd124827b"
+      }
+    },
+    {
+      "name": "optimization-measured-control",
+      "skillName": "yuyin-dev",
+      "resourceHashes": {
+        "SKILL.md": "08bbdf69a5f88e0d6105b8df2593a409a15106efe9bd76e2c0c6a4e724043e02",
+        "references/optimization.md": "88962f6f856ef28906811839bbb9cd12f14b46a571dbd24c7ea0a8439e841c44"
+      }
+    },
+    {
+      "name": "optimization-r3",
+      "skillName": "yuyin-dev",
+      "resourceHashes": {
+        "SKILL.md": "08bbdf69a5f88e0d6105b8df2593a409a15106efe9bd76e2c0c6a4e724043e02",
+        "references/optimization.md": "f658781fb0760f16f12883f6e39bf80b6bfae059ab359359a329cb1fdcadeac1"
+      }
+    },
+    {
+      "name": "optimization-measured-control-r2",
+      "skillName": "yuyin-dev",
+      "resourceHashes": {
+        "SKILL.md": "08bbdf69a5f88e0d6105b8df2593a409a15106efe9bd76e2c0c6a4e724043e02",
+        "references/optimization.md": "f658781fb0760f16f12883f6e39bf80b6bfae059ab359359a329cb1fdcadeac1"
+      }
+    }
+  ],
+  "contentBySha256": {
+    "fd4c0e0423ff9947d2cbe9213bd6e230af1630a3aa659385a01c0fb2d0476f2c": {
+      "skillName": "yuyin-dev",
+      "resource": "SKILL.md",
+      "content": "---\nname: yuyin-dev\ndescription: 前后端开发协作入口。用于功能实现、故障修复、重构、依赖升级、补测试，以及可行性评估、逻辑梳理、优化与代码审查；依据当前项目版本选择已安装的专业技能，沿用既有架构并验证实际行为。只读评估不自动实施。\n---\n\n# 余音开发工作流\n\n保留 `$yuyin-dev` 调用，也接受自然语言。根据完整请求区分评估与实施，先确认当前项目，再选择最少的相关参考。\n\n## 开始工作\n\n1. 读取适用的项目指令、相关源码、依赖与锁文件和 Git 状态，保留用户改动。命令、版本与架构以当前仓库证据为准。\n2. 明确目标、范围和可观察验收条件。实现任务在已有授权内推进，遵守项目执行门禁；只向用户提出源码无法解答且影响正确性的产品决策。已获授权的常规步骤直接推进。\n3. 从下表选择一个主要意图参考；明确跨意图时再补相关部分。通用局部逻辑可直接采用现有工具，需要框架、设计或测试专项建议时才读 [专业技能路由](references/stack-skills.md)。\n\n| 意图 | 处理重点 | 按需读取 |\n| --- | --- | --- |\n| 了解或初始化项目上下文 | 只读建立项目事实与运行入口 | [context.md](references/context.md) |\n| 新增、实现、修改行为 | 完成一条业务闭环 | [feature.md](references/feature.md) |\n| 分析报错、排查或修好 | 复现、定位，按请求诊断或修复 | [bug.md](references/bug.md) |\n| 重构或整理结构 | 保持外部行为，减少具体维护成本 | [refactor.md](references/refactor.md) |\n| 升级依赖或迁移框架 | 按授权目标处理兼容、分步验证与回退 | [dependencies.md](references/dependencies.md) |\n| 只补测试或提高测试可信度 | 从既有契约补覆盖，保留生产行为 | [testing.md](references/testing.md) |\n| 能否加入、是否值得 | 只读评估可行性与取舍 | [assessment.md](references/assessment.md) |\n| 解释或梳理已有逻辑 | 追踪实际调用和数据流 | [logic.md](references/logic.md) |\n| 能否优化 / 优化一下 | 前者评估；后者按基线实施 | [optimization.md](references/optimization.md) |\n| 审查或检查改动 | 对照范围、验收与验证证据 | [review.md](references/review.md) |\n| 交接或复盘 | 汇总状态与可复用经验 | [handoff-retro.md](references/handoff-retro.md) |\n\n涉及 React 状态、表单、请求和页面交互时读 [React 实务](references/react.md)；Spring 接口、持久化或事务读 [Spring 实务](references/spring.md)。异步副作用、外部协议、视觉交互或部署环境按需读 [技术检查](references/domains.md)。\n\n## 共用边界与交付\n\n- 项目事实留在当前项目；沿用既有技术栈、组件和测试体系，扩展范围以本次需求为依据。任务状态默认放在对话中，项目文档只按明确请求维护。\n- 只读任务保持文件与外部状态不变。推送、部署、迁移、外发及安装额外技能依据明确授权执行；已有授权持续有效。\n- 验证与风险匹配：核心行为覆盖成功、边界和相关失败；小文案或样式用相应检查。跨层功能检查实际请求、数据和用户结果；测试预期来自需求或独立样例。\n- 结论附对应证据：报告“通过”需有实际运行结果；判断工具、依赖或服务缺失需先检查对应环境，说明命令、结果与影响。区分源码判断、测试、Mock 和真实联调，保留失败与未验证项。\n- 实施后审查 diff。交付先说结果，再给关键依据或代码位置、实际验证、限制与下一步；各意图参考只补本任务特有信息，篇幅随任务复杂度调整。\n"
+    },
+    "9e18b92691962fbea2952bb6e64be25b5f905d61f6505f996a36d056d0d9bcd2": {
+      "skillName": "yuyin-dev",
+      "resource": "references/review.md",
+      "content": "# 审查与交付\n\n先读原始请求、验收条件、适用项目规则与验证基线。按用户要求确定审查范围：当前工作区包含已暂存、未暂存及相关未跟踪文件；分支审查先核实比较基准与提交范围。说明范围，区分已有改动与本次改动，不能只看分支 diff 而漏掉尚未提交的工作。\n先为每项候选问题建立“适用要求或调用契约 → 实际违背 → 触发条件与后果”的证据链，再定严重程度。要求可来自用户验收、项目规则、公共接口约定或实际调用方。契约尚未确定时，将问题列为有条件的风险或待确认项；缺少一种可选能力、未支持契约外输入或存在另一种设计方案，本身不足以认定确定缺陷。\n\n检查：\n- 需求覆盖：逐项对应实际行为和验证证据；指出遗漏、与约定不一致或尚未验证的验收条件。\n- 正确性：正常/异常、边界、并发、状态与原目标。\n- 范围：夹带重构、升级、开关与额外功能。\n- 架构：业务泄漏到通用层、是否重复现有能力；抽象是否把复杂度封装在简单接口后。假设删掉包装层，复杂度会消失还是散落到调用方？只搬代码、增加跳转而不减少决策负担的抽象应说明具体成本，不凭文件数量判断好坏。\n- 数据接口：权限、隔离、校验、幂等、兼容、迁移与回滚。\n- 验证：实际覆盖风险，有无删断言、跳测试、降阈值。\n- 资源：无限重试/队列、N+1、并发与超时；性能问题要有证据。\n- 真实性：完成/通过是否有运行结果。\n\n按阻塞、必须修复、建议、小项排序。每项写位置、条件、后果和最小修正。\n没有实质问题就直说，不凑数量。\n轻微文案/样式用差异和页面验证；权限、数据、消息发送验证关键失败。\n独立审查只在已有授权和能力下使用；自审不能宣称独立审查。\n交付补充审查范围、按严重程度排序的问题及其触发条件；无实质问题时明确剩余验证缺口。\n"
+    },
+    "08bbdf69a5f88e0d6105b8df2593a409a15106efe9bd76e2c0c6a4e724043e02": {
+      "skillName": "yuyin-dev",
+      "resource": "SKILL.md",
+      "content": "---\nname: yuyin-dev\ndescription: 前后端开发协作入口。用于功能实现、故障修复、重构、依赖升级、补测试，以及可行性评估、逻辑梳理、优化与代码审查；依据当前项目版本选择已安装的专业技能，沿用既有架构并验证实际行为。只读评估不自动实施。\n---\n\n# 余音开发工作流\n\n保留 `$yuyin-dev` 调用，也接受自然语言。根据完整请求区分评估与实施，先确认当前项目，再选择最少的相关参考。\n\n## 开始工作\n\n1. 读取适用的项目指令、相关源码、依赖与锁文件和 Git 状态，保留用户改动。命令、版本与架构以当前仓库证据为准。\n2. 明确目标、范围和可观察验收条件。实现任务在已有授权内推进，遵守项目执行门禁；只向用户提出源码无法解答且影响正确性的产品决策。已获授权的常规步骤直接推进。\n3. 从下表选择并读取一个主要意图参考，按其中步骤完成当前任务；明确跨意图时再补相关部分。通用局部逻辑可直接采用现有工具，需要框架、设计或测试专项建议时才读 [专业技能路由](references/stack-skills.md)。\n\n| 意图 | 处理重点 | 按需读取 |\n| --- | --- | --- |\n| 了解或初始化项目上下文 | 只读建立项目事实与运行入口 | [context.md](references/context.md) |\n| 新增、实现、修改行为 | 完成一条业务闭环 | [feature.md](references/feature.md) |\n| 分析报错、排查或修好 | 复现、定位，按请求诊断或修复 | [bug.md](references/bug.md) |\n| 重构或整理结构 | 保持外部行为，减少具体维护成本 | [refactor.md](references/refactor.md) |\n| 升级依赖或迁移框架 | 按授权目标处理兼容、分步验证与回退 | [dependencies.md](references/dependencies.md) |\n| 只补测试或提高测试可信度 | 从既有契约补覆盖，保留生产行为 | [testing.md](references/testing.md) |\n| 能否加入、是否值得 | 只读评估可行性与取舍 | [assessment.md](references/assessment.md) |\n| 解释或梳理已有逻辑 | 追踪实际调用和数据流 | [logic.md](references/logic.md) |\n| 能否优化 / 优化一下 | 前者评估；后者按基线实施 | [optimization.md](references/optimization.md) |\n| 审查或检查改动 | 对照范围、验收与验证证据 | [review.md](references/review.md) |\n| 交接或复盘 | 汇总状态与可复用经验 | [handoff-retro.md](references/handoff-retro.md) |\n\n涉及 React 状态、表单、请求和页面交互时读 [React 实务](references/react.md)；Spring 接口、持久化或事务读 [Spring 实务](references/spring.md)。异步副作用、外部协议、视觉交互或部署环境按需读 [技术检查](references/domains.md)。\n\n## 共用边界与交付\n\n- 项目事实留在当前项目；沿用既有技术栈、组件和测试体系，扩展范围以本次需求为依据。任务状态默认放在对话中，项目文档只按明确请求维护。\n- 只读任务保持文件与外部状态不变。推送、部署、迁移、外发及安装额外技能依据明确授权执行；已有授权持续有效。\n- 验证与风险匹配：核心行为覆盖成功、边界和相关失败；小文案或样式用相应检查。跨层功能检查实际请求、数据和用户结果；测试预期来自需求或独立样例。\n- 结论附对应证据：报告“通过”需有实际运行结果；判断工具、依赖或服务缺失需先检查对应环境，说明命令、结果与影响。区分源码判断、测试、Mock 和真实联调，保留失败与未验证项。\n- 实施后审查 diff。交付先说结果，再给关键依据或代码位置、实际验证、限制与下一步；各意图参考只补本任务特有信息，篇幅随任务复杂度调整。\n"
+    },
+    "b788d38af49497f7d2cf769e6cf49bb73684deea1353339e95507300c444ccc3": {
+      "skillName": "yuyin-dev",
+      "resource": "references/review.md",
+      "content": "# 审查与交付\n\n先读原始请求、验收条件、适用项目规则与验证基线。按用户要求确定审查范围：当前工作区包含已暂存、未暂存及相关未跟踪文件；分支审查先核实比较基准与提交范围。说明范围，区分已有改动与本次改动，不能只看分支 diff 而漏掉尚未提交的工作。\n先为每项候选问题建立“适用要求或调用契约 → 实际违背 → 触发条件与后果”的证据链，再定严重程度。要求可来自用户验收、项目规则、公共接口约定或实际调用方。契约尚未确定时，将问题列为有条件的风险或待确认项；缺少一种可选能力、未支持契约外输入或存在另一种设计方案，本身不足以认定确定缺陷。\n\n涉及语言或框架运行时语义时，先用对应实现、权威资料或最小复现核实推断，再断言崩溃、未处理异常或数据丢失等后果。当前环境无法查证时，标明待验证的假设与最小验证步骤。\n\n检查：\n- 需求覆盖：逐项对应实际行为和验证证据；指出遗漏、与约定不一致或尚未验证的验收条件。\n- 正确性：正常/异常、边界、并发、状态与原目标。\n- 范围：夹带重构、升级、开关与额外功能。\n- 架构：业务泄漏到通用层、是否重复现有能力；抽象是否把复杂度封装在简单接口后。假设删掉包装层，复杂度会消失还是散落到调用方？只搬代码、增加跳转而不减少决策负担的抽象应说明具体成本，不凭文件数量判断好坏。\n- 数据接口：权限、隔离、校验、幂等、兼容、迁移与回滚。\n- 验证：实际覆盖风险，有无删断言、跳测试、降阈值。\n- 资源：无限重试/队列、N+1、并发与超时；性能问题要有证据。\n- 真实性：完成/通过是否有运行结果。\n\n按阻塞、必须修复、建议、小项排序。每项写位置、条件、后果和最小修正。\n没有实质问题就直说，不凑数量。\n轻微文案/样式用差异和页面验证；权限、数据、消息发送验证关键失败。\n独立审查只在已有授权和能力下使用；自审不能宣称独立审查。\n交付补充审查范围、按严重程度排序的问题及其触发条件；无实质问题时明确剩余验证缺口。\n"
+    },
+    "fb6bd4a1dbca56d481d53c93e715f627a8dea0884320bb128b0ad447efd52115": {
+      "skillName": "yuyin-dev",
+      "resource": "references/review.md",
+      "content": "# 代码审查与问题判定\n\n先读原始请求、验收条件、适用项目规则与验证基线。工作区审查包含已暂存、未暂存及相关未跟踪文件；分支审查先核实比较基准与提交范围。区分已有改动与本次改动。\n\n## 先判定，再排序\n\n对每项候选问题先列出三件事：要求的证据位置、实际违背该要求的代码位置、可触发的后果。要求来自用户验收、项目规则、已约定公共接口或实际调用方；审查惯例是检查线索，本身不扩展代码承诺的输入、能力或 SLA。\n\n- **确定缺陷**：适用要求、实际违背和触发路径均有证据。报告须引用要求与代码双方的位置，再说明影响和最小修正。\n- **条件性风险**：结论依赖尚未确认的输入、环境、负载或外部机制。写明“在什么前提下会发生什么”及核实方式，保留前提未知的状态。\n- **可选改进**：另一种设计或能力可能有收益，但当前没有已证实的要求被违背。说明取舍与成本，交由任务优先级决定。\n\n没有满足第一类条件的问题时，明确“未发现已证实缺陷”，再按需要附条件性风险、建议与验证缺口。严重程度只对已成立的问题排序，不因需要写报告而补足问题数量。\n\n涉及语言或框架运行时语义时，先用对应实现、权威资料或最小复现核实，再断言崩溃、未处理异常或数据丢失等后果。无法查证时，将这部分结论保留为待验证假设。\n\n## 按改动选择检查\n\n- 需求与范围：实际行为、遗漏、夹带重构、升级或额外功能。\n- 正确性与接口：已约定的输入、错误传播、权限、隔离、并发、幂等及兼容；区分源码判断、Mock 与真实联调。\n- 架构：复用现有能力，业务归属清楚；抽象应减少调用方的决策负担，只搬代码、增加跳转时说明具体成本。\n- 验证与资源：测试是否覆盖真实风险，有无删断言或跳过失败；性能、重试、队列及超时结论需要对应证据。\n\n交付先给审查结论与范围，再按上述性质和严重程度列问题。每项保留依据、条件、后果和最小行动。自审与独立审查如实区分，未运行的检查不报告为通过。\n"
+    },
+    "947ef1416e444ad9ef43789410632540d3a1c61107e5c7de9482134cbca70354": {
+      "skillName": "yuyin-dev",
+      "resource": "references/optimization.md",
+      "content": "# 判断与实施优化\n\n先区分性能、可靠性、成本、维护性和体验。“复杂”不是性能瓶颈证据。\n选择与目标相关的基线：延迟、请求或查询次数、错误率、资源消耗、重复分支或具体用户场景。没证据时提出低成本测量，不用大重构代替测量。\n\n区分结构观察与性能测量：源码能支持调用链、循环和复杂度判断；耗时量级、开销占比、主要瓶颈及瓶颈是否存在，先作为待测假设。实测结论附环境、输入、方法与结果，计入依赖等待、运行时调度及超时策略的影响。没有运行条件时给最小测量方案，保留这些性能判断的未知状态。\n\n按收益、风险、实施与验证成本排列方案。可读性改进描述减少的概念与分支，不虚构提升百分比。“是否能优化”只评估；“优化一下”在明确目标与授权范围实施。\n\n先锁定需保持的行为。旧代码无测试又需重构时补相关特征测试，不追求无关覆盖率。一次改变一个可归因因素，分离结构变化与新行为，同环境同输入比较前后。替换第三方服务或依赖时，同时比较质量、失败、兼容性与成本，不能仅凭价格切换生产配置。\n\n日志摘要和工具输出压缩不能代替性能测量。保留诊断所需的原始错误、请求和协议差异；缺少证据不等于没有异常。新增测量工具或运行依赖须有本次任务依据与相应授权。\n"
+    },
+    "88962f6f856ef28906811839bbb9cd12f14b46a571dbd24c7ea0a8439e841c44": {
+      "skillName": "yuyin-dev",
+      "resource": "references/optimization.md",
+      "content": "# 判断与实施优化\n\n先区分性能、可靠性、成本、维护性和体验。“是否能优化”只评估；“优化一下”在明确目标与授权范围实施。\n\n## 先列证据，再给结论\n\n将现有依据分为两栏：\n- **结构证据**：代码中能直接定位的调用关系、循环、查询次数、复杂度或维护成本，注明位置与适用输入。\n- **测量证据**：实际运行或已提供的测量记录，注明环境、输入、方法、样本及结果，并区分本人运行与引用已有记录。\n\n耗时量级、开销占比、主要瓶颈以及“是否存在性能瓶颈”只能由对应测量支持。没有测量时，这些项的结论为尚未确定；可以建议先测量、暂不改造，但不能把实现简短直接换算为开销低、可忽略或改造不会有收益。已提供的有效基准可以使用，结论范围限于该环境和输入。\n\n下一步选择能区分关键假设的最小测量：例如相同输入下对比调用路径，并分别观测依赖等待、运行时调度、超时与错误率。性能现状和改动收益分别验证，生产表现留待相应负载与真实依赖证据支持。\n\n## 获准实施时\n\n先锁定需保持的行为，按收益、风险、实施与验证成本选择最小方案。旧代码缺少测试又需重构时补特征测试，一次改变一个可归因因素，用同环境、同输入比较前后结果。\n\n可读性改进描述减少的概念与分支；服务或依赖替换同时核对质量、失败、兼容性和成本。日志摘要、工具输出压缩与文件缩短不代替性能测量，保留诊断所需的原始错误和协议差异。\n\n交付补充实际证据、仍待测的假设、方案取舍和下一条最小验证行动。\n"
+    },
+    "19289c28378a31ebcc951713131a270ad28db03a2abc2428a4450c75a19b5101": {
+      "skillName": "web-design-guidelines",
+      "resource": "SKILL.md",
+      "content": "---\nname: web-design-guidelines\ndescription: Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\".\nmetadata:\n  author: vercel\n  version: \"1.0.0\"\n  argument-hint: <file-or-pattern>\n---\n\n# Web Interface Guidelines\n\n\nReview UI code using the rules bundled in [references/web-interface-guidelines.md](references/web-interface-guidelines.md).\n\n## How to Review\n\n1. Read the local guideline snapshot; do not fetch remote rules during a review.\n2. Read the files requested by the user, preserving their design system and task scope.\n3. For each finding, show an applicable requirement/rule, the concrete source mismatch, and its consequence. Select keyboard and focus conventions from the actual navigation, disclosure, menu or dialog semantics and interaction contract; classify enhancements from other patterns as conditional recommendations.\n4. Distinguish static findings from behavior needing a running page or browser. Missing execution tools are environment limitations; describe a project prohibition only when an actual instruction establishes one.\n\nIf no files are specified, resolve the relevant scope from the current task; ask only when it cannot be determined.\n\nAdapted by yuyin-skills to use a locked local snapshot. The bundled rule resource retains its [MIT license](references/WEB-INTERFACE-LICENSE.txt); provenance and adaptation records are in the distribution's SOURCES.md and upstream lock.\n"
+    },
+    "19d83e12c865e02f7abae25995561dd12c738939496c2c9d0b437dabd124827b": {
+      "skillName": "web-design-guidelines",
+      "resource": "SKILL.md",
+      "content": "---\nname: web-design-guidelines\ndescription: Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\".\nmetadata:\n  author: vercel\n  version: \"1.0.0\"\n  argument-hint: <file-or-pattern>\n---\n\n# Web Interface Guidelines\n\n\nReview UI code using the rules bundled in [references/web-interface-guidelines.md](references/web-interface-guidelines.md).\n\n## How to Review\n\n1. Read the local guideline snapshot; do not fetch remote rules during a review.\n2. Read the files requested by the user, preserving their design system and task scope.\n3. Establish the actual semantics and interaction contract from source roles, implemented behavior, user requirements and supplied rules. A pattern label inferred by the reviewer remains a hypothesis, not an additional requirement.\n4. For each violation, cite the applicable rule or established requirement and the source mismatch. Missing capabilities are violations only where that rule/requirement calls for them. Keep conventions from other navigation, disclosure, menu or dialog patterns as conditional recommendations, with their prerequisites stated.\n5. Distinguish static findings from behavior needing a running page or browser. Missing execution tools are environment limitations; describe a project prohibition only when an actual instruction establishes one.\n\nIf no files are specified, resolve the relevant scope from the current task; ask only when it cannot be determined.\n\nAdapted by yuyin-skills to use a locked local snapshot. The bundled rule resource retains its [MIT license](references/WEB-INTERFACE-LICENSE.txt); provenance and adaptation records are in the distribution's SOURCES.md and upstream lock.\n"
+    },
+    "f658781fb0760f16f12883f6e39bf80b6bfae059ab359359a329cb1fdcadeac1": {
+      "skillName": "yuyin-dev",
+      "resource": "references/optimization.md",
+      "content": "# 判断与实施优化\n\n先区分性能、可靠性、成本、维护性和体验。“是否能优化”只评估；“优化一下”在明确目标与授权范围实施。\n\n## 先列证据，再给结论\n\n将现有依据分为两栏：\n- **结构证据**：代码中能直接定位的调用关系、循环、查询次数、复杂度或维护成本，注明位置与适用输入。测试源码定义预期和模拟输入，仍属这一栏；它不是已执行的测试结果或测得的耗时。\n- **测量证据**：实际运行或已提供的测量记录，注明环境、输入、方法、样本及结果，并区分本人运行与引用已有记录。\n\n耗时量级、开销占比、主要瓶颈以及“是否存在性能瓶颈”只能由对应测量支持。没有测量时，这些项的结论为尚未确定；可以建议先测量、暂不改造，但不能把实现简短直接换算为开销低、可忽略或改造不会有收益。已提供的有效基准可以使用，结论范围限于该环境和输入。数值换算、配对差值和比值需可复核；缺少计算条件时保留原始记录和计算方法，不估算派生数字。\n\n下一步选择能区分关键假设的最小测量：例如相同输入下对比调用路径，并分别观测依赖等待、运行时调度、超时与错误率。性能现状和改动收益分别验证，生产表现留待相应负载与真实依赖证据支持。\n\n## 获准实施时\n\n先锁定需保持的行为，按收益、风险、实施与验证成本选择最小方案。旧代码缺少测试又需重构时补特征测试，一次改变一个可归因因素，用同环境、同输入比较前后结果。\n\n可读性改进描述减少的概念与分支；服务或依赖替换同时核对质量、失败、兼容性和成本。日志摘要、工具输出压缩与文件缩短不代替性能测量，保留诊断所需的原始错误和协议差异。\n\n交付补充实际证据、仍待测的假设、方案取舍和下一条最小验证行动。\n"
+    }
+  }
+}

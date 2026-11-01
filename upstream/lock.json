@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "manifestSha256": "1c631a1211dd24cbd17009779cd78aaa7bac9dc87f8b604883641c42e43253d2",
+  "manifestSha256": "335b3bd46d7cf94318f60868acbc3d290e0fb8ec89e05ba16f8df052be4f6be7",
   "sources": [
     {
       "id": "vercel",
@@ -138,7 +138,7 @@
       "id": "web-guidelines-local-snapshot",
       "path": "skills/upstream/vercel/web-design-guidelines/SKILL.md",
       "beforeSha256": "f4647ca866a3accf763777f83e7682954f0187cd6bea7eea0399796652414e8f",
-      "afterSha256": "3073b75375199fb0870748d6d87aaff2a339d571a7c3be4bafaca5db455bec78",
+      "afterSha256": "19d83e12c865e02f7abae25995561dd12c738939496c2c9d0b437dabd124827b",
       "reason": "Read a locked local rule snapshot instead of fetching mutable main at runtime; preserve offline review and release reproducibility."
     },
     {
@@ -817,7 +817,7 @@
     },
     {
       "path": "skills/upstream/vercel/web-design-guidelines/SKILL.md",
-      "sha256": "3073b75375199fb0870748d6d87aaff2a339d571a7c3be4bafaca5db455bec78",
+      "sha256": "19d83e12c865e02f7abae25995561dd12c738939496c2c9d0b437dabd124827b",
       "mode": "100644"
     },
     {

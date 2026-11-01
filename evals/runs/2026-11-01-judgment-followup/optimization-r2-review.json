@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "caseId": "optimization-readonly",
+  "round": "r2",
+  "control": false,
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "requestedModel": "newapi/gemini-3.8-flash-high",
+  "completed": true,
+  "automaticStatus": "needs-trace-review",
+  "judgmentOutcome": "failed",
+  "review": {
+    "reviewer": "Codex source/trace and independent-evidence review",
+    "status": "reviewed-with-findings",
+    "notes": [
+      "The revised evidence-table guidance was read. It no longer states a microsecond timing as fact, but still confuses executable test definitions with execution evidence."
+    ],
+    "findings": [
+      "The unexecuted unit-test source is listed as a stable reproduced measurement record.",
+      "The structural-evidence column asserts the dominant latency source without measured attribution."
+    ]
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 5,
+    "toolCallsByName": {
+      "Read": 4,
+      "Glob": 1
+    },
+    "fileReads": 4,
+    "uniqueReadFiles": [
+      ".claude/skills/yuyin-dev/references/optimization.md",
+      "package.json",
+      "src/orders.mjs",
+      "orders.test.mjs"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 23434,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 4106,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.21982000000000002,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "4af99930c909072e55b36d946fb77a5f139a8f981c79f650cd91384db35ef9b4",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-r2-result.json",
+      "sha256": "4969d2bc4078de31270901ff143e4ba9842c3a4022e39dfad4156d943589c65e",
+      "originalSha256": "4969d2bc4078de31270901ff143e4ba9842c3a4022e39dfad4156d943589c65e"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-r2-trace.jsonl",
+      "sha256": "a66271b43fd6de5f7ea625e264ad241046de39042f0e7416faf82212bb31b6e1",
+      "originalSha256": "5ca7269ffc238c93d240987ce477fa7df0a52ec7f26ffb50c55a652b5b3fdd5b"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-r2-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-r2-prompt.txt",
+      "sha256": "521e4bbed238a8fce78dbdb40b48ec62cf15406e8170333a027005abd034bf30",
+      "originalSha256": "521e4bbed238a8fce78dbdb40b48ec62cf15406e8170333a027005abd034bf30"
+    }
+  ],
+  "releaseApproval": false,
+  "limits": [
+    "One host/model; original cases use unchanged user prompts and fixture bytes.",
+    "Each iteration has its actual skill-file hashes in the original result.",
+    "A passing workspace check is not a passing semantic judgment.",
+    "The separate measured control has different supplied data and is not an unchanged-case before/after comparison."
+  ]
+}

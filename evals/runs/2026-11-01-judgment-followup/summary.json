@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-01",
+  "baseCommit": "a11394a",
+  "host": "claude",
+  "requestedModel": "newapi/gemini-3.8-flash-high",
+  "releaseApproval": false,
+  "runs": [
+    {
+      "name": "review-r1",
+      "caseId": "review-readonly",
+      "round": "r1",
+      "control": false,
+      "judgmentOutcome": "failed",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/review-r1-review.json"
+    },
+    {
+      "name": "review-r2",
+      "caseId": "review-readonly",
+      "round": "r2",
+      "control": false,
+      "judgmentOutcome": "failed",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/review-r2-review.json"
+    },
+    {
+      "name": "review-r3",
+      "caseId": "review-readonly",
+      "round": "r3",
+      "control": false,
+      "judgmentOutcome": "failed",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/review-r3-review.json"
+    },
+    {
+      "name": "optimization-r1",
+      "caseId": "optimization-readonly",
+      "round": "r1",
+      "control": false,
+      "judgmentOutcome": "failed",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/optimization-r1-review.json"
+    },
+    {
+      "name": "optimization-r2",
+      "caseId": "optimization-readonly",
+      "round": "r2",
+      "control": false,
+      "judgmentOutcome": "failed",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/optimization-r2-review.json"
+    },
+    {
+      "name": "ui-r1",
+      "caseId": "ui-review-local",
+      "round": "r1",
+      "control": false,
+      "judgmentOutcome": "failed",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/ui-r1-review.json"
+    },
+    {
+      "name": "ui-r2",
+      "caseId": "ui-review-local",
+      "round": "r2",
+      "control": false,
+      "judgmentOutcome": "passed",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/ui-r2-review.json"
+    },
+    {
+      "name": "optimization-measured-control",
+      "caseId": "optimization-readonly",
+      "round": "measured-control",
+      "control": true,
+      "judgmentOutcome": "partial",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/optimization-measured-control-review.json"
+    },
+    {
+      "name": "optimization-r3",
+      "caseId": "optimization-readonly",
+      "round": "r3",
+      "control": false,
+      "judgmentOutcome": "passed",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/optimization-r3-review.json"
+    },
+    {
+      "name": "optimization-measured-control-r2",
+      "caseId": "optimization-readonly",
+      "round": "measured-control-r2",
+      "control": true,
+      "judgmentOutcome": "partial",
+      "models": [
+        "newapi/gemini-3.8-flash-high"
+      ],
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/optimization-measured-control-r2-review.json"
+    }
+  ],
+  "latestOriginalCaseOutcomes": {
+    "review": {
+      "outcome": "failed",
+      "attempts": 3,
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/review-r3-review.json",
+      "stoppedAtUserLimit": true
+    },
+    "optimization": {
+      "outcome": "passed",
+      "attempts": 3,
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/optimization-r3-review.json"
+    },
+    "uiReview": {
+      "outcome": "passed",
+      "attempts": 2,
+      "reviewPath": "evals/runs/2026-11-01-judgment-followup/ui-r2-review.json"
+    }
+  },
+  "measuredControl": {
+    "outcome": "partial",
+    "attempts": 2,
+    "reviewPath": "evals/runs/2026-11-01-judgment-followup/optimization-measured-control-r2-review.json",
+    "dataFile": "evals/runs/2026-11-01-judgment-followup/measured-control-fixture.json",
+    "remainingIssue": "Unmeasured production extrapolation; the final paired arithmetic is correct."
+  },
+  "runtimeCounterexample": {
+    "evidence": "evals/runs/2026-11-01-judgment-followup/runtime-probe.json",
+    "exitCode": 0,
+    "unhandledRejections": 0,
+    "officialSource": "https://tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-performpromiserace"
+  },
+  "reviewPositiveControl": {
+    "modelRun": false,
+    "evidence": "evals/runs/2026-11-01-judgment-followup/prepared-review-control.json",
+    "reason": "Prepared locally but no further review-model calls after reaching three iterations on the original sample."
+  },
+  "validation": {
+    "completedRuns": 10,
+    "apiRetries": 0,
+    "artifactsVerified": 40,
+    "modelIdentityMatched": true,
+    "originalCasePromptsAndFixturesUnchanged": true,
+    "repositoryTests": 103,
+    "repositoryTestsFailed": 0
+  },
+  "limits": [
+    "Outcome labels apply to these selected samples only; the full 96-combination matrix was not run.",
+    "Instructions changed between iterations; exact installed skill hashes and CLI/model identity are preserved per run.",
+    "Runtime and benchmark probes ran separately in a local sanitized process; the model did not have a command execution tool.",
+    "Three failed iterations ended work on the original review sample; it is not approved for reliable general code review.",
+    "No release review approval or publication is granted by these records."
+  ],
+  "additionalEvidence": [
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/runtime-probe.json",
+      "sha256": "eb37b8fa34b66691c9503f7d7edb020cc37d0467a0e314f61009625f2d4ca978"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/runtime-probe.mjs",
+      "sha256": "54d1fac2b432478848ac414cb934f01e5f4ce0bfc848dc30f06513480b4bb653"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/runtime-probe-output.json",
+      "sha256": "dd32278f1318cffbf489fbca935e1d68edcfc037193f31e2019c7aed981c9521"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/measured-control-fixture.json",
+      "sha256": "566975f274d3b56aec17097b8cc909339deb75462a852f9ee6c8b6496d4e8f1b"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/prepared-review-control.json",
+      "sha256": "c478e52c4dfa69820173414d32eb935dc4a49e4a402df54ef6b5faf84dfaef50"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/skill-variants.json",
+      "sha256": "f47b216a3322e15a11a065dc6b704871408e3786bdd3bdffb7690a530d2bed70"
+    }
+  ]
+}

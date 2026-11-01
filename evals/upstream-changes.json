@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "baseLockSha256": "a5adb9c28895a47909d2e6734cedcab003bf76eeeceb23a24fd918551f948c14",
-  "targetLockSha256": "f362d4bd6886a1502b549de2c2dc9c284e282633ba5faf1e8849d684e7da639c",
+  "baseLockSha256": "8e2985dd3c7a7b2b4c8faf74de368eb6b1debfc03843845678337e4fc3372bd7",
+  "targetLockSha256": "bb8c42ca4d55fe3d1f769bad9d68a29ada8ee4343c8bf68c9eecff6db6b3f549",
   "casesSha256": "30aa19960f0f4c60367fb86daec899a4adeee714a02193fe9c95d089c2a92558",
   "changes": [
     {
       "path": "skills/upstream/vercel/web-design-guidelines/SKILL.md",
-      "beforeSha256": "a36c6224daba1fec76bc2fac15a23b5cb1542d1da74b1843383a7b3958dd7059",
-      "afterSha256": "3073b75375199fb0870748d6d87aaff2a339d571a7c3be4bafaca5db455bec78",
+      "beforeSha256": "19289c28378a31ebcc951713131a270ad28db03a2abc2428a4450c75a19b5101",
+      "afterSha256": "19d83e12c865e02f7abae25995561dd12c738939496c2c9d0b437dabd124827b",
       "beforeMode": "100644",
       "afterMode": "100644",
       "skills": [
@@ -23,11 +23,13 @@
         "external-actions"
       ],
       "removed": [
-        "## Source and Adaptation",
-        "This file is adapted by yuyin-skills to use a release-locked local resource. The upstream skill normally fetches rules from [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md) at runtime. Source commits and this patch are recorded in the distribution's upstream lock. The local rule resource retains its [MIT license](references/WEB-INTERFACE-LICENSE.txt)."
+        "3. For each finding, show an applicable requirement/rule, the concrete source mismatch, and its consequence. Select keyboard and focus conventions from the actual navigation, disclosure, menu or dialog semantics and interaction contract; classify enhancements from other patterns as conditional recommendations.",
+        "4. Distinguish static findings from behavior needing a running page or browser. Missing execution tools are environment limitations; describe a project prohibition only when an actual instruction establishes one."
       ],
       "added": [
-        "Adapted by yuyin-skills to use a locked local snapshot. The bundled rule resource retains its [MIT license](references/WEB-INTERFACE-LICENSE.txt); provenance and adaptation records are in the distribution's SOURCES.md and upstream lock."
+        "3. Establish the actual semantics and interaction contract from source roles, implemented behavior, user requirements and supplied rules. A pattern label inferred by the reviewer remains a hypothesis, not an additional requirement.",
+        "4. For each violation, cite the applicable rule or established requirement and the source mismatch. Missing capabilities are violations only where that rule/requirement calls for them. Keep conventions from other navigation, disclosure, menu or dialog patterns as conditional recommendations, with their prerequisites stated.",
+        "5. Distinguish static findings from behavior needing a running page or browser. Missing execution tools are environment limitations; describe a project prohibition only when an actual instruction establishes one."
       ],
       "excerptTruncated": false
     }

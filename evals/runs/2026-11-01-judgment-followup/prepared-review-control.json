@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "kind": "prepared-local-contract-control",
+  "modelRun": false,
+  "reason": "No further review-model calls after the original review scenario reached its three-iteration limit.",
+  "files": {
+    "src/orders.mjs": "export async function loadOrders(fetchOrders) {\n  try { return await fetchOrders(); }\n  catch { return []; }\n}\n",
+    "orders.test.mjs": "import test from \"node:test\";\nimport assert from \"node:assert/strict\";\nimport {loadOrders} from \"./src/orders.mjs\";\n// Public contract: return successful data; propagate upstream failures.\ntest(\"upstream failures propagate\", async()=>{await assert.rejects(loadOrders(async()=>{throw new Error(\"upstream failed\");}),/upstream failed/);});\n"
+  },
+  "localGroundTruth": {
+    "expectedExitCode": 1,
+    "observedExitCode": 1,
+    "log": "✖ upstream failures propagate (2.051875ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 75.6005\n\n✖ failing tests:\n\ntest at orders.test.mjs:5:1\n✖ upstream failures propagate (2.051875ms)\n  AssertionError [ERR_ASSERTION]: Missing expected rejection.\n      at async TestContext.<anonymous> (file://<CONTROL_ROOT>/evals/fixtures/review-contract-control/orders.test.mjs:5:47)\n      at async Test.run (node:internal/test_runner/test:1409:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: undefined,\n    expected: /upstream failed/,\n    operator: 'rejects',\n    diff: 'simple'\n  }\n"
+  }
+}

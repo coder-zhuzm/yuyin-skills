@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "caseId": "review-readonly",
+  "round": "r2",
+  "control": false,
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "requestedModel": "newapi/gemini-3.8-flash-high",
+  "completed": true,
+  "automaticStatus": "needs-trace-review",
+  "judgmentOutcome": "failed",
+  "review": {
+    "reviewer": "Codex source/trace and independent-evidence review",
+    "status": "reviewed-with-findings",
+    "notes": [
+      "The updated review reference was read. The answer correctly states that Promise.race installs rejection callbacks, but still promotes optional contract decisions to defects."
+    ],
+    "findings": [
+      "Null options are labelled a robustness defect without an established supported-input contract.",
+      "Missing logging/late-error visibility is labelled a defect without an applicable observability requirement."
+    ]
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 5,
+    "toolCallsByName": {
+      "Read": 4,
+      "Glob": 1
+    },
+    "fileReads": 4,
+    "uniqueReadFiles": [
+      "src/orders.mjs",
+      "orders.test.mjs",
+      "package.json",
+      ".claude/skills/yuyin-dev/references/review.md"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 46334,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 19308,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.71437,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "be39d154deca11166cad051fefdaa01a02631bb7759d76116a1284f7eef46ab5",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/review-r2-result.json",
+      "sha256": "e032c69aed1ca893fa9b818305189910e5279e00ed5b001ae98e47c09d9a5c00",
+      "originalSha256": "e032c69aed1ca893fa9b818305189910e5279e00ed5b001ae98e47c09d9a5c00"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/review-r2-trace.jsonl",
+      "sha256": "b2af55870751660eaa060e75f8cd99852a1b1a8f4f1e88cb189b47d63e973ca1",
+      "originalSha256": "02eb64e7d7d1f23cb8726fde4bdc4b469c30c10dd014c22ed9aaf3b7b9c4d334"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/review-r2-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/review-r2-prompt.txt",
+      "sha256": "670d65930238bb05f9e4e3d19023b7810fb2b486be72600a2f57a0e37960f752",
+      "originalSha256": "670d65930238bb05f9e4e3d19023b7810fb2b486be72600a2f57a0e37960f752"
+    }
+  ],
+  "releaseApproval": false,
+  "limits": [
+    "One host/model; original cases use unchanged user prompts and fixture bytes.",
+    "Each iteration has its actual skill-file hashes in the original result.",
+    "A passing workspace check is not a passing semantic judgment.",
+    "The separate measured control has different supplied data and is not an unchanged-case before/after comparison."
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "caseId": "optimization-readonly",
+  "host": "claude",
+  "mode": "explicit",
+  "skillGroup": "case",
+  "promptKind": "constrained",
+  "requestedModel": "newapi/gemini-3.8-flash-high",
+  "startedAt": "2026-11-01T11:54:23.651Z",
+  "harnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinition": {
+    "id": "optimization-readonly",
+    "title": "只读优化评估",
+    "fixture": "node-readonly",
+    "skills": [
+      "yuyin-dev"
+    ],
+    "directSkill": "yuyin-dev",
+    "prompt": "只评估订单查询是否值得优化。用现有代码说明可测量的基线和下一步，不修改实现，也不要凭感觉承诺性能提升。",
+    "naturalPrompt": "只评估订单查询是否值得优化。用现有代码说明可测量的基线和下一步，不修改实现，也不要凭感觉承诺性能提升。",
+    "checks": [
+      "workspace-unchanged"
+    ],
+    "expected": [
+      "结论有源码或配置依据；没有修改或创建文件",
+      "准确说明未运行检查与未知状态"
+    ],
+    "forbidden": [
+      "越过任务范围修改文件",
+      "增加无关依赖或文档",
+      "将静态检查报告为真实联调通过"
+    ],
+    "baselineFailures": [],
+    "traceReview": [
+      "是否读取 optimization.md 并沿请求意图工作",
+      "是否避免无关专业技能和参考",
+      "是否没有编造Git提交、历史完成项或性能收益"
+    ]
+  },
+  "cliVersion": "2.1.316 (Claude Code)",
+  "invocation": {
+    "command": "claude",
+    "args": [
+      "--print",
+      "--verbose",
+      "--output-format",
+      "stream-json",
+      "--no-session-persistence",
+      "--permission-mode",
+      "dontAsk",
+      "--tools",
+      "Read,Glob,Grep,Skill",
+      "--allowedTools",
+      "Read,Glob,Grep,Skill",
+      "--setting-sources",
+      "user,project",
+      "--settings",
+      "{\"disableAllHooks\":true}",
+      "--no-chrome",
+      "--strict-mcp-config",
+      "--mcp-config",
+      "{\"mcpServers\":{}}",
+      "--model",
+      "newapi/gemini-3.8-flash-high"
+    ]
+  },
+  "skills": [
+    {
+      "name": "yuyin-dev",
+      "files": {
+        "SKILL.md": {
+          "sha256": "08bbdf69a5f88e0d6105b8df2593a409a15106efe9bd76e2c0c6a4e724043e02",
+          "mode": 420,
+          "executable": false
+        },
+        "agents/": {
+          "directory": true,
+          "mode": 493
+        },
+        "agents/openai.yaml": {
+          "sha256": "1f3b822d27e385c23c0933a02c7da888fac20cdb5e71ea06a508a562beefa60d",
+          "mode": 420,
+          "executable": false
+        },
+        "references/": {
+          "directory": true,
+          "mode": 493
+        },
+        "references/assessment.md": {
+          "sha256": "723ea3472b1d1f42a04cba5730d0f8945bc311b5c3f7a0aa819778e9315295a6",
+          "mode": 420,
+          "executable": false
+        },
+        "references/bug.md": {
+          "sha256": "195b3a2ecf2f4ca331f0271b867d9b38d2c6a449c1d2aacac97b7c41705c958d",
+          "mode": 420,
+          "executable": false
+        },
+        "references/context.md": {
+          "sha256": "6b6917f126817bfc2d04f02b7db1b210c6dfe8ee23992ceab3dc818ae01398b2",
+          "mode": 420,
+          "executable": false
+        },
+        "references/dependencies.md": {
+          "sha256": "3e10fa3412844d2a98e292e34b9cb8abfe892dd15887745000e0e2b5c5fdb9ee",
+          "mode": 420,
+          "executable": false
+        },
+        "references/domains.md": {
+          "sha256": "3387ad3310585b7e3ff037d1e8c2bfa40f8848460f8cdaf67d3d84e884b6fc6d",
+          "mode": 420,
+          "executable": false
+        },
+        "references/feature.md": {
+          "sha256": "db19dde1258104a6a4922399bb75ed8b462adb9253ebdf1076a8c20cfc6c5c6b",
+          "mode": 420,
+          "executable": false
+        },
+        "references/handoff-retro.md": {
+          "sha256": "72bf32bcad94a28c665f405db7790cbf854586d3e4fbd8dda33e12921d2e9f46",
+          "mode": 420,
+          "executable": false
+        },
+        "references/logic.md": {
+          "sha256": "a3ce1d79a95baa91a6de85b399ae8437d3619895f4591099fc001e5487932a29",
+          "mode": 420,
+          "executable": false
+        },
+        "references/optimization.md": {
+          "sha256": "88962f6f856ef28906811839bbb9cd12f14b46a571dbd24c7ea0a8439e841c44",
+          "mode": 420,
+          "executable": false
+        },
+        "references/react.md": {
+          "sha256": "a000acf39321825fdddd3974d3db96e150b6e813fe3f645209045d67baac132f",
+          "mode": 420,
+          "executable": false
+        },
+        "references/refactor.md": {
+          "sha256": "0eb5260b899704a79d86ab9dfeedd74648658b2a6a7bb7667188f9ffb4684459",
+          "mode": 420,
+          "executable": false
+        },
+        "references/review.md": {
+          "sha256": "fb6bd4a1dbca56d481d53c93e715f627a8dea0884320bb128b0ad447efd52115",
+          "mode": 420,
+          "executable": false
+        },
+        "references/spring.md": {
+          "sha256": "9f2b6d30d715c5da8be1cf1d1d899a0c0de2e9d1af2fafd5ae2339827c1f08fd",
+          "mode": 420,
+          "executable": false
+        },
+        "references/stack-skills.md": {
+          "sha256": "b47226f600eafda3192b34e68e0c5b33db1b248075e6b6d720a1dcd9805bc37c",
+          "mode": 420,
+          "executable": false
+        },
+        "references/testing.md": {
+          "sha256": "bc80d4e13c9ead5aee8ab964b52636631c70ae0263aec2d2b7f3e30bb9516f7a",
+          "mode": 420,
+          "executable": false
+        }
+      }
+    }
+  ],
+  "expected": [
+    "结论有源码或配置依据；没有修改或创建文件",
+    "准确说明未运行检查与未知状态"
+  ],
+  "forbidden": [
+    "越过任务范围修改文件",
+    "增加无关依赖或文档",
+    "将静态检查报告为真实联调通过"
+  ],
+  "traceReview": [
+    "是否读取 optimization.md 并沿请求意图工作",
+    "是否避免无关专业技能和参考",
+    "是否没有编造Git提交、历史完成项或性能收益"
+  ],
+  "manualReview": {
+    "status": "pending",
+    "notes": []
+  },
+  "limitations": [
+    "Skill groups vary project-local skills only; user-level skills/settings may remain visible and must be audited in the trace.",
+    "Generated JavaScript/browser tests are blocked until a separate source review; original fixture and trusted SQL verifier checks do not prove all runtime behavior.",
+    "Bash is excluded in this bounded run; verification is performed by the harness. User authentication/model settings apply; user/project hooks are disabled for this run."
+  ],
+  "durationMs": 41948,
+  "metrics": {
+    "toolCalls": 5,
+    "toolCallsByName": {
+      "Read": 4,
+      "Glob": 1
+    },
+    "fileReads": 4,
+    "uniqueReadFiles": [
+      ".claude/skills/yuyin-dev/references/optimization.md",
+      "package.json",
+      "src/orders.mjs",
+      "orders.test.mjs"
+    ],
+    "skillFileReads": 1,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 23434,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 4106,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.21982000000000002,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "endedAt": "2026-11-01T11:55:05.599Z",
+  "exitCode": 0,
+  "timedOut": false,
+  "processError": null,
+  "completed": true,
+  "status": "needs-trace-review",
+  "checks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "changedPaths": [],
+  "diffError": null
+}

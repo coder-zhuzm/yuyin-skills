@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent-local-benchmark-control",
+  "program": "import {performance} from 'node:perf_hooks';\nimport {writeFileSync} from 'node:fs';\nimport {loadOrders} from './src/orders.mjs';\nconst iterations=5000, samples=5;\nconst upstream=async()=>[];\nfor(let i=0;i<1000;i++) await loadOrders(upstream,{budgetMs:1000});\nconst results=[];\nfor(let sample=0;sample<samples;sample++){\n  let start=performance.now();\n  for(let i=0;i<iterations;i++) await upstream();\n  const directMs=performance.now()-start;\n  start=performance.now();\n  for(let i=0;i<iterations;i++) await loadOrders(upstream,{budgetMs:1000});\n  const wrappedMs=performance.now()-start;\n  results.push({sample,directMs,wrappedMs,directPerCallMs:directMs/iterations,wrappedPerCallMs:wrappedMs/iterations});\n}\nwriteFileSync(new URL('./benchmark.json',import.meta.url),JSON.stringify({schemaVersion:1,environment:{node:process.version,platform:process.platform,arch:process.arch},method:{iterations,samples,warmup:1000,budgetMs:1000,input:'Immediate async empty-array upstream; no real network, production load, or concurrent callers',measurement:'performance.now wall time; direct and wrapped loops measured sequentially'},results,limits:['Single local process and runtime','No production SLA or real upstream measurements','Not evidence about cancellation behavior or all bottlenecks']},null,2)+'\\n');\n",
+  "record": {
+    "schemaVersion": 1,
+    "environment": {
+      "node": "v26.13.0",
+      "platform": "darwin",
+      "arch": "arm64"
+    },
+    "method": {
+      "iterations": 5000,
+      "samples": 5,
+      "warmup": 1000,
+      "budgetMs": 1000,
+      "input": "Immediate async empty-array upstream; no real network, production load, or concurrent callers",
+      "measurement": "performance.now wall time; direct and wrapped loops measured sequentially"
+    },
+    "results": [
+      {
+        "sample": 0,
+        "directMs": 0.9017919999999968,
+        "wrappedMs": 6.598082999999999,
+        "directPerCallMs": 0.00018035839999999936,
+        "wrappedPerCallMs": 0.0013196165999999998
+      },
+      {
+        "sample": 1,
+        "directMs": 0.5842500000000008,
+        "wrappedMs": 3.898457999999998,
+        "directPerCallMs": 0.00011685000000000017,
+        "wrappedPerCallMs": 0.0007796915999999996
+      },
+      {
+        "sample": 2,
+        "directMs": 0.5531250000000014,
+        "wrappedMs": 12.44625,
+        "directPerCallMs": 0.00011062500000000029,
+        "wrappedPerCallMs": 0.0024892499999999997
+      },
+      {
+        "sample": 3,
+        "directMs": 1.0687500000000014,
+        "wrappedMs": 6.0228329999999985,
+        "directPerCallMs": 0.0002137500000000003,
+        "wrappedPerCallMs": 0.0012045665999999998
+      },
+      {
+        "sample": 4,
+        "directMs": 0.6417080000000013,
+        "wrappedMs": 8.658583,
+        "directPerCallMs": 0.00012834160000000026,
+        "wrappedPerCallMs": 0.0017317166
+      }
+    ],
+    "limits": [
+      "Single local process and runtime",
+      "No production SLA or real upstream measurements",
+      "Not evidence about cancellation behavior or all bottlenecks"
+    ]
+  },
+  "derivedFromPairedSamples": [
+    {
+      "sample": 0,
+      "deltaMicroseconds": 1.1392582000000004,
+      "ratio": 7.316635099890021
+    },
+    {
+      "sample": 1,
+      "deltaMicroseconds": 0.6628415999999994,
+      "ratio": 6.672585365853645
+    },
+    {
+      "sample": 2,
+      "deltaMicroseconds": 2.378624999999999,
+      "ratio": 22.501694915254177
+    },
+    {
+      "sample": 3,
+      "deltaMicroseconds": 0.9908165999999996,
+      "ratio": 5.635399298245606
+    },
+    {
+      "sample": 4,
+      "deltaMicroseconds": 1.6033749999999998,
+      "ratio": 13.49302642323297
+    }
+  ]
+}

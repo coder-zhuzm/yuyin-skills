@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "caseId": "optimization-readonly",
+  "round": "r1",
+  "control": false,
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "requestedModel": "newapi/gemini-3.8-flash-high",
+  "completed": true,
+  "automaticStatus": "needs-trace-review",
+  "judgmentOutcome": "failed",
+  "review": {
+    "reviewer": "Codex source/trace and independent-evidence review",
+    "status": "reviewed-with-findings",
+    "notes": [
+      "The new optimization reference was read, but source simplicity was still converted into quantitative timing and no-bottleneck claims."
+    ],
+    "findings": [
+      "Claims microsecond overhead and a less-than-1ms expectation without a timing experiment or supplied measurement record."
+    ]
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 6,
+    "toolCallsByName": {
+      "Read": 5,
+      "Glob": 1
+    },
+    "fileReads": 5,
+    "uniqueReadFiles": [
+      ".claude/skills/yuyin-dev/references/optimization.md",
+      "package.json",
+      "src/orders.mjs",
+      "orders.test.mjs",
+      ".claude/skills/yuyin-dev/references/assessment.md"
+    ],
+    "skillFileReads": 2,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 56258,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 4411,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.39156499999999994,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "4af99930c909072e55b36d946fb77a5f139a8f981c79f650cd91384db35ef9b4",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-r1-result.json",
+      "sha256": "ca1d091745c76d5804f61693f96675c1ebae097403dc8e3d2354dfcf55826b38",
+      "originalSha256": "ca1d091745c76d5804f61693f96675c1ebae097403dc8e3d2354dfcf55826b38"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-r1-trace.jsonl",
+      "sha256": "b9d779d70357d573189af7e45013fb139d94c878017b1b78e0f8c32f4339679f",
+      "originalSha256": "dc1f7ab0593220d67716d7b5ce33d72e3806238b0dca9289979d73ea7363bcf3"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-r1-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-r1-prompt.txt",
+      "sha256": "521e4bbed238a8fce78dbdb40b48ec62cf15406e8170333a027005abd034bf30",
+      "originalSha256": "521e4bbed238a8fce78dbdb40b48ec62cf15406e8170333a027005abd034bf30"
+    }
+  ],
+  "releaseApproval": false,
+  "limits": [
+    "One host/model; original cases use unchanged user prompts and fixture bytes.",
+    "Each iteration has its actual skill-file hashes in the original result.",
+    "A passing workspace check is not a passing semantic judgment.",
+    "The separate measured control has different supplied data and is not an unchanged-case before/after comparison."
+  ]
+}

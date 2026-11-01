@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "caseId": "optimization-readonly",
+  "round": "measured-control",
+  "control": true,
+  "models": [
+    "newapi/gemini-3.8-flash-high"
+  ],
+  "requestedModel": "newapi/gemini-3.8-flash-high",
+  "completed": true,
+  "automaticStatus": "needs-trace-review",
+  "judgmentOutcome": "partial",
+  "review": {
+    "reviewer": "Codex source/trace and independent-evidence review",
+    "status": "reviewed-with-limitations",
+    "notes": [
+      "The model read the supplied benchmark program and JSON, correctly attributed measurements to an existing record rather than its own run, cited the runtime/input/sample counts, and kept production bottlenecks unconfirmed."
+    ],
+    "findings": [
+      "The derived delta range is not computed from paired samples: reported upper bound about 2.28 microseconds, actual paired upper bound about 2.378625 microseconds.",
+      "The table assumes tens-of-milliseconds real I/O when comparing production overhead, although no production latency measurements were supplied."
+    ]
+  },
+  "reviewedChecks": [
+    {
+      "id": "workspace-unchanged",
+      "kind": "integrity",
+      "status": "passed",
+      "detail": "Check satisfied; see traceReview for evidence beyond this check."
+    }
+  ],
+  "metrics": {
+    "toolCalls": 9,
+    "toolCallsByName": {
+      "Glob": 1,
+      "Read": 8
+    },
+    "fileReads": 8,
+    "uniqueReadFiles": [
+      ".claude/skills/yuyin-dev/references/optimization.md",
+      ".claude/skills/yuyin-dev/references/assessment.md",
+      "package.json",
+      "benchmark.json",
+      "benchmark.mjs",
+      "src/orders.mjs",
+      "orders.test.mjs"
+    ],
+    "skillFileReads": 2,
+    "skillInvocations": [],
+    "models": [
+      "newapi/gemini-3.8-flash-high"
+    ],
+    "usage": {
+      "input_tokens": 45669,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 4754,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "costUsd": 0.34719500000000003,
+    "clarificationCount": null,
+    "reworkCount": null,
+    "manualMetricsStatus": "pending-trace-review",
+    "limitations": [
+      "Tool/read counts reflect structured events only; shell reads and actual bytes read are not inferred.",
+      "Clarifications and rework require manual trace review; a missing value is not zero."
+    ]
+  },
+  "sourceHarnessSha256": "8958137181cdcfb9dde210bafa0fcd407e77aaa446daec263e25effb77b8a171",
+  "caseDefinitionSha256AtRun": "adfe9e85b16c2206099203a5ce7675cf666fe3b259249d120a5f7eca70be994f",
+  "artifacts": [
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-measured-control-result.json",
+      "sha256": "44b126bda5dbf5746c4b0996e1fce2047b2b6246589cba65ced2074267d61831",
+      "originalSha256": "44b126bda5dbf5746c4b0996e1fce2047b2b6246589cba65ced2074267d61831"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-measured-control-trace.jsonl",
+      "sha256": "a591d214f7df0b32671df436c31f5ec62952257e7e55d7998de46317e77e7d2d",
+      "originalSha256": "e6f580677ca925cb43c4f320b5cc41605066691e61999233b9bdddf95cac6468"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-measured-control-diff.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/runs/2026-11-01-judgment-followup/optimization-measured-control-prompt.txt",
+      "sha256": "07db1af71ea3ca3ab2f56eb90a77488c6a9f638741005c75d925e16adf453b51",
+      "originalSha256": "07db1af71ea3ca3ab2f56eb90a77488c6a9f638741005c75d925e16adf453b51"
+    }
+  ],
+  "releaseApproval": false,
+  "limits": [
+    "One host/model; original cases use unchanged user prompts and fixture bytes.",
+    "Each iteration has its actual skill-file hashes in the original result.",
+    "A passing workspace check is not a passing semantic judgment.",
+    "The separate measured control has different supplied data and is not an unchanged-case before/after comparison."
+  ]
+}

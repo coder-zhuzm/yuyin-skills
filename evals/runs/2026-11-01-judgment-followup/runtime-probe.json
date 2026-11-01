@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "fixture": "evals/fixtures/node-readonly/src/orders.mjs",
+  "fixtureSha256": "c5120739d782e15b6690b23bfead58fd72f71c7f0a18bb4d8f1cb1a9546f5d3d",
+  "originalExecutedSourceSha256": "fc0862f2216aa23d7d5e126595ae82b27e5895b5977b7afbd8bfd3af5f283404",
+  "reproductionWorkingDirectory": "evals/fixtures/node-readonly",
+  "reproductionSource": "import assert from 'node:assert/strict';import {loadOrders} from \"./src/orders.mjs\";const errors=[];process.on('unhandledRejection',e=>errors.push(String(e)));await assert.rejects(loadOrders(()=>new Promise((_,reject)=>setTimeout(()=>reject(new Error('late upstream error')),25)),{budgetMs:2}),/timed out/);await new Promise(resolve=>setTimeout(resolve,80));assert.deepEqual(errors,[]);console.log(JSON.stringify({node:process.version,unhandledRejections:errors,exit:'normal',findingReproduced:false}));",
+  "result": {
+    "exitCode": 0,
+    "stdout": "{\"node\":\"v26.13.0\",\"unhandledRejections\":[],\"exit\":\"normal\",\"findingReproduced\":false}\n",
+    "stderr": ""
+  },
+  "officialSource": {
+    "title": "ECMAScript PerformPromiseRace",
+    "url": "https://tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-performpromiserace",
+    "accessedOn": "2026-11-01",
+    "supports": "The operation registers fulfillment and rejection callbacks on every input promise."
+  },
+  "limits": [
+    "Probe ran on the recorded local Node runtime.",
+    "The allegation was universal; this checked counterexample and the specification contradict it."
+  ]
+}
