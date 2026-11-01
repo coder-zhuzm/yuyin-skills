@@ -1,5 +1,11 @@
 # yuyin-skills
 
+[![npm version](https://img.shields.io/npm/v/@zhuzm/yuyin-skills?logo=npm&color=CB3837)](https://www.npmjs.com/package/@zhuzm/yuyin-skills)
+[![npm downloads](https://img.shields.io/npm/dt/@zhuzm/yuyin-skills?logo=npm)](https://www.npmjs.com/package/@zhuzm/yuyin-skills)
+[![publish](https://img.shields.io/github/actions/workflow/status/coder-zhuzm/yuyin-skills/publish.yml?branch=main&label=publish&logo=githubactions&logoColor=white)](https://github.com/coder-zhuzm/yuyin-skills/actions/workflows/publish.yml)
+[![node version](https://img.shields.io/node/v/@zhuzm/yuyin-skills?logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey)](https://github.com/coder-zhuzm/yuyin-skills)
+
 面向 Claude Code 与 Codex 的开发技能组合，优先服务 React、Java/Spring，兼顾 Node。`yuyin-dev` 提供中文任务入口；框架、设计与测试能力按需使用精选社区技能。
 
 通用包保存开发方法与技术检查，具体业务、品牌、接口、有效 workaround 和部署环境留在目标项目。不会因为技能更新而要求项目迁移框架或持久层。
@@ -44,7 +50,7 @@ $yuyin-dev 分析 Node 服务的超时原因，先不修改。
 
 ## 内容与版本
 
-包名称为 **`@zhuzm/yuyin-skills`**，版本 **`0.3.6`**。源码版本字段由发布准备更新；实际发行内容以对应 tag 和 npm 包为准。包包含选定技能、资源、许可、上游锁定记录和 npm 命令入口；运行依赖为 `skills@1.7.2`，Agent 接入由它完成。
+包名称为 [**`@zhuzm/yuyin-skills`**](https://www.npmjs.com/package/@zhuzm/yuyin-skills)，版本 **`0.3.6`**。源码版本字段由发布准备更新；实际发行内容以对应 tag 和 npm 包为准。包包含选定技能、资源、许可、上游锁定记录和 npm 命令入口；运行依赖为 `skills@1.7.2`，Agent 接入由它完成。
 
 上游更新由维护者单独执行、审阅并锁定提交和逐文件摘要；发布准备只使用仓库中已锁定的内容，并检查与当前技能、案例及验收器匹配的行为审阅记录。同一版本的安装与发布重试使用原快照。已安装项目只在显式更新时采用新内容。
 
