@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "identitySha256": "d89f84afb52c550844a48384125fc44837b98dd4f4c1ab03bd44ccddb5c2c532",
+  "reviewer": "Codex release evidence review (repository owner authorized publication)",
+  "reviewedAt": "2026-11-01",
+  "rationale": "Repository owner requested publication after the documented pre-release limitations were disclosed. Release the locked-content fixes with two verified samples and fourteen explicit release-only waivers; preserve all failed, partial and historical behavior outcomes. See the hashed release decision for scope and limits.",
+  "decisions": [
+    {
+      "id": "case:node-readonly",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-10-15-smoke.json",
+          "sha256": "72e1c6929602cdba9be30843c73dd2cac1e5d6933df3a8e3b52e61556e6e9dd6"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:react-local",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-10-15-smoke.json",
+          "sha256": "72e1c6929602cdba9be30843c73dd2cac1e5d6933df3a8e3b52e61556e6e9dd6"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:spring-mybatis",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-10-15-smoke.json",
+          "sha256": "72e1c6929602cdba9be30843c73dd2cac1e5d6933df3a8e3b52e61556e6e9dd6"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:js-playwright",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-10-15-smoke.json",
+          "sha256": "72e1c6929602cdba9be30843c73dd2cac1e5d6933df3a8e3b52e61556e6e9dd6"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:small-copy",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-claude-pilot/summary.json",
+          "sha256": "e2c3172f01ba92361eda94d8b87216fef60468fc0cf17ab7cb8880bcc8573c64"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:missing-skill",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-10-15-smoke.json",
+          "sha256": "72e1c6929602cdba9be30843c73dd2cac1e5d6933df3a8e3b52e61556e6e9dd6"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:refactor-local",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/refactor-local-review.json",
+          "sha256": "17778bc7d8c89b0185268d368645c06c531ac2f415a835a53a3e60490bcf1996"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:tests-only",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/tests-only-review.json",
+          "sha256": "a49923c8d6814f93dd0ed9d75dfc95a39a75fa4d6fee774bb04138769c47ff15"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:upgrade-local",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/upgrade-local-review.json",
+          "sha256": "019911e39c61cf48955a248a5125b28d6dd2b209238df584841055b78cae4172"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:review-readonly",
+      "status": "waived",
+      "rationale": "Release-only waiver of the known model judgment failure, following the informed publication request. The semantic failure remains recorded; no retest or reliability claim.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-judgment-followup/review-r3-review.json",
+          "sha256": "d1782e52f7500c821090437906170546a37354583e02459b23982992573fc4cd"
+        },
+        {
+          "path": "evals/runs/2026-11-01-judgment-followup/runtime-probe.json",
+          "sha256": "eb37b8fa34b66691c9503f7d7edb020cc37d0467a0e314f61009625f2d4ca978"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:optimization-readonly",
+      "status": "verified",
+      "rationale": "Current-case input identity and existing reviewed evidence match.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-pre-release/optimization-readonly-reviewed.json",
+          "sha256": "f9ad09acec5ba81b3d4104d0ad6777de9572cb8ea86c5a1d21f5fd68916907de"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:context-readonly",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/context-readonly-review.json",
+          "sha256": "5e9fff5f498a79f51668e556301e2d70cdec1a32ca588f0f09e533d259e2e03c"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:handoff-readonly",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/handoff-readonly-review.json",
+          "sha256": "ede515ddfaff9a3e0c5d086f998e005eb869fddc2984b4c95520ba8032eded98"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:frontend-design-local",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/frontend-design-local-review.json",
+          "sha256": "c6cbb7bda200bab50212d32270e7fa0ee7ffa26a5f092d7448aee635603abbf7"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:ui-review-local",
+      "status": "verified",
+      "rationale": "Current-case input identity and existing reviewed evidence match.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-pre-release/ui-review-local-reviewed.json",
+          "sha256": "d637ad7e03ae0181d6b11b2d67777a94b06a3fafdfaefb32c6f90a2f45be5122"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    },
+    {
+      "id": "case:react-performance-direct",
+      "status": "waived",
+      "rationale": "Release-only waiver of the current-evidence gap, following the informed publication request. Historical results and limitations remain unchanged; no fabricated current pass.",
+      "evidence": [
+        {
+          "path": "evals/runs/2026-11-01-v1-retry/react-performance-direct-review.json",
+          "sha256": "2ab069e40293d021fbcff21369dc1043e1867e4cc3e637037695849587ccebb7"
+        },
+        {
+          "path": "evals/runs/2026-11-01-release-decision.json",
+          "sha256": "09fb1d91a603dccef69fec4ab2d32e8466ccd1220f3f1dbc65e6ec9c5af31ab6"
+        }
+      ]
+    }
+  ]
+}
